@@ -73,7 +73,7 @@ export default function HeroSpaceSwitcher({ onOpenContact }: HeroSpaceSwitcherPr
             <ArrowRight size={18} />
           </button>
           <Link
-            href="#overview"
+            href="/services"
             className="inline-flex items-center justify-center rounded-full border border-white/45 bg-white/[0.04] backdrop-blur-sm px-7 py-3.5 text-base font-medium text-white hover:bg-white/15 hover:border-white/75 transition-all"
           >
             Explore Our Services
@@ -82,7 +82,7 @@ export default function HeroSpaceSwitcher({ onOpenContact }: HeroSpaceSwitcherPr
 
         {/* Spaces Switcher Pills */}
         <div className="mt-9 flex flex-wrap items-center gap-2">
-          <span className="text-[11px] uppercase tracking-[0.18em] text-neutral-400 mr-2">
+          <span className="text-[11px] uppercase tracking-[0.18em] text-neutral-400 mr-2 font-medium">
             Spaces
           </span>
           {SPACES.map((space, idx) => {

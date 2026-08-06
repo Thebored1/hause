@@ -41,7 +41,10 @@ export default function Home() {
         <LocationsGrid />
 
         {/* CTA Get Started Section */}
-        <CTASection onOpenContact={() => setContactModalOpen(true)} />
+        <CTASection
+          onOpenContact={() => setContactModalOpen(true)}
+          bgImage="/images/jaiswal/jaiswal-07.jpg"
+        />
 
         {/* Footer */}
         <Footer />

@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 const STEPS = [
   {
@@ -32,7 +34,7 @@ const STEPS = [
 
 export default function ProcessTimeline() {
   return (
-    <section id="process" className="bg-[#0c0d0e] text-white py-28 px-6 sm:px-12 md:px-16">
+    <section id="process" className="bg-[#0c0d0e] text-white py-28 px-6 sm:px-12 md:px-16 border-t border-white/10">
       <div className="max-w-[1280px] mx-auto flex flex-col gap-20">
         {/* Header */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end">
@@ -75,6 +77,20 @@ export default function ProcessTimeline() {
               </div>
             </div>
           ))}
+
+          {/* Bottom link to dedicated process page */}
+          <div className="border-t border-white/14 pt-10 flex justify-between items-center flex-wrap gap-4">
+            <span className="text-xs text-white/40 uppercase tracking-widest">
+              From Concept to Handover
+            </span>
+            <Link
+              href="/process"
+              className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.16em] uppercase text-white hover:text-white/80 transition-colors"
+            >
+              <span>See Our Full Process</span>
+              <ArrowRight size={14} />
+            </Link>
+          </div>
         </div>
       </div>
     </section>

@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { Zap, Globe, Sparkles, Home, Layers, Box } from "lucide-react";
+import Link from "next/link";
+import { Zap, Globe, Sparkles, Home, Layers, Box, ArrowRight, ArrowUpRight } from "lucide-react";
 
 interface ServicesGridProps {
   onOpenContact: () => void;
@@ -13,36 +14,42 @@ const SERVICES = [
     title: "Residential Interior Design",
     description: "Full-home and room-wise design for apartments, villas and builder-floor homes — living rooms, bedrooms, kitchens and everything in between.",
     icon: Home,
+    href: "/services/residential-interior-design",
   },
   {
     id: "02",
     title: "Commercial & Office Design",
     description: "Offices, retail stores, showrooms, cafes and clinics designed to reflect your brand and support how your team and customers move through the space.",
     icon: Globe,
+    href: "/services/commercial-office-interior-design",
   },
   {
     id: "03",
     title: "Modular Kitchens & Wardrobes",
     description: "Custom kitchen and wardrobe layouts engineered for storage, durability, and everyday use — not just a pretty render.",
     icon: Sparkles,
+    href: "/services/modular-kitchen-wardrobe-design",
   },
   {
     id: "04",
     title: "Turnkey Interior Solutions",
     description: "One team handles design, civil work, electrical, carpentry, and styling — a single point of accountability from day one to handover.",
     icon: Zap,
+    href: "/services/turnkey-interior-solutions",
   },
   {
     id: "05",
     title: "Renovation & Remodeling",
     description: "Refresh a tired home or reconfigure an outdated office layout without starting from scratch.",
     icon: Layers,
+    href: "/services/renovation-remodeling",
   },
   {
     id: "06",
     title: "3D Visualization & Design Consultation",
     description: "See your space before it’s built, with detailed 3D visuals and material mock-ups that remove the guesswork from decision-making.",
     icon: Box,
+    href: "/services",
   },
 ];
 
@@ -85,7 +92,7 @@ export default function ServicesGrid({ onOpenContact }: ServicesGridProps) {
                 100%
               </div>
               <p className="mt-4 text-sm text-[#6b6559] leading-[1.65]">
-                Every project is supervised on site by our own team, from the first day of civil work to final styling.
+                Every project is personally supervised on site by our own team, from the first day of civil work to final styling.
               </p>
             </div>
             <button
@@ -105,14 +112,15 @@ export default function ServicesGrid({ onOpenContact }: ServicesGridProps) {
             const isBorderTop = idx >= 3;
 
             return (
-              <div
+              <Link
                 key={srv.id}
-                className={`p-8 sm:p-[36px] flex flex-col gap-6 transition-colors duration-200 hover:bg-white/80 ${
+                href={srv.href}
+                className={`group p-8 sm:p-[36px] flex flex-col justify-between gap-6 transition-colors duration-200 hover:bg-white/80 ${
                   isBorderLeft ? "md:border-l md:border-black/10" : ""
                 } ${isBorderTop ? "border-t border-black/10" : ""}`}
               >
                 <div className="flex items-center justify-between">
-                  <div className="text-[#18181b] flex">
+                  <div className="text-[#18181b] flex group-hover:scale-110 transition-transform">
                     <Icon size={22} strokeWidth={1.5} />
                   </div>
                   <span className="text-xs tracking-[0.18em] text-[#a19c8f] font-mono">
@@ -120,16 +128,31 @@ export default function ServicesGrid({ onOpenContact }: ServicesGridProps) {
                   </span>
                 </div>
                 <div>
-                  <h3 className="m-0 text-lg sm:text-xl font-medium text-[#18181b] tracking-[-0.02em] leading-snug">
+                  <h3 className="m-0 text-lg sm:text-xl font-medium text-[#18181b] tracking-[-0.02em] leading-snug group-hover:text-black">
                     {srv.title}
                   </h3>
                   <p className="mt-3 text-sm text-[#6b6559] leading-[1.7] max-w-xs">
                     {srv.description}
                   </p>
                 </div>
-              </div>
+                <div className="flex items-center gap-1 text-xs font-semibold tracking-wider text-[#18181b] uppercase group-hover:translate-x-1 transition-transform">
+                  <span>Explore Service</span>
+                  <ArrowUpRight size={13} />
+                </div>
+              </Link>
             );
           })}
+        </div>
+
+        {/* View All Services Link Button */}
+        <div className="flex justify-center pt-2">
+          <Link
+            href="/services"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[#18181b] text-white text-xs font-semibold tracking-[0.18em] uppercase rounded-full hover:bg-black transition-all shadow-md"
+          >
+            <span>View All Services</span>
+            <ArrowRight size={14} />
+          </Link>
         </div>
       </div>
     </section>

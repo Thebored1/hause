@@ -1,20 +1,25 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 interface CTASectionProps {
-  onOpenContact: () => void;
+  onOpenContact?: () => void;
+  bgImage?: string;
 }
 
-export default function CTASection({ onOpenContact }: CTASectionProps) {
+export default function CTASection({
+  onOpenContact,
+  bgImage = "/images/jaiswal/jaiswal-07.jpg",
+}: CTASectionProps) {
   return (
     <section id="visit" className="relative overflow-hidden bg-[#0c0d0e] text-white">
       {/* Background Image & Ambient Overlay */}
       <img
-        src="/images/sp-office.jpg"
-        alt="Showroom aisle"
-        className="absolute inset-0 w-full h-full object-cover filter brightness-[0.45]"
+        src={bgImage}
+        alt="Hause Interiors Studio & Showroom"
+        className="absolute inset-0 w-full h-full object-cover filter brightness-[0.38]"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#0c0d0e] via-black/40 to-black/60 pointer-events-none" />
 
@@ -46,18 +51,28 @@ export default function CTASection({ onOpenContact }: CTASectionProps) {
                 Get in touch
               </div>
               <div className="mt-2.5 text-sm sm:text-base text-white leading-[1.6]">
-                +91 98992 04333<br />info@hause.co.in
+                +91 80065 59900<br />interiors@hause.agency
               </div>
             </div>
           </div>
 
-          <button
-            onClick={onOpenContact}
-            className="self-start inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-black hover:bg-neutral-200 transition-all border-none cursor-pointer shadow-lg mt-2"
-          >
-            <span>Get a Free Consultation</span>
-            <ArrowRight size={18} />
-          </button>
+          {onOpenContact ? (
+            <button
+              onClick={onOpenContact}
+              className="self-start inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-black hover:bg-neutral-200 transition-all border-none cursor-pointer shadow-lg mt-2"
+            >
+              <span>Get a Free Consultation</span>
+              <ArrowRight size={18} />
+            </button>
+          ) : (
+            <Link
+              href="/contact"
+              className="self-start inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-black hover:bg-neutral-200 transition-all shadow-lg mt-2"
+            >
+              <span>Get a Free Consultation</span>
+              <ArrowRight size={18} />
+            </Link>
+          )}
         </div>
       </div>
     </section>

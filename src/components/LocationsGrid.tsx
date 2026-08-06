@@ -66,12 +66,15 @@ export default function LocationsGrid() {
             );
           })}
 
-          <div className="border-t border-black/12 pt-8">
+          <div className="border-t border-black/12 pt-8 flex justify-between items-center flex-wrap gap-4">
+            <span className="text-xs text-[#8a8578] uppercase tracking-wider">
+              Serving Delhi NCR &amp; Select Pan-India Projects
+            </span>
             <Link
-              href="#visit"
+              href="/locations"
               className="inline-flex items-center gap-2 text-sm font-semibold text-[#18181b] hover:opacity-80 transition-opacity"
             >
-              <span>Check if we serve your city</span>
+              <span>View All Location Details</span>
               <ArrowRight size={16} />
             </Link>
           </div>

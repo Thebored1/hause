@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 const REASONS = [
   {
@@ -12,12 +14,16 @@ const REASONS = [
     body: "You see exactly what you're paying for, itemised against a detailed Bill of Quantities, before work begins.",
   },
   {
-    title: "On-time delivery discipline",
-    body: "Timelines are set upfront and tracked at every site visit.",
+    title: "Design with a business mindset",
+    body: "Born from a digital studio built on measurable outcomes — clear scopes, realistic timelines, and practical budgets.",
   },
   {
-    title: "Pan-India execution network",
-    body: "Delhi NCR site supervision, with the systems and vetted partners to run projects in other cities too.",
+    title: "On-ground site supervision",
+    body: "Delhi NCR projects are personally supervised at every stage, from civil work to final styling.",
+  },
+  {
+    title: "Pan-India delivery capability",
+    body: "Structured remote design paired with vetted local partners, so the same accountability applies anywhere.",
   },
 ];
 
@@ -32,17 +38,30 @@ export default function WhyUs() {
           Anyone can make a space look good in a render. What&apos;s harder is delivering it on time, on budget, and exactly as designed. That&apos;s the gap Hause Interiors is built to close.
         </h3>
 
-        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
           {REASONS.map((r, i) => (
-            <div key={i} className="flex flex-col">
-              <h4 className="m-0 text-base font-semibold text-white">
-                {r.title}
-              </h4>
-              <p className="mt-3 text-sm text-white/50 leading-[1.7]">
-                {r.body}
-              </p>
+            <div key={i} className="flex flex-col justify-between border-t border-white/10 pt-6">
+              <div>
+                <span className="text-[11px] font-mono text-white/30 block mb-3">0{i + 1}</span>
+                <h4 className="m-0 text-sm sm:text-base font-semibold text-white leading-snug">
+                  {r.title}
+                </h4>
+                <p className="mt-3 text-xs sm:text-sm text-white/50 leading-[1.65]">
+                  {r.body}
+                </p>
+              </div>
             </div>
           ))}
+        </div>
+
+        <div className="mt-12 pt-8 border-t border-white/10 flex justify-end">
+          <Link
+            href="/why-hause-interiors"
+            className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.16em] uppercase text-white hover:text-white/80 transition-colors"
+          >
+            <span>Learn More About Why Hause</span>
+            <ArrowRight size={14} />
+          </Link>
         </div>
       </div>
     </section>
