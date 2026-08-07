@@ -36,20 +36,20 @@ export default function PageHero({
 }: PageHeroProps) {
   return (
     <section className="relative pt-36 pb-24 md:pt-44 md:pb-32 px-6 sm:px-12 md:px-16 overflow-hidden border-b border-white/10 bg-[#0c0d0e]">
-      {/* Background Image with Cinematic Overlay */}
+      {/* Background Image with Balanced Medium Overlay Opacity */}
       {bgImage && (
         <div className="absolute inset-0 z-0">
           <img
             src={bgImage}
             alt={title}
-            className="w-full h-full object-cover object-center opacity-35 scale-105 filter blur-[0.5px]"
+            className="w-full h-full object-cover object-center opacity-55 scale-105 filter brightness-90"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0c0d0e] via-[#0c0d0e]/85 to-[#0c0d0e]/50" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0c0d0e] via-transparent to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0c0d0e]/90 via-[#0c0d0e]/65 to-[#0c0d0e]/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0c0d0e] via-transparent to-black/30" />
         </div>
       )}
 
-      {/* Subtle radial ambient glow */}
+      {/* Subtle radial ambient glow for pages without background images */}
       {!bgImage && (
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-b from-[#22262a]/40 to-transparent blur-3xl pointer-events-none rounded-full" />
       )}
