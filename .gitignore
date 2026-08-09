@@ -42,3 +42,8 @@ next-env.d.ts
 payload.db
 payload.db-journal
 .env
+
+# scratch
+*.frag
+*.cls
+/*.html

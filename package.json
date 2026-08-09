@@ -11,9 +11,16 @@
     "generate:importmap": "payload generate:importmap"
   },
   "dependencies": {
+    "@craftjs/core": "^0.2.12",
+    "@payloadcms/db-postgres": "^3.87.1",
     "@payloadcms/db-sqlite": "^3.87.1",
     "@payloadcms/next": "^3.87.1",
     "@payloadcms/richtext-lexical": "^3.87.1",
+    "@payloadcms/storage-vercel-blob": "^3.87.1",
+    "@tiptap/extension-placeholder": "^3.29.2",
+    "@tiptap/pm": "^3.29.2",
+    "@tiptap/react": "^3.29.2",
+    "@tiptap/starter-kit": "^3.29.2",
     "graphql": "^16.14.2",
     "lenis": "^1.3.26",
     "lucide-react": "^1.29.0",

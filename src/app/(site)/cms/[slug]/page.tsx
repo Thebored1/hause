@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 import config from "@payload-config";
 import ServicesGrid, { type ServiceItem } from "@/components/ServicesGrid";
+import { RenderTree } from "@/render/RenderTree";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +34,9 @@ function renderBlock(block: Block, i: number) {
           services={block.services as ServiceItem[]}
         />
       );
+    case "canvas":
+      return block.content ? <RenderTree key={i} data={JSON.stringify(block.content)} /> : null;
+
     default:
       return null;
   }

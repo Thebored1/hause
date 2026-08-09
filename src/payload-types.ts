@@ -132,29 +132,45 @@ export interface Page {
   title: string;
   slug: string;
   layout?:
-    | {
-        eyebrow?: string | null;
-        title?: string | null;
-        intro?: string | null;
-        featureImage?: string | null;
-        statLabel?: string | null;
-        statValue?: string | null;
-        statBody?: string | null;
-        ctaLabel?: string | null;
-        ctaHref?: string | null;
-        services?:
-          | {
-              id: string | null;
-              icon: 'home' | 'globe' | 'sparkles' | 'zap' | 'layers' | 'box';
-              title: string;
-              description: string;
-              href: string;
-            }[]
-          | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'servicesGrid';
-      }[]
+    | (
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            intro?: string | null;
+            featureImage?: string | null;
+            statLabel?: string | null;
+            statValue?: string | null;
+            statBody?: string | null;
+            ctaLabel?: string | null;
+            ctaHref?: string | null;
+            services?:
+              | {
+                  id: string | null;
+                  icon: 'home' | 'globe' | 'sparkles' | 'zap' | 'layers' | 'box';
+                  title: string;
+                  description: string;
+                  href: string;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'servicesGrid';
+          }
+        | {
+            content?:
+              | {
+                  [k: string]: unknown;
+                }
+              | unknown[]
+              | string
+              | number
+              | boolean
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'canvas';
+          }
+      )[]
     | null;
   updatedAt: string;
   createdAt: string;
@@ -383,6 +399,13 @@ export interface PagesSelect<T extends boolean = true> {
                     description?: T;
                     href?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        canvas?:
+          | T
+          | {
+              content?: T;
               id?: T;
               blockName?: T;
             };

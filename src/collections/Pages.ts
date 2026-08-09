@@ -1,5 +1,6 @@
 import type { CollectionConfig } from "payload";
 import { ServicesGridBlock } from "../blocks/ServicesGridBlock";
+import { CanvasBlock } from "../blocks/CanvasBlock";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -13,7 +14,7 @@ export const Pages: CollectionConfig = {
       name: "layout",
       type: "blocks",
       // Existing site components, exposed as editable blocks.
-      blocks: [ServicesGridBlock],
+      blocks: [ServicesGridBlock, CanvasBlock],
     },
   ],
 };

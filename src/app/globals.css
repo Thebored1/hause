@@ -101,3 +101,22 @@ html.lenis, html.lenis body {
 .lenis.lenis-smooth iframe {
   pointer-events: none;
 }
+
+/* ---- Card hover variants used by the block canvas ---- */
+.nb-card {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.nb-card--lift:hover { transform: translateY(-3px); }
+.nb-card--border:hover { border-color: currentColor; }
+.nb-card--shadow:hover { box-shadow: 0 14px 36px rgb(0 0 0 / 0.16); }
+
+/* Rich-text output from the Text block */
+.nb-rt :where(p) { margin: 0 0 0.9em; }
+.nb-rt :where(p):last-child { margin-bottom: 0; }
+.nb-rt :where(h2) { font-size: 1.75em; font-weight: 600; line-height: 1.2; margin: 1.2em 0 0.4em; }
+.nb-rt :where(h3) { font-size: 1.35em; font-weight: 600; margin: 1.1em 0 0.4em; }
+.nb-rt :where(a) { text-decoration: underline; text-underline-offset: 2px; }
+.nb-rt :where(ul) { list-style: disc; padding-left: 1.4em; margin: 0 0 0.9em; }
+.nb-rt :where(ol) { list-style: decimal; padding-left: 1.4em; margin: 0 0 0.9em; }
+.nb-rt :where(strong) { font-weight: 700; }
+.nb-empty-slot { outline: 1px dashed rgb(0 0 0 / 0.18); outline-offset: -4px; border-radius: 6px; min-height: 76px; }

@@ -1,0 +1,87 @@
+/* ============================================================
+   Styles for the canvas when it runs inside Payload's admin.
+
+   Deliberately imports Tailwind's theme + utilities but NOT
+   preflight: preflight is a global reset and would strip the
+   styling off Payload's own UI. Utilities alone give our panels
+   what they need without touching anything else.
+   ============================================================ */
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+/* Rendered rich text inside the canvas (mirrors globals.css). */
+.nb-rt :where(p) {
+  margin: 0 0 0.9em;
+}
+.nb-rt :where(p):last-child {
+  margin-bottom: 0;
+}
+.nb-rt :where(h2) {
+  font-size: 1.75em;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 1.2em 0 0.4em;
+}
+.nb-rt :where(h3) {
+  font-size: 1.35em;
+  font-weight: 600;
+  margin: 1.1em 0 0.4em;
+}
+.nb-rt :where(a) {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.nb-rt :where(ul) {
+  list-style: disc;
+  padding-left: 1.4em;
+  margin: 0 0 0.9em;
+}
+.nb-rt :where(ol) {
+  list-style: decimal;
+  padding-left: 1.4em;
+  margin: 0 0 0.9em;
+}
+.nb-rt :where(li) {
+  margin: 0.2em 0;
+}
+.nb-rt :where(strong) {
+  font-weight: 700;
+}
+.nb-rt:focus,
+.nb-rt :focus {
+  outline: none;
+}
+.nb-rt p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.nb-empty-slot {
+  outline: 1px dashed rgb(0 0 0 / 0.18);
+  outline-offset: -4px;
+  border-radius: 6px;
+  min-height: 76px;
+}
+
+/* The canvas shell fills Payload's field area. */
+.nb-canvas-root {
+  border: 1px solid rgb(0 0 0 / 0.12);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f5f5;
+  height: 78vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card hover variants, mirrored for the in-admin canvas. */
+.nb-card {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.nb-card--lift:hover { transform: translateY(-3px); }
+.nb-card--border:hover { border-color: currentColor; }
+.nb-card--shadow:hover { box-shadow: 0 14px 36px rgb(0 0 0 / 0.16); }
