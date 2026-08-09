@@ -10,12 +10,32 @@ interface ContactModalProps {
 
 export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  /** Saves the enquiry to Payload so it shows up in /admin. */
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSending(true);
+    setError(null);
+
+    const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+
+    try {
+      const res = await fetch("/api/enquiries", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ ...data, source: "Contact modal" }),
+      });
+      if (!res.ok) throw new Error("request failed");
+      setSubmitted(true);
+    } catch {
+      setError("Sorry — that didn't send. Please email interiors@hause.agency instead.");
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleDone = () => {
@@ -69,7 +89,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 <input
                   required
                   type="text"
-                  placeholder="e.g. Ananya Sharma"
+                  name="name" placeholder="e.g. Ananya Sharma"
                   className="w-full rounded-xl bg-[#171717] border border-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:border-white/40 transition-colors"
                 />
               </div>
@@ -82,7 +102,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   <input
                     required
                     type="email"
-                    placeholder="you@example.com"
+                    name="email" placeholder="you@example.com"
                     className="w-full rounded-xl bg-[#171717] border border-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:border-white/40 transition-colors"
                   />
                 </div>
@@ -93,7 +113,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   <input
                     required
                     type="tel"
-                    placeholder="+91 98765 43210"
+                    name="phone" placeholder="+91 98765 43210"
                     className="w-full rounded-xl bg-[#171717] border border-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:border-white/40 transition-colors"
                   />
                 </div>
@@ -106,7 +126,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Gurugram, Haryana"
+                    name="location" placeholder="e.g. Gurugram, Haryana"
                     className="w-full rounded-xl bg-[#171717] border border-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:border-white/40 transition-colors"
                   />
                 </div>
@@ -114,7 +134,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                   <label className="block text-xs font-medium text-neutral-300 mb-1">
                     Project Type
                   </label>
-                  <select className="w-full rounded-xl bg-[#171717] border border-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:border-white/40 transition-colors appearance-none">
+                  <select name="projectType" className="w-full rounded-xl bg-[#171717] border border-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:border-white/40 transition-colors appearance-none">
                     <option>Residential - Full Home</option>
                     <option>Residential - Specific Room(s)</option>
                     <option>Commercial / Office Fit-out</option>
@@ -128,18 +148,25 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                 <label className="block text-xs font-medium text-neutral-300 mb-1">
                   Project Details / Notes
                 </label>
-                <textarea
+                <textarea name="message"
                   rows={3}
                   placeholder="Tell us about your space requirements, timeline, or preferred aesthetic..."
                   className="w-full rounded-xl bg-[#171717] border border-white/10 px-4 py-3 text-sm text-white focus:outline-none focus:border-white/40 transition-colors resize-none"
                 />
               </div>
 
+              {error && (
+                <p role="alert" className="m-0 text-xs text-red-400">
+                  {error}
+                </p>
+              )}
+
               <button
                 type="submit"
-                className="mt-2 w-full rounded-full bg-white text-black font-semibold text-sm py-3.5 hover:bg-neutral-200 transition-colors cursor-pointer border-none shadow-lg"
+                disabled={sending}
+                className="mt-2 w-full rounded-full bg-white text-black font-semibold text-sm py-3.5 hover:bg-neutral-200 transition-colors cursor-pointer border-none shadow-lg disabled:opacity-60"
               >
-                Request Free Consultation
+                {sending ? "Sending…" : "Request Free Consultation"}
               </button>
             </form>
           </div>
