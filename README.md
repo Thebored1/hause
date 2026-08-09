@@ -16,25 +16,23 @@ npm run dev          # http://localhost:3000
 | `/admin` | Payload admin — pages, posts, enquiries, media, users |
 | `/api/*` | Payload REST (and `/api/graphql`) |
 
-## Current state — read this before promising anyone an editable site
+## Current state
 
-Editable in the admin today: **blog posts**, **enquiries**, and **CMS pages** at `/cms/[slug]`.
+The **home page is CMS-driven**. Its seven sections are Payload blocks rendered by the
+site's own components, editable at `/admin` → **Pages** → **Home**.
 
-**The 17 hand-coded site pages are not editable.** Their content lives in `.tsx` files.
-Making them editable means converting each section component to be content-driven, giving it
-a Payload block, and pointing the route at the CMS. `ServicesGrid` is done as the worked
-example; the rest are not.
-
-Roughly 1–2 hours per component. See [`CMS.md`](./CMS.md) for the recipe.
-
-| Component | Status |
+| Editable in the admin | Not yet |
 | --- | --- |
-| `ServicesGrid` | Content-driven, has a block, renders from the CMS |
-| `ProcessTimeline`, `WhyUs`, `LocationsGrid` | Partly — content still in `const` arrays in the file |
-| `HeroSpaceSwitcher`, `PortfolioShowcase`, `CTASection`, `Footer` | Fully hard-coded |
+| Home page — hero, services, process, why us, locations, CTA | The other 16 hand-coded pages |
+| Blog posts | Portfolio project list (placement only; content still in the component) |
+| Enquiries (contact form submissions) | Nav and footer content |
+| Media | |
 
-Worth deciding rather than assuming: pages that rarely change (e.g. `/safety-compliance`) are
-arguably fine left in code. A CMS-for-marketing-pages, code-for-the-rest split is normal.
+`/` falls back to the original hand-coded page if no CMS page with slug `home` exists, so a
+fresh database or a failed lookup never leaves the site blank.
+
+Converting the remaining pages follows the same recipe — see [`CMS.md`](./CMS.md). Roughly
+1–2 hours per component.
 
 ## Documentation
 

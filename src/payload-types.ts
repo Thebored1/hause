@@ -135,6 +135,45 @@ export interface Page {
     | (
         | {
             eyebrow?: string | null;
+            titleLine1?: string | null;
+            titleLine2?: string | null;
+            body?: string | null;
+            primaryLabel?: string | null;
+            ctaHref?: string | null;
+            secondaryLabel?: string | null;
+            secondaryHref?: string | null;
+            spacesLabel?: string | null;
+            /**
+             * Chips that swap the background photograph.
+             */
+            spaces?:
+              | {
+                  /**
+                   * Unique id, e.g. living-rooms
+                   */
+                  key: string;
+                  name: string;
+                  /**
+                   * e.g. /images/sp-living.jpg
+                   */
+                  image: string;
+                  id?: string | null;
+                }[]
+              | null;
+            statsIntro?: string | null;
+            stats?:
+              | {
+                  value: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero';
+          }
+        | {
+            eyebrow?: string | null;
             title?: string | null;
             intro?: string | null;
             featureImage?: string | null;
@@ -145,16 +184,78 @@ export interface Page {
             ctaHref?: string | null;
             services?:
               | {
-                  id: string | null;
+                  /**
+                   * e.g. 01
+                   */
+                  number: string;
                   icon: 'home' | 'globe' | 'sparkles' | 'zap' | 'layers' | 'box';
                   title: string;
                   description: string;
                   href: string;
+                  id?: string | null;
                 }[]
               | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'servicesGrid';
+          }
+        | {
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'portfolio';
+          }
+        | {
+            steps?:
+              | {
+                  /**
+                   * e.g. 01
+                   */
+                  n: string;
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'process';
+          }
+        | {
+            reasons?:
+              | {
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'whyUs';
+          }
+        | {
+            cities?:
+              | {
+                  name: string;
+                  body: string;
+                  /**
+                   * e.g. On ground
+                   */
+                  tag: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'locations';
+          }
+        | {
+            /**
+             * Background photograph, e.g. /images/jaiswal/jaiswal-07.jpg
+             */
+            bgImage?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta';
           }
         | {
             content?:
@@ -378,6 +479,37 @@ export interface PagesSelect<T extends boolean = true> {
   layout?:
     | T
     | {
+        hero?:
+          | T
+          | {
+              eyebrow?: T;
+              titleLine1?: T;
+              titleLine2?: T;
+              body?: T;
+              primaryLabel?: T;
+              ctaHref?: T;
+              secondaryLabel?: T;
+              secondaryHref?: T;
+              spacesLabel?: T;
+              spaces?:
+                | T
+                | {
+                    key?: T;
+                    name?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              statsIntro?: T;
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
         servicesGrid?:
           | T
           | {
@@ -393,12 +525,67 @@ export interface PagesSelect<T extends boolean = true> {
               services?:
                 | T
                 | {
-                    id?: T;
+                    number?: T;
                     icon?: T;
                     title?: T;
                     description?: T;
                     href?: T;
+                    id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        portfolio?:
+          | T
+          | {
+              id?: T;
+              blockName?: T;
+            };
+        process?:
+          | T
+          | {
+              steps?:
+                | T
+                | {
+                    n?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        whyUs?:
+          | T
+          | {
+              reasons?:
+                | T
+                | {
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        locations?:
+          | T
+          | {
+              cities?:
+                | T
+                | {
+                    name?: T;
+                    body?: T;
+                    tag?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        cta?:
+          | T
+          | {
+              bgImage?: T;
               id?: T;
               blockName?: T;
             };

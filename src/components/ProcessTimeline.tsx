@@ -4,7 +4,13 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-const STEPS = [
+export interface ProcessStep {
+  n: string;
+  title: string;
+  body: string;
+}
+
+const STEPS: ProcessStep[] = [
   {
     n: "01",
     title: "Discovery & site visit",
@@ -32,7 +38,12 @@ const STEPS = [
   },
 ];
 
-export default function ProcessTimeline() {
+interface ProcessTimelineProps {
+  /** Defaults to the copy this page has always shipped. */
+  steps?: ProcessStep[];
+}
+
+export default function ProcessTimeline({ steps = STEPS }: ProcessTimelineProps) {
   return (
     <section id="process" className="bg-[#0c0d0e] text-white py-28 px-6 sm:px-12 md:px-16 border-t border-white/10">
       <div className="max-w-[1280px] mx-auto flex flex-col gap-20">
@@ -55,7 +66,7 @@ export default function ProcessTimeline() {
 
         {/* Steps Timeline List */}
         <div className="flex flex-col">
-          {STEPS.map((step) => (
+          {steps.map((step) => (
             <div
               key={step.n}
               className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-10 items-start py-8 border-t border-white/14 first:border-t hover:bg-white/[0.02] transition-colors"

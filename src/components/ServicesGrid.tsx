@@ -8,7 +8,7 @@ const ICONS = { home: Home, globe: Globe, sparkles: Sparkles, zap: Zap, layers: 
 export type ServiceIcon = keyof typeof ICONS;
 
 export interface ServiceItem {
-  id: string;
+  number: string;
   title: string;
   description: string;
   icon: ServiceIcon;
@@ -38,42 +38,42 @@ interface ServicesGridProps {
 
 const SERVICES: ServiceItem[] = [
   {
-    id: "01",
+    number: "01",
     title: "Residential Interior Design",
     description: "Full-home and room-wise design for apartments, villas and builder-floor homes — living rooms, bedrooms, kitchens and everything in between.",
     icon: "home",
     href: "/services/residential-interior-design",
   },
   {
-    id: "02",
+    number: "02",
     title: "Commercial & Office Design",
     description: "Offices, retail stores, showrooms, cafes and clinics designed to reflect your brand and support how your team and customers move through the space.",
     icon: "globe",
     href: "/services/commercial-office-interior-design",
   },
   {
-    id: "03",
+    number: "03",
     title: "Modular Kitchens & Wardrobes",
     description: "Custom kitchen and wardrobe layouts engineered for storage, durability, and everyday use — not just a pretty render.",
     icon: "sparkles",
     href: "/services/modular-kitchen-wardrobe-design",
   },
   {
-    id: "04",
+    number: "04",
     title: "Turnkey Interior Solutions",
     description: "One team handles design, civil work, electrical, carpentry, and styling — a single point of accountability from day one to handover.",
     icon: "zap",
     href: "/services/turnkey-interior-solutions",
   },
   {
-    id: "05",
+    number: "05",
     title: "Renovation & Remodeling",
     description: "Refresh a tired home or reconfigure an outdated office layout without starting from scratch.",
     icon: "layers",
     href: "/services/renovation-remodeling",
   },
   {
-    id: "06",
+    number: "06",
     title: "3D Visualization & Design Consultation",
     description: "See your space before it’s built, with detailed 3D visuals and material mock-ups that remove the guesswork from decision-making.",
     icon: "box",
@@ -156,7 +156,7 @@ export default function ServicesGrid({
 
             return (
               <Link
-                key={srv.id}
+                key={srv.number}
                 href={srv.href}
                 className={`group p-8 sm:p-[36px] flex flex-col justify-between gap-6 transition-colors duration-200 hover:bg-white/80 ${
                   isBorderLeft ? "md:border-l md:border-black/10" : ""
@@ -167,7 +167,7 @@ export default function ServicesGrid({
                     <Icon size={22} strokeWidth={1.5} />
                   </div>
                   <span className="text-xs tracking-[0.18em] text-[#a19c8f] font-mono">
-                    {srv.id}
+                    {srv.number}
                   </span>
                 </div>
                 <div>

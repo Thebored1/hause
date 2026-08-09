@@ -4,7 +4,13 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-const CITIES = [
+export interface City {
+  name: string;
+  body: string;
+  tag: string;
+}
+
+const CITIES: City[] = [
   { name: "Delhi", body: "South Delhi apartments to independent floors in older colonies.", tag: "On ground" },
   { name: "Gurugram", body: "High-rise apartments, builder floors and corporate offices.", tag: "On ground" },
   { name: "Noida & Greater Noida", body: "Growing apartment societies, plus office and retail fit-outs.", tag: "On ground" },
@@ -13,7 +19,12 @@ const CITIES = [
   { name: "Pan-India", body: "Remote design, milestone site visits and vetted local execution partners.", tag: "Select projects" },
 ];
 
-export default function LocationsGrid() {
+interface LocationsGridProps {
+  /** Defaults to the copy this page has always shipped. */
+  cities?: City[];
+}
+
+export default function LocationsGrid({ cities = CITIES }: LocationsGridProps) {
   return (
     <section id="locations" className="bg-[#f9f8f6] text-[#18181b] py-24 px-6 sm:px-12 md:px-16">
       <div className="max-w-[1280px] mx-auto flex flex-col gap-14">
@@ -36,7 +47,7 @@ export default function LocationsGrid() {
 
         {/* Cities Table */}
         <div className="flex flex-col">
-          {CITIES.map((city, idx) => {
+          {cities.map((city, idx) => {
             const isHq = city.tag === "Headquarters";
             return (
               <div

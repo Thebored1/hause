@@ -4,7 +4,12 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-const REASONS = [
+export interface Reason {
+  title: string;
+  body: string;
+}
+
+const REASONS: Reason[] = [
   {
     title: "Single point of responsibility",
     body: "One team for design and execution, so nothing gets lost between the architect, contractor and carpenter.",
@@ -27,7 +32,12 @@ const REASONS = [
   },
 ];
 
-export default function WhyUs() {
+interface WhyUsProps {
+  /** Defaults to the copy this page has always shipped. */
+  reasons?: Reason[];
+}
+
+export default function WhyUs({ reasons = REASONS }: WhyUsProps) {
   return (
     <section className="bg-[#141618] text-white py-24 px-6 sm:px-12 md:px-16 border-t border-white/10">
       <div className="max-w-[1280px] mx-auto">
@@ -39,7 +49,7 @@ export default function WhyUs() {
         </h3>
 
         <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8">
-          {REASONS.map((r, i) => (
+          {reasons.map((r, i) => (
             <div key={i} className="flex flex-col justify-between border-t border-white/10 pt-6">
               <div>
                 <span className="text-[11px] font-mono text-white/30 block mb-3">0{i + 1}</span>

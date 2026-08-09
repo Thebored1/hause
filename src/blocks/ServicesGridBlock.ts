@@ -37,7 +37,7 @@ export const ServicesGridBlock: Block = {
         {
           type: "row",
           fields: [
-            { name: "id", type: "text", required: true, admin: { width: "30%", description: "e.g. 01" } },
+            { name: "number", type: "text", required: true, admin: { width: "30%", description: "e.g. 01" } },
             {
               name: "icon",
               type: "select",
