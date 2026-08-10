@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getPayload } from "payload";
-import config from "@payload-config";
+import { getPublishedPosts } from "@/lib/posts";
 
 export const dynamic = "force-dynamic";
 
@@ -11,16 +10,9 @@ export const metadata: Metadata = {
 };
 
 export default async function BlogIndex() {
-  const payload = await getPayload({ config });
-
-  // Access control on the collection already hides drafts from the
-  // public, so this returns published posts only.
-  const { docs } = await payload.find({
-    collection: "posts",
-    sort: "-publishedAt",
-    limit: 50,
-    depth: 1,
-  });
+  // Filters on _status itself. The collection's access rule is not enough:
+  // the local API runs with overrideAccess: true and bypasses it.
+  const docs = await getPublishedPosts();
 
   return (
     <main className="min-h-screen bg-[#f9f8f6] text-[#18181b] py-28 px-6 sm:px-12 md:px-16">

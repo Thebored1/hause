@@ -1,4 +1,24 @@
 import type { CollectionConfig } from "payload";
+import {
+  lexicalEditor,
+  BoldFeature,
+  ItalicFeature,
+  UnderlineFeature,
+  StrikethroughFeature,
+  InlineCodeFeature,
+  ParagraphFeature,
+  HeadingFeature,
+  UnorderedListFeature,
+  OrderedListFeature,
+  BlockquoteFeature,
+  LinkFeature,
+  UploadFeature,
+  HorizontalRuleFeature,
+  AlignFeature,
+  IndentFeature,
+  InlineToolbarFeature,
+  FixedToolbarFeature,
+} from "@payloadcms/richtext-lexical";
 
 /** Blog posts. Drafts are on, autosave off — publish is explicit. */
 export const Posts: CollectionConfig = {
@@ -30,7 +50,36 @@ export const Posts: CollectionConfig = {
       admin: { description: "Shown on the blog index and used as the meta description." },
     },
     { name: "coverImage", type: "upload", relationTo: "media" },
-    { name: "content", type: "richText" },
+    {
+      name: "content",
+      type: "richText",
+      // Pinned rather than relying on lexicalEditor()'s defaults, which vary
+      // by release. Everything enabled here has matching styles in .nb-prose.
+      editor: lexicalEditor({
+        features: [
+          ParagraphFeature(),
+          // h1 is the post title on the page, so the body starts at h2.
+          HeadingFeature({ enabledHeadingSizes: ["h2", "h3", "h4"] }),
+          BoldFeature(),
+          ItalicFeature(),
+          UnderlineFeature(),
+          StrikethroughFeature(),
+          InlineCodeFeature(),
+          UnorderedListFeature(),
+          OrderedListFeature(),
+          BlockquoteFeature(),
+          LinkFeature({ enabledCollections: ["posts", "pages"] }),
+          // `collections` needs a `fields` array per slug; use enabledCollections
+          // to simply restrict which upload collections may be inserted.
+          UploadFeature({ enabledCollections: ["media"] }),
+          HorizontalRuleFeature(),
+          AlignFeature(),
+          IndentFeature(),
+          FixedToolbarFeature(),
+          InlineToolbarFeature(),
+        ],
+      }),
+    },
     {
       name: "publishedAt",
       type: "date",

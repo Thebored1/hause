@@ -120,3 +120,83 @@ html.lenis, html.lenis body {
 .nb-rt :where(ol) { list-style: decimal; padding-left: 1.4em; margin: 0 0 0.9em; }
 .nb-rt :where(strong) { font-weight: 700; }
 .nb-empty-slot { outline: 1px dashed rgb(0 0 0 / 0.18); outline-offset: -4px; border-radius: 6px; min-height: 76px; }
+
+/* ---- Blog article body (Lexical rich text) ----
+   The blog markup has always carried .nb-prose but nothing defined it, so
+   post bodies rendered with no heading scale, no list markers and no
+   blockquote treatment. Scoped with :where() so the utility classes on the
+   wrapper still win. */
+.nb-prose :where(p) { margin: 0 0 1.15em; }
+.nb-prose :where(p):last-child { margin-bottom: 0; }
+
+.nb-prose :where(h2) {
+  font-size: 1.9em;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: #18181b;
+  margin: 1.8em 0 0.5em;
+}
+.nb-prose :where(h3) {
+  font-size: 1.35em;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: #18181b;
+  margin: 1.6em 0 0.45em;
+}
+.nb-prose :where(h4) {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #18181b;
+  margin: 1.4em 0 0.4em;
+}
+.nb-prose :where(h2, h3, h4):first-child { margin-top: 0; }
+
+.nb-prose :where(ul) { list-style: disc; padding-left: 1.35em; margin: 0 0 1.15em; }
+.nb-prose :where(ol) { list-style: decimal; padding-left: 1.35em; margin: 0 0 1.15em; }
+.nb-prose :where(li) { margin: 0.35em 0; padding-left: 0.2em; }
+.nb-prose :where(li)::marker { color: #a19c8f; }
+
+.nb-prose :where(a) {
+  color: #18181b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgb(24 24 27 / 0.35);
+  transition: text-decoration-color 0.2s ease;
+}
+.nb-prose :where(a):hover { text-decoration-color: currentColor; }
+
+.nb-prose :where(strong) { font-weight: 600; color: #18181b; }
+.nb-prose :where(em) { font-style: italic; }
+
+.nb-prose :where(blockquote) {
+  margin: 1.7em 0;
+  padding: 0.15em 0 0.15em 1.3em;
+  border-left: 2px solid #d8d2c6;
+  color: #6b6559;
+  font-style: italic;
+}
+.nb-prose :where(blockquote) :where(p):last-child { margin-bottom: 0; }
+
+.nb-prose :where(hr) { border: 0; border-top: 1px solid rgb(24 24 27 / 0.12); margin: 2.4em 0; }
+
+.nb-prose :where(img) { border-radius: 18px; margin: 1.8em 0; max-width: 100%; height: auto; }
+
+.nb-prose :where(code) {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.88em;
+  background: rgb(24 24 27 / 0.06);
+  padding: 0.15em 0.4em;
+  border-radius: 5px;
+}
+.nb-prose :where(pre) {
+  background: #18181b;
+  color: #f3efea;
+  padding: 1.1em 1.3em;
+  border-radius: 14px;
+  overflow-x: auto;
+  margin: 1.6em 0;
+}
+.nb-prose :where(pre code) { background: none; padding: 0; font-size: 0.86em; }

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPayload } from "payload";
-import config from "@payload-config";
+import { getPublishedPostBySlug } from "@/lib/posts";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 
@@ -10,20 +9,9 @@ export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ slug: string }> };
 
-async function getPost(slug: string) {
-  const payload = await getPayload({ config });
-  const { docs } = await payload.find({
-    collection: "posts",
-    where: { slug: { equals: slug } },
-    limit: 1,
-    depth: 1,
-  });
-  return docs[0] ?? null;
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getPost(slug);
+  const post = await getPublishedPostBySlug(slug);
   if (!post) return { title: "Not found" };
   return {
     title: `${post.title} — Hause Interiors`,
@@ -33,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PostPage({ params }: Props) {
   const { slug } = await params;
-  const post = await getPost(slug);
+  const post = await getPublishedPostBySlug(slug);
   if (!post) notFound();
 
   const cover = post.coverImage as { url?: string; alt?: string } | null;
