@@ -657,6 +657,41 @@ export interface Page {
             blockType: 'reachBar';
           }
         | {
+            eyebrow: string;
+            title: string;
+            body: string;
+            items?:
+              | {
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            image: string;
+            imageAlt: string;
+            imageSide?: ('right' | 'left') | null;
+            tone?: ('ivory' | 'sand') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'checklistFeature';
+          }
+        | {
+            eyebrow: string;
+            title: string;
+            intro: string;
+            cards?:
+              | {
+                  title: string;
+                  desc: string;
+                  id?: string | null;
+                }[]
+              | null;
+            columns?: ('2' | '3' | '4') | null;
+            tone?: ('ivory' | 'sand') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'numberedCards';
+          }
+        | {
             content?:
               | {
                   [k: string]: unknown;
@@ -1377,6 +1412,43 @@ export interface PagesSelect<T extends boolean = true> {
               body?: T;
               ctaLabel?: T;
               ctaHref?: T;
+              id?: T;
+              blockName?: T;
+            };
+        checklistFeature?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              body?: T;
+              items?:
+                | T
+                | {
+                    value?: T;
+                    id?: T;
+                  };
+              image?: T;
+              imageAlt?: T;
+              imageSide?: T;
+              tone?: T;
+              id?: T;
+              blockName?: T;
+            };
+        numberedCards?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              intro?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    desc?: T;
+                    id?: T;
+                  };
+              columns?: T;
+              tone?: T;
               id?: T;
               blockName?: T;
             };

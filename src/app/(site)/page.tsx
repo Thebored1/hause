@@ -1,7 +1,7 @@
 import SmoothScroll from "@/components/SmoothScroll";
 import PageBlocks, { type PageBlock } from "@/components/PageBlocks";
 import HomeHardcoded from "@/components/HomeHardcoded";
-import { getPageBySlug } from "@/app/(site)/cms/[slug]/page";
+import { getPageBySlug } from "@/app/(site)/cms/[...slug]/page";
 
 export const dynamic = "force-dynamic";
 

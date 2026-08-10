@@ -7,6 +7,9 @@ import SmoothScroll from "@/components/SmoothScroll";
 
 export const dynamic = "force-dynamic";
 
+// Catch-all rather than [slug]: nested pages such as the service details are
+// stored under slugs like "services/renovation-remodeling".
+
 /** Fetches a CMS page by slug. Returns null when there isn't one. */
 export async function getPageBySlug(slug: string) {
   const payload = await getPayload({ config });
@@ -19,9 +22,11 @@ export async function getPageBySlug(slug: string) {
   return docs[0] ?? null;
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+type Params = { params: Promise<{ slug: string[] }> };
+
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const page = await getPageBySlug(slug);
+  const page = await getPageBySlug(slug.join("/"));
   if (!page) return {};
 
   const meta = page.meta ?? {};
@@ -31,9 +36,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function CmsPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function CmsPage({ params }: Params) {
   const { slug } = await params;
-  const page = await getPageBySlug(slug);
+  const path = slug.join("/");
+  const page = await getPageBySlug(path);
   if (!page) notFound();
 
   // Same shell as the hand-coded pages, so a CMS page is a drop-in replacement.
@@ -44,7 +50,7 @@ export default async function CmsPage({ params }: { params: Promise<{ slug: stri
           blocks={(page.layout ?? []) as PageBlock[]}
           withChrome
           contactModal={Boolean(page.contactModal)}
-          activePath={`/${slug}`}
+          activePath={`/${path}`}
         />
       </main>
     </SmoothScroll>

@@ -30,6 +30,8 @@ import TeamNetwork from "@/components/TeamNetwork";
 import GalleryRibbon, { type GalleryItem } from "@/components/GalleryRibbon";
 import ValuesGrid, { type Value } from "@/components/ValuesGrid";
 import ReachBar from "@/components/ReachBar";
+import ChecklistFeature from "@/components/ChecklistFeature";
+import NumberedCards, { type NumberedCard } from "@/components/NumberedCards";
 import { type FAQItem } from "@/components/FAQAccordion";
 import ContactModal from "@/components/ContactModal";
 import Navbar from "@/components/Navbar";
@@ -393,6 +395,35 @@ export default function PageBlocks({
                 body={val<string>(block.body)}
                 ctaLabel={val<string>(block.ctaLabel)}
                 ctaHref={val<string>(block.ctaHref)}
+              />
+            );
+
+          case "checklistFeature":
+            return (
+              <ChecklistFeature
+                key={i}
+                eyebrow={String(block.eyebrow ?? "")}
+                title={String(block.title ?? "")}
+                body={String(block.body ?? "")}
+                items={list(block.items) ?? []}
+                image={String(block.image ?? "")}
+                imageAlt={String(block.imageAlt ?? "")}
+                imageSide={val<"left" | "right">(block.imageSide)}
+                tone={val<"ivory" | "sand">(block.tone)}
+              />
+            );
+
+          case "numberedCards":
+            return (
+              <NumberedCards
+                key={i}
+                eyebrow={String(block.eyebrow ?? "")}
+                title={String(block.title ?? "")}
+                intro={String(block.intro ?? "")}
+                cards={val<NumberedCard[]>(block.cards) ?? []}
+                // Stored as a string because Payload selects are string-valued.
+                columns={val<string>(block.columns) ? (Number(block.columns) as 2 | 3 | 4) : undefined}
+                tone={val<"ivory" | "sand">(block.tone)}
               />
             );
 

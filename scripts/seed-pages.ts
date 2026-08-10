@@ -309,6 +309,74 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
       { blockType: "cta" },
     ],
   },
+  {
+    title: "Renovation & Remodeling",
+    slug: "services/renovation-remodeling",
+    meta: {
+      title: "Home Renovation & Remodeling in Delhi NCR | Hause Interiors",
+      description:
+        "Expert home, kitchen and bathroom renovations across Delhi NCR \u2014 modernizing older homes, improving layouts, and upgrading MEP with minimal disruption.",
+    },
+    layout: [
+      {
+        blockType: "pageHero",
+        badge: "Renovation & Remodeling",
+        title: "Give your space a second life.",
+        subtitle:
+          "You don't always need a new home to get the space you want. Hause Interiors renovates and remodels residential and commercial properties across Delhi NCR \u2014 modernising older layouts, upgrading electrical and plumbing, and delivering fresh aesthetics with minimal disruption.",
+        breadcrumbs: [home, { label: "Services", href: "/services" }, { label: "Renovation & Remodeling" }],
+        bgImage: "/images/jaiswal/jaiswal-13.jpg",
+        primaryCtaText: "Plan Your Renovation",
+        primaryCtaHref: "/contact",
+        secondaryCtaText: "View Renovation Projects",
+        secondaryCtaHref: "/projects",
+      },
+      {
+        blockType: "checklistFeature",
+        eyebrow: "Revitalize & Modernize",
+        title: "What We Renovate",
+        body: "From targeted single-room overhauls to full structural renovations of decades-old homes in Delhi NCR.",
+        items: [
+          "Full-home structural & cosmetic renovations",
+          "Modular kitchen modernizations & layout expansions",
+          "Luxury bathroom remodels with thermostatic fixtures",
+          "Flooring upgrades (Italian marble, tiles, engineered wood)",
+          "Full electrical re-wiring & plumbing replacement",
+          "Structural partition removals & beam reinforcements",
+          "Custom carpentry, false ceilings & door replacements",
+          "Balcony waterproofings & sunroom enclosures",
+        ].map((value) => ({ value })),
+        image: "/images/service-renovation.jpg",
+        imageAlt: "Bathroom and Living Renovation",
+        imageSide: "right",
+        tone: "ivory",
+      },
+      {
+        blockType: "numberedCards",
+        eyebrow: "Living Through A Remodel",
+        title: "Renovating in Occupied Spaces",
+        intro:
+          "If you are living in the home while remodeling takes place, we follow strict dust-containment and noise-mitigation protocols.",
+        cards: [
+          {
+            title: "Phased Zone-Wise Execution",
+            desc: "We seal off active work zones with dust barriers and tackle rooms sequentially so your daily living isn't completely upended.",
+          },
+          {
+            title: "Strict Noise Time-Boxing",
+            desc: "Heavy civil demolition and tile cutting are strictly restricted to permitted society hours (10:00 AM \u2013 5:00 PM).",
+          },
+          {
+            title: "Daily Site Cleanups",
+            desc: "Debris and construction waste are cleared daily, keeping hallways, elevators, and living areas neat and presentable.",
+          },
+        ],
+        columns: "3",
+        tone: "sand",
+      },
+      { blockType: "cta" },
+    ],
+  },
 ];
 
 const payload = await getPayload({ config });

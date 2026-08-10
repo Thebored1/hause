@@ -362,3 +362,78 @@ export const ReachBarBlock: Block = {
     },
   ],
 };
+
+// ---------- shared by the service detail pages ----------
+
+const TONE_OPTIONS = [
+  { label: "Ivory", value: "ivory" },
+  { label: "Sand", value: "sand" },
+];
+
+export const ChecklistFeatureBlock: Block = {
+  slug: "checklistFeature",
+  labels: { singular: "Checklist Feature", plural: "Checklist Features" },
+  admin: { group: "Page sections" },
+  fields: [
+    { name: "eyebrow", type: "text", required: true },
+    { name: "title", type: "text", required: true },
+    { name: "body", type: "textarea", required: true },
+    stringList("items", "Item"),
+    {
+      type: "row",
+      fields: [
+        { name: "image", type: "text", required: true, admin: { width: "50%" } },
+        { name: "imageAlt", type: "text", required: true, admin: { width: "50%" } },
+      ],
+    },
+    {
+      type: "row",
+      fields: [
+        {
+          name: "imageSide",
+          type: "select",
+          defaultValue: "right",
+          options: [
+            { label: "Right", value: "right" },
+            { label: "Left", value: "left" },
+          ],
+          admin: { width: "50%" },
+        },
+        { name: "tone", type: "select", defaultValue: "ivory", options: TONE_OPTIONS, admin: { width: "50%" } },
+      ],
+    },
+  ],
+};
+
+export const NumberedCardsBlock: Block = {
+  slug: "numberedCards",
+  labels: { singular: "Numbered Cards", plural: "Numbered Cards" },
+  admin: { group: "Page sections" },
+  fields: [
+    { name: "eyebrow", type: "text", required: true },
+    { name: "title", type: "text", required: true },
+    { name: "intro", type: "textarea", required: true },
+    {
+      name: "cards",
+      type: "array",
+      labels: { singular: "Card", plural: "Cards" },
+      fields: [
+        { name: "title", type: "text", required: true },
+        { name: "desc", type: "textarea", required: true },
+      ],
+    },
+    {
+      type: "row",
+      fields: [
+        {
+          name: "columns",
+          type: "select",
+          defaultValue: "3",
+          options: ["2", "3", "4"].map((v) => ({ label: v, value: v })),
+          admin: { width: "50%" },
+        },
+        { name: "tone", type: "select", defaultValue: "sand", options: TONE_OPTIONS, admin: { width: "50%" } },
+      ],
+    },
+  ],
+};
