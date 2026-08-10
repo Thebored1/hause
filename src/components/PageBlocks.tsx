@@ -9,6 +9,13 @@ import ProcessTimeline, { type ProcessStep } from "@/components/ProcessTimeline"
 import WhyUs, { type Reason } from "@/components/WhyUs";
 import LocationsGrid, { type City } from "@/components/LocationsGrid";
 import CTASection from "@/components/CTASection";
+import PageHero from "@/components/PageHero";
+import FAQSection from "@/components/FAQSection";
+import ProjectsSection from "@/components/ProjectsSection";
+import ContactDetails, { type NextStep } from "@/components/ContactDetails";
+import PromoBanner from "@/components/PromoBanner";
+import RegionsDirectory, { type Region } from "@/components/RegionsDirectory";
+import { type FAQItem } from "@/components/FAQAccordion";
 import ContactModal from "@/components/ContactModal";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -101,6 +108,89 @@ export default function PageBlocks({
 
           case "cta":
             return <CTASection key={i} onOpenContact={openContact} bgImage={val<string>(block.bgImage)} />;
+
+          case "pageHero": {
+            const crumbs = val<{ label: string; href?: string }[]>(block.breadcrumbs);
+            return (
+              <PageHero
+                key={i}
+                title={String(block.title ?? "")}
+                badge={val<string>(block.badge)}
+                subtitle={val<string>(block.subtitle)}
+                bgImage={val<string>(block.bgImage)}
+                // An empty href means "current page" — PageHero renders it as plain text.
+                breadcrumbs={crumbs?.map((c) => ({ label: c.label, href: val<string>(c.href) }))}
+                primaryCtaText={val<string>(block.primaryCtaText)}
+                primaryCtaHref={val<string>(block.primaryCtaHref)}
+                secondaryCtaText={val<string>(block.secondaryCtaText)}
+                secondaryCtaHref={val<string>(block.secondaryCtaHref)}
+              />
+            );
+          }
+
+          case "faqSection":
+            return (
+              <FAQSection
+                key={i}
+                items={val<FAQItem[]>(block.items)}
+                askTitle={val<string>(block.askTitle)}
+                askBody={val<string>(block.askBody)}
+                askLabel={val<string>(block.askLabel)}
+                askHref={val<string>(block.askHref)}
+              />
+            );
+
+          case "projectsSection":
+            return <ProjectsSection key={i} />;
+
+          case "contactDetails":
+            return (
+              <ContactDetails
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                body={val<string>(block.body)}
+                phone={val<string>(block.phone)}
+                email={val<string>(block.email)}
+                address={val<string>(block.address)}
+                hours={val<string>(block.hours)}
+                nextStepsLabel={val<string>(block.nextStepsLabel)}
+                nextSteps={val<NextStep[]>(block.nextSteps)}
+              />
+            );
+
+          case "promoBanner":
+            return (
+              <PromoBanner
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                body={val<string>(block.body)}
+                ctaLabel={val<string>(block.ctaLabel)}
+                ctaHref={val<string>(block.ctaHref)}
+                spacing={val<"normal" | "loose">(block.spacing)}
+                cardShadow={val<"sm" | "md">(block.cardShadow)}
+                showArrow={val<boolean>(block.showArrow)}
+              />
+            );
+
+          case "regionsDirectory": {
+            // Payload arrays can't hold bare strings, so specialties arrive wrapped.
+            const regions = val<(Omit<Region, "specialties"> & { specialties?: { value: string }[] })[]>(
+              block.regions,
+            );
+            return (
+              <RegionsDirectory
+                key={i}
+                regions={regions?.map((r) => ({
+                  ...r,
+                  specialties: (r.specialties ?? []).map((s) => s.value),
+                }))}
+                specialtiesLabel={val<string>(block.specialtiesLabel)}
+                ctaHref={val<string>(block.ctaHref)}
+              />
+            );
+          }
 
           case "canvas":
             return block.content ? <RenderTree key={i} data={JSON.stringify(block.content)} /> : null;

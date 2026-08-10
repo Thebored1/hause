@@ -131,6 +131,13 @@ export interface Page {
   id: number;
   title: string;
   slug: string;
+  /**
+   * Falls back to the page title and the site description.
+   */
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+  };
   layout?:
     | (
         | {
@@ -256,6 +263,126 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'cta';
+          }
+        | {
+            /**
+             * Small pill above the title.
+             */
+            badge?: string | null;
+            title: string;
+            subtitle?: string | null;
+            /**
+             * e.g. /images/jaiswal/jaiswal-15.jpg
+             */
+            bgImage?: string | null;
+            /**
+             * Leave the last crumb's link empty — it is the current page.
+             */
+            breadcrumbs?:
+              | {
+                  label: string;
+                  href?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            primaryCtaText?: string | null;
+            primaryCtaHref?: string | null;
+            secondaryCtaText?: string | null;
+            secondaryCtaHref?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pageHero';
+          }
+        | {
+            /**
+             * Leave empty to use the standard question set.
+             */
+            items?:
+              | {
+                  question: string;
+                  answer: string;
+                  category?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            askTitle?: string | null;
+            askBody?: string | null;
+            askLabel?: string | null;
+            askHref?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faqSection';
+          }
+        | {
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'projectsSection';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            body?: string | null;
+            phone?: string | null;
+            email?: string | null;
+            /**
+             * One line per line break.
+             */
+            address?: string | null;
+            hours?: string | null;
+            nextStepsLabel?: string | null;
+            nextSteps?:
+              | {
+                  /**
+                   * e.g. 01
+                   */
+                  step: string;
+                  title: string;
+                  desc: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contactDetails';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            body?: string | null;
+            ctaLabel?: string | null;
+            ctaHref?: string | null;
+            spacing?: ('normal' | 'loose') | null;
+            cardShadow?: ('sm' | 'md') | null;
+            showArrow?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'promoBanner';
+          }
+        | {
+            /**
+             * Leave empty to use the standard service-area list.
+             */
+            regions?:
+              | {
+                  name: string;
+                  badge: string;
+                  subtext: string;
+                  desc: string;
+                  specialties?:
+                    | {
+                        value: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  highlight?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            specialtiesLabel?: string | null;
+            ctaHref?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'regionsDirectory';
           }
         | {
             content?:
@@ -476,6 +603,12 @@ export interface PayloadMigration {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
   layout?:
     | T
     | {
@@ -586,6 +719,111 @@ export interface PagesSelect<T extends boolean = true> {
           | T
           | {
               bgImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        pageHero?:
+          | T
+          | {
+              badge?: T;
+              title?: T;
+              subtitle?: T;
+              bgImage?: T;
+              breadcrumbs?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    id?: T;
+                  };
+              primaryCtaText?: T;
+              primaryCtaHref?: T;
+              secondaryCtaText?: T;
+              secondaryCtaHref?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faqSection?:
+          | T
+          | {
+              items?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    category?: T;
+                    id?: T;
+                  };
+              askTitle?: T;
+              askBody?: T;
+              askLabel?: T;
+              askHref?: T;
+              id?: T;
+              blockName?: T;
+            };
+        projectsSection?:
+          | T
+          | {
+              id?: T;
+              blockName?: T;
+            };
+        contactDetails?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              body?: T;
+              phone?: T;
+              email?: T;
+              address?: T;
+              hours?: T;
+              nextStepsLabel?: T;
+              nextSteps?:
+                | T
+                | {
+                    step?: T;
+                    title?: T;
+                    desc?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        promoBanner?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              body?: T;
+              ctaLabel?: T;
+              ctaHref?: T;
+              spacing?: T;
+              cardShadow?: T;
+              showArrow?: T;
+              id?: T;
+              blockName?: T;
+            };
+        regionsDirectory?:
+          | T
+          | {
+              regions?:
+                | T
+                | {
+                    name?: T;
+                    badge?: T;
+                    subtext?: T;
+                    desc?: T;
+                    specialties?:
+                      | T
+                      | {
+                          value?: T;
+                          id?: T;
+                        };
+                    highlight?: T;
+                    id?: T;
+                  };
+              specialtiesLabel?: T;
+              ctaHref?: T;
               id?: T;
               blockName?: T;
             };

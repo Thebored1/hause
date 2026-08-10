@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
-import ProjectFilterGrid from "@/components/ProjectFilterGrid";
+import ProjectsSection from "@/components/ProjectsSection";
 import CTASection from "@/components/CTASection";
 import SmoothScroll from "@/components/SmoothScroll";
 
@@ -36,11 +36,7 @@ export default function ProjectsPage() {
         />
 
         {/* Filterable Portfolio Grid Section */}
-        <section className="py-24 px-6 sm:px-12 md:px-16 bg-[#0c0d0e]">
-          <div className="max-w-[1408px] mx-auto">
-            <ProjectFilterGrid />
-          </div>
-        </section>
+        <ProjectsSection />
 
         {/* Global CTA */}
         <CTASection bgImage="/images/jaiswal/jaiswal-33.jpg" />

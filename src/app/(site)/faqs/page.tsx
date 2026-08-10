@@ -3,11 +3,9 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
-import FAQAccordion from "@/components/FAQAccordion";
+import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import SmoothScroll from "@/components/SmoothScroll";
-import Link from "next/link";
-import { MessageSquare } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Frequently Asked Questions | Hause Interiors Delhi NCR",
@@ -38,28 +36,7 @@ export default function FAQsPage() {
         />
 
         {/* SECTION 1: FAQ Accordion (Crisp Light Ivory Background: #f9f8f6) */}
-        <section className="py-24 px-6 sm:px-12 md:px-16 bg-[#f9f8f6] text-[#18181b]">
-          <div className="max-w-[1000px] mx-auto space-y-16">
-            <FAQAccordion theme="light" />
-
-            {/* Still have questions card (Warm Sand: #f3efea) */}
-            <div className="p-8 sm:p-10 bg-[#f3efea] border border-black/10 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-sm">
-              <div className="space-y-2 text-center sm:text-left">
-                <h3 className="text-xl font-medium text-[#18181b]">Have a specific question not answered here?</h3>
-                <p className="text-xs sm:text-sm text-[#6b6559] font-normal">
-                  Our design directors are happy to answer your specific spatial, timeline, or material queries.
-                </p>
-              </div>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-[#18181b] text-white text-xs font-bold uppercase tracking-wider hover:bg-black transition-colors rounded-full shadow-lg shrink-0"
-              >
-                <MessageSquare size={14} />
-                <span>Ask Us Directly</span>
-              </Link>
-            </div>
-          </div>
-        </section>
+        <FAQSection />
 
         {/* Global CTA */}
         <CTASection />
