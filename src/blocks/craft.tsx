@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import { useNode, useEditor, Element, type Node, type NodeTree } from "@craftjs/core";
 import {
   Type, Heading1, Image as ImageIcon, MousePointerClick, Columns as ColumnsIcon,
-  Square, SquareStack, Sparkles, Rows3, Minus, MoveVertical, GripVertical, Copy, Trash2, ChevronUp, ChevronDown,
+  Square, Minus, MoveVertical, GripVertical, Copy, Trash2, ChevronUp, ChevronDown,
 } from "lucide-react";
 import {
   SectionView, CardView, RowView, IconView, HeadingView, TextView, ButtonView, ImageView, ColumnsView,

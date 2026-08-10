@@ -59,7 +59,7 @@ export default function HeroSpaceSwitcher({
   secondaryHref = "/services",
   spacesLabel = "Spaces",
   spaces = SPACES,
-  statsIntro = "{statsIntro}",
+  statsIntro = "Residential and commercial interiors designed and delivered end to end — from the first sketch to the final handover, under one accountable team.",
   stats = STATS,
 }: HeroSpaceSwitcherProps) {
   const [activeSpaceIndex, setActiveSpaceIndex] = useState(0);
@@ -103,15 +103,25 @@ export default function HeroSpaceSwitcher({
 
         {/* Action Buttons */}
         <div className="mt-10 flex flex-wrap items-center gap-4">
-          <button
-            onClick={onOpenContact}
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-base font-semibold text-black hover:bg-neutral-200 transition-all shadow-xl cursor-pointer"
-          >
-            <span>{primaryLabel}</span>
-            <ArrowRight size={18} />
-          </button>
+          {onOpenContact ? (
+            <button
+              onClick={onOpenContact}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-base font-semibold text-black hover:bg-neutral-200 transition-all shadow-xl cursor-pointer"
+            >
+              <span>{primaryLabel}</span>
+              <ArrowRight size={18} />
+            </button>
+          ) : (
+            <Link
+              href={ctaHref}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-base font-semibold text-black hover:bg-neutral-200 transition-all shadow-xl"
+            >
+              <span>{primaryLabel}</span>
+              <ArrowRight size={18} />
+            </Link>
+          )}
           <Link
-            href="/services"
+            href={secondaryHref}
             className="inline-flex items-center justify-center rounded-full border border-white/45 bg-white/[0.04] backdrop-blur-sm px-7 py-3.5 text-base font-medium text-white hover:bg-white/15 hover:border-white/75 transition-all"
           >
             {secondaryLabel}

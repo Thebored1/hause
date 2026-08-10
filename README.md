@@ -10,29 +10,42 @@ npm run dev          # http://localhost:3000
 
 | Route | What it is |
 | --- | --- |
-| `/` and the rest of the site | Hand-coded pages — **not yet in the CMS** |
+| `/` | Home, from the CMS |
 | `/blog`, `/blog/[slug]` | Blog, from Payload |
-| `/cms/[slug]` | CMS-driven pages, rendered with the site's own components |
+| `/cms/[...slug]` | Every other page, from the CMS |
+| the hand-coded routes (`/about`, `/services/*`, …) | Still served, and still the source of truth for layout |
 | `/admin` | Payload admin — pages, posts, enquiries, media, users |
 | `/api/*` | Payload REST (and `/api/graphql`) |
 
 ## Current state
 
-The **home page is CMS-driven**. Its seven sections are Payload blocks rendered by the
-site's own components, editable at `/admin` → **Pages** → **Home**.
+**Every page is CMS-driven.** All fifteen — home plus the fourteen inner pages — exist as
+Payload documents whose blocks are rendered by the site's own components, editable at
+`/admin` → **Pages**.
 
 | Editable in the admin | Not yet |
 | --- | --- |
-| Home page — hero, services, process, why us, locations, CTA | The other 16 hand-coded pages |
-| Blog posts | Portfolio project list (placement only; content still in the component) |
-| Enquiries (contact form submissions) | Nav and footer content |
-| Media | |
+| Home — hero, services, process, why us, locations, CTA | Nav and footer content |
+| The nine inner pages (about, services, process, contact, locations, projects, faqs, testimonials, why-us) | Portfolio and project-filter lists (placement only; content still in the component) |
+| The five service detail pages | |
+| Blog posts, enquiries, media | |
 
-`/` falls back to the original hand-coded page if no CMS page with slug `home` exists, so a
-fresh database or a failed lookup never leaves the site blank.
+Each CMS page renders **markup identical** to the hand-coded route it stands in for — every
+class and attribute — so it is a drop-in replacement. The hand-coded routes are still what
+Next serves today; the CMS copies live under `/cms/...` until you point the routes at them.
 
-Converting the remaining pages follows the same recipe — see [`CMS.md`](./CMS.md). Roughly
-1–2 hours per component.
+`/` falls back to the original hand-coded home page if no CMS page with slug `home` exists,
+so a fresh database or a failed lookup never leaves the site blank.
+
+Seed every page with its real content:
+
+```bash
+npx payload run scripts/seed-pages.ts    # the fourteen inner pages
+```
+
+The seed **imports the components' own exported defaults** rather than carrying a copy of the
+copy, so the two cannot drift apart. It is idempotent on slug — which also means re-running it
+overwrites admin edits with those defaults.
 
 ## Documentation
 

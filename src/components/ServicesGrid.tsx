@@ -86,7 +86,7 @@ export default function ServicesGrid({
   ctaHref = "/contact",
   eyebrow = "Services",
   title = "Interior design services that work for the way you live.",
-  intro,
+  intro = "Whether it's a first home, a growing office, or a retail space that needs to convert footfall into sales, Hause Interiors designs around how a space is actually used — then builds it to hold up.",
   featureImage = "/images/sp-living.jpg",
   statLabel = "Site Supervision",
   statValue = "100%",
@@ -111,7 +111,7 @@ export default function ServicesGrid({
           </div>
           <div className="md:col-span-5">
             <p className="m-0 text-sm sm:text-base text-[#6b6559] leading-[1.7] max-w-[420px]">
-              Whether it&apos;s a first home, a growing office, or a retail space that needs to convert footfall into sales, Hause Interiors designs around how a space is actually used — then builds it to hold up.
+              {intro}
             </p>
           </div>
         </div>
