@@ -389,6 +389,274 @@ export interface Page {
             blockType: 'regionsDirectory';
           }
         | {
+            eyebrow?: string | null;
+            title?: string | null;
+            /**
+             * Cards 1 and 4 span two columns. Leave empty for the standard five.
+             */
+            pillars?:
+              | {
+                  num: string;
+                  tag: string;
+                  title: string;
+                  desc: string;
+                  icon?: ('shield-check' | 'file-check' | 'target' | 'eye' | 'globe') | null;
+                  details?:
+                    | {
+                        value: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pillarsGrid';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            negativeLabel?: string | null;
+            negatives?:
+              | {
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            positiveLabel?: string | null;
+            positives?:
+              | {
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'comparisonColumns';
+          }
+        | {
+            stars?: number | null;
+            summary?: string | null;
+            facts?:
+              | {
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ratingBar';
+          }
+        | {
+            testimonials?:
+              | {
+                  client: string;
+                  designation: string;
+                  project: string;
+                  location: string;
+                  rating: number;
+                  quote: string;
+                  tags?:
+                    | {
+                        value: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonialsGrid';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            linkLabel?: string | null;
+            linkHref?: string | null;
+            photos?:
+              | {
+                  src: string;
+                  title: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'photoStrip';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            deliverablesLabel?: string | null;
+            steps?:
+              | {
+                  num: string;
+                  tag: string;
+                  title: string;
+                  subtitle: string;
+                  desc: string;
+                  image: string;
+                  theme?: ('light' | 'sand' | 'dark') | null;
+                  deliverables?:
+                    | {
+                        value: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'processDeepDive';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            body?: string | null;
+            ctaLabel?: string | null;
+            ctaHref?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'commitmentBar';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            services?:
+              | {
+                  slug: string;
+                  title: string;
+                  tagline: string;
+                  desc: string;
+                  image: string;
+                  theme?: ('light' | 'sand' | 'dark') | null;
+                  isExternalOrContact?: boolean | null;
+                  features?:
+                    | {
+                        value: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'servicesShowcase';
+          }
+        | {
+            cards?:
+              | {
+                  icon?: ('shield-check' | 'clock' | 'award') | null;
+                  title: string;
+                  body: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'assuranceRibbon';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            body1?: string | null;
+            body2?: string | null;
+            stats?:
+              | {
+                  value: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            image?: string | null;
+            imageAlt?: string | null;
+            imageEyebrow?: string | null;
+            imageCaption?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'studioStory';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            intro?: string | null;
+            philosophies?:
+              | {
+                  num: string;
+                  title: string;
+                  desc: string;
+                  icon?: ('compass' | 'sliders' | 'shield-check' | 'award') | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'philosophyGrid';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            body?: string | null;
+            points?:
+              | {
+                  value: string;
+                  id?: string | null;
+                }[]
+              | null;
+            image?: string | null;
+            imageAlt?: string | null;
+            imageEyebrow?: string | null;
+            imageCaption?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'teamNetwork';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            linkLabel?: string | null;
+            linkHref?: string | null;
+            items?:
+              | {
+                  src: string;
+                  title: string;
+                  tag: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'galleryRibbon';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            values?:
+              | {
+                  title: string;
+                  desc: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'valuesGrid';
+          }
+        | {
+            eyebrow?: string | null;
+            title?: string | null;
+            body?: string | null;
+            ctaLabel?: string | null;
+            ctaHref?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'reachBar';
+          }
+        | {
             content?:
               | {
                   [k: string]: unknown;
@@ -828,6 +1096,286 @@ export interface PagesSelect<T extends boolean = true> {
                     id?: T;
                   };
               specialtiesLabel?: T;
+              ctaHref?: T;
+              id?: T;
+              blockName?: T;
+            };
+        pillarsGrid?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              pillars?:
+                | T
+                | {
+                    num?: T;
+                    tag?: T;
+                    title?: T;
+                    desc?: T;
+                    icon?: T;
+                    details?:
+                      | T
+                      | {
+                          value?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        comparisonColumns?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              negativeLabel?: T;
+              negatives?:
+                | T
+                | {
+                    value?: T;
+                    id?: T;
+                  };
+              positiveLabel?: T;
+              positives?:
+                | T
+                | {
+                    value?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        ratingBar?:
+          | T
+          | {
+              stars?: T;
+              summary?: T;
+              facts?:
+                | T
+                | {
+                    value?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        testimonialsGrid?:
+          | T
+          | {
+              testimonials?:
+                | T
+                | {
+                    client?: T;
+                    designation?: T;
+                    project?: T;
+                    location?: T;
+                    rating?: T;
+                    quote?: T;
+                    tags?:
+                      | T
+                      | {
+                          value?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        photoStrip?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              linkLabel?: T;
+              linkHref?: T;
+              photos?:
+                | T
+                | {
+                    src?: T;
+                    title?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        processDeepDive?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              deliverablesLabel?: T;
+              steps?:
+                | T
+                | {
+                    num?: T;
+                    tag?: T;
+                    title?: T;
+                    subtitle?: T;
+                    desc?: T;
+                    image?: T;
+                    theme?: T;
+                    deliverables?:
+                      | T
+                      | {
+                          value?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        commitmentBar?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              body?: T;
+              ctaLabel?: T;
+              ctaHref?: T;
+              id?: T;
+              blockName?: T;
+            };
+        servicesShowcase?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              services?:
+                | T
+                | {
+                    slug?: T;
+                    title?: T;
+                    tagline?: T;
+                    desc?: T;
+                    image?: T;
+                    theme?: T;
+                    isExternalOrContact?: T;
+                    features?:
+                      | T
+                      | {
+                          value?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        assuranceRibbon?:
+          | T
+          | {
+              cards?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    body?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        studioStory?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              body1?: T;
+              body2?: T;
+              stats?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              image?: T;
+              imageAlt?: T;
+              imageEyebrow?: T;
+              imageCaption?: T;
+              id?: T;
+              blockName?: T;
+            };
+        philosophyGrid?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              intro?: T;
+              philosophies?:
+                | T
+                | {
+                    num?: T;
+                    title?: T;
+                    desc?: T;
+                    icon?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        teamNetwork?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              body?: T;
+              points?:
+                | T
+                | {
+                    value?: T;
+                    id?: T;
+                  };
+              image?: T;
+              imageAlt?: T;
+              imageEyebrow?: T;
+              imageCaption?: T;
+              id?: T;
+              blockName?: T;
+            };
+        galleryRibbon?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              linkLabel?: T;
+              linkHref?: T;
+              items?:
+                | T
+                | {
+                    src?: T;
+                    title?: T;
+                    tag?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        valuesGrid?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              values?:
+                | T
+                | {
+                    title?: T;
+                    desc?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        reachBar?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              body?: T;
+              ctaLabel?: T;
               ctaHref?: T;
               id?: T;
               blockName?: T;

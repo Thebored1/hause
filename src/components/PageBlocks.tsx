@@ -15,6 +15,21 @@ import ProjectsSection from "@/components/ProjectsSection";
 import ContactDetails, { type NextStep } from "@/components/ContactDetails";
 import PromoBanner from "@/components/PromoBanner";
 import RegionsDirectory, { type Region } from "@/components/RegionsDirectory";
+import PillarsGrid, { type Pillar } from "@/components/PillarsGrid";
+import ComparisonColumns from "@/components/ComparisonColumns";
+import RatingBar from "@/components/RatingBar";
+import TestimonialsGrid, { type Testimonial } from "@/components/TestimonialsGrid";
+import PhotoStrip, { type CompletedPhoto } from "@/components/PhotoStrip";
+import ProcessDeepDive, { type ProcessDeepStep } from "@/components/ProcessDeepDive";
+import CommitmentBar from "@/components/CommitmentBar";
+import ServicesShowcase, { type ServiceEntry } from "@/components/ServicesShowcase";
+import AssuranceRibbon, { type AssuranceCard } from "@/components/AssuranceRibbon";
+import StudioStory, { type StoryStat } from "@/components/StudioStory";
+import PhilosophyGrid, { type Philosophy } from "@/components/PhilosophyGrid";
+import TeamNetwork from "@/components/TeamNetwork";
+import GalleryRibbon, { type GalleryItem } from "@/components/GalleryRibbon";
+import ValuesGrid, { type Value } from "@/components/ValuesGrid";
+import ReachBar from "@/components/ReachBar";
 import { type FAQItem } from "@/components/FAQAccordion";
 import ContactModal from "@/components/ContactModal";
 import Navbar from "@/components/Navbar";
@@ -38,6 +53,12 @@ const val = <T,>(v: unknown): T | undefined => {
   if (typeof v === "string" && v.trim() === "") return undefined;
   if (Array.isArray(v) && v.length === 0) return undefined;
   return v as T;
+};
+
+/** Payload stores string lists as [{value}] — flatten them back. */
+const list = (v: unknown): string[] | undefined => {
+  const rows = val<{ value: string }[]>(v);
+  return rows?.map((r) => r.value);
 };
 
 export default function PageBlocks({
@@ -201,6 +222,179 @@ export default function PageBlocks({
               />
             );
           }
+
+          case "pillarsGrid": {
+            const rows = val<(Omit<Pillar, "details"> & { details?: { value: string }[] })[]>(block.pillars);
+            return (
+              <PillarsGrid
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                pillars={rows?.map((r) => ({ ...r, details: (r.details ?? []).map((d) => d.value) }))}
+              />
+            );
+          }
+
+          case "comparisonColumns":
+            return (
+              <ComparisonColumns
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                negativeLabel={val<string>(block.negativeLabel)}
+                negatives={list(block.negatives)}
+                positiveLabel={val<string>(block.positiveLabel)}
+                positives={list(block.positives)}
+              />
+            );
+
+          case "ratingBar":
+            return (
+              <RatingBar
+                key={i}
+                stars={val<number>(block.stars)}
+                summary={val<string>(block.summary)}
+                facts={list(block.facts)}
+              />
+            );
+
+          case "testimonialsGrid": {
+            const rows = val<(Omit<Testimonial, "tags"> & { tags?: { value: string }[] })[]>(block.testimonials);
+            return (
+              <TestimonialsGrid
+                key={i}
+                testimonials={rows?.map((r) => ({ ...r, tags: (r.tags ?? []).map((t) => t.value) }))}
+              />
+            );
+          }
+
+          case "photoStrip":
+            return (
+              <PhotoStrip
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                linkLabel={val<string>(block.linkLabel)}
+                linkHref={val<string>(block.linkHref)}
+                photos={val<CompletedPhoto[]>(block.photos)}
+              />
+            );
+
+          case "processDeepDive": {
+            const rows = val<(Omit<ProcessDeepStep, "deliverables"> & { deliverables?: { value: string }[] })[]>(block.steps);
+            return (
+              <ProcessDeepDive
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                deliverablesLabel={val<string>(block.deliverablesLabel)}
+                steps={rows?.map((r) => ({ ...r, deliverables: (r.deliverables ?? []).map((d) => d.value) }))}
+              />
+            );
+          }
+
+          case "commitmentBar":
+            return (
+              <CommitmentBar
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                body={val<string>(block.body)}
+                ctaLabel={val<string>(block.ctaLabel)}
+                ctaHref={val<string>(block.ctaHref)}
+              />
+            );
+
+          case "servicesShowcase": {
+            const rows = val<(Omit<ServiceEntry, "features"> & { features?: { value: string }[] })[]>(block.services);
+            return (
+              <ServicesShowcase
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                services={rows?.map((r) => ({ ...r, features: (r.features ?? []).map((f) => f.value) }))}
+              />
+            );
+          }
+
+          case "assuranceRibbon":
+            return <AssuranceRibbon key={i} cards={val<AssuranceCard[]>(block.cards)} />;
+
+          case "studioStory":
+            return (
+              <StudioStory
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                body1={val<string>(block.body1)}
+                body2={val<string>(block.body2)}
+                stats={val<StoryStat[]>(block.stats)}
+                image={val<string>(block.image)}
+                imageAlt={val<string>(block.imageAlt)}
+                imageEyebrow={val<string>(block.imageEyebrow)}
+                imageCaption={val<string>(block.imageCaption)}
+              />
+            );
+
+          case "philosophyGrid":
+            return (
+              <PhilosophyGrid
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                intro={val<string>(block.intro)}
+                philosophies={val<Philosophy[]>(block.philosophies)}
+              />
+            );
+
+          case "teamNetwork":
+            return (
+              <TeamNetwork
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                body={val<string>(block.body)}
+                points={list(block.points)}
+                image={val<string>(block.image)}
+                imageAlt={val<string>(block.imageAlt)}
+                imageEyebrow={val<string>(block.imageEyebrow)}
+                imageCaption={val<string>(block.imageCaption)}
+              />
+            );
+
+          case "galleryRibbon":
+            return (
+              <GalleryRibbon
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                linkLabel={val<string>(block.linkLabel)}
+                linkHref={val<string>(block.linkHref)}
+                items={val<GalleryItem[]>(block.items)}
+              />
+            );
+
+          case "valuesGrid":
+            return (
+              <ValuesGrid
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                values={val<Value[]>(block.values)}
+              />
+            );
+
+          case "reachBar":
+            return (
+              <ReachBar
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                body={val<string>(block.body)}
+                ctaLabel={val<string>(block.ctaLabel)}
+                ctaHref={val<string>(block.ctaHref)}
+              />
+            );
 
           case "canvas":
             return block.content ? <RenderTree key={i} data={JSON.stringify(block.content)} /> : null;

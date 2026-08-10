@@ -169,6 +169,146 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
       { blockType: "cta" },
     ],
   },
+  {
+    title: "About Us",
+    slug: "about",
+    meta: {
+      title: "About Hause Interiors | Interior Design Studio Delhi NCR",
+      description:
+        "Learn about Hause Interiors \u2014 our story, design philosophy, in-house team, and how we bring architectural rigor and transparent execution to homes and workspaces across Delhi NCR and pan-India.",
+    },
+    layout: [
+      {
+        blockType: "pageHero",
+        badge: "About Hause Interiors",
+        title: "Spaces designed with purpose. Delivered with precision.",
+        subtitle:
+          "We are an interior design and turnkey execution studio based in Delhi NCR. We bridge the gap between high-end architectural design and disciplined on-ground delivery.",
+        breadcrumbs: [home, { label: "About Us" }],
+        bgImage: "/images/jaiswal/jaiswal-01.jpg",
+        primaryCtaText: "Book a Free Consultation",
+        primaryCtaHref: "/contact",
+        secondaryCtaText: "View Our Work",
+        secondaryCtaHref: "/projects",
+      },
+      { blockType: "studioStory" },
+      { blockType: "philosophyGrid" },
+      { blockType: "teamNetwork" },
+      { blockType: "galleryRibbon" },
+      { blockType: "valuesGrid" },
+      { blockType: "reachBar" },
+      { blockType: "cta", bgImage: "/images/jaiswal/jaiswal-01.jpg" },
+    ],
+  },
+  {
+    title: "Services",
+    slug: "services",
+    meta: {
+      title: "Interior Design Services in Delhi NCR | Hause Interiors",
+      description:
+        "Explore Hause Interiors' full range of interior design services in Delhi NCR \u2014 residential, commercial, modular kitchens, turnkey solutions and renovations.",
+    },
+    layout: [
+      {
+        blockType: "pageHero",
+        badge: "Our Services",
+        title: "Interior design services that move with your life.",
+        subtitle:
+          "From a single room to a full office fit-out, every Hause Interiors project starts with how the space needs to function \u2014 then we design around it.",
+        breadcrumbs: [home, { label: "Services" }],
+        bgImage: "/images/jaiswal/jaiswal-04.jpg",
+        primaryCtaText: "Book a Free Consultation",
+        primaryCtaHref: "/contact",
+        secondaryCtaText: "View Portfolio",
+        secondaryCtaHref: "/projects",
+      },
+      { blockType: "servicesShowcase" },
+      { blockType: "assuranceRibbon" },
+      { blockType: "cta", bgImage: "/images/jaiswal/jaiswal-03.jpg" },
+    ],
+  },
+  {
+    title: "Our Process",
+    slug: "process",
+    meta: {
+      title: "Our Interior Design Process | Hause Interiors Delhi NCR",
+      description:
+        "From first consultation to final handover \u2014 see how Hause Interiors plans, designs and executes interior projects in Delhi NCR and pan-India.",
+    },
+    layout: [
+      {
+        blockType: "pageHero",
+        badge: "Our Delivery Process",
+        title: "A process built for spaces that get delivered on time.",
+        subtitle:
+          "Interior projects go over budget and past deadline when there's no single process holding them together. Here's how we structure ours.",
+        breadcrumbs: [home, { label: "Our Process" }],
+        bgImage: "/images/jaiswal/jaiswal-09.jpg",
+        primaryCtaText: "Start With a Discovery Call",
+        primaryCtaHref: "/contact",
+        secondaryCtaText: "View Portfolio",
+        secondaryCtaHref: "/projects",
+      },
+      { blockType: "processDeepDive" },
+      { blockType: "commitmentBar" },
+      { blockType: "cta", bgImage: "/images/jaiswal/jaiswal-24.jpg" },
+    ],
+  },
+  {
+    title: "Testimonials",
+    slug: "testimonials",
+    meta: {
+      title: "Client Reviews & Testimonials | Hause Interiors Delhi NCR",
+      description:
+        "Read what homeowners and businesses across Delhi NCR say about working with Hause Interiors for their interior design projects.",
+    },
+    layout: [
+      {
+        blockType: "pageHero",
+        badge: "Client Stories",
+        title: "What clients say about working with us.",
+        subtitle:
+          "Real reviews from homeowners and business leaders across Delhi NCR who trusted Hause Interiors with their residential and commercial spaces.",
+        breadcrumbs: [home, { label: "Testimonials" }],
+        bgImage: "/images/jaiswal/jaiswal-14.jpg",
+        primaryCtaText: "Book a Free Consultation",
+        primaryCtaHref: "/contact",
+        secondaryCtaText: "View Portfolio",
+        secondaryCtaHref: "/projects",
+      },
+      { blockType: "ratingBar" },
+      { blockType: "testimonialsGrid" },
+      { blockType: "photoStrip" },
+      { blockType: "cta" },
+    ],
+  },
+  {
+    title: "Why Hause Interiors",
+    slug: "why-hause-interiors",
+    meta: {
+      title: "Why Choose Hause Interiors | Interior Design Company Delhi NCR",
+      description:
+        "Transparent costing, single-point accountability, and on-time delivery \u2014 here's why homeowners and businesses across Delhi NCR choose Hause Interiors.",
+    },
+    layout: [
+      {
+        blockType: "pageHero",
+        badge: "Why Choose Hause",
+        title: "More than a design studio \u2014 a space partner.",
+        subtitle:
+          "Anyone can make a space look good in a render. What's harder is delivering it on time, on budget, and exactly as designed. That's the gap Hause Interiors is built to close.",
+        breadcrumbs: [home, { label: "Why Us" }],
+        bgImage: "/images/jaiswal/jaiswal-02.jpg",
+        primaryCtaText: "Talk to Us About Your Project",
+        primaryCtaHref: "/contact",
+        secondaryCtaText: "Explore Our Work",
+        secondaryCtaHref: "/projects",
+      },
+      { blockType: "pillarsGrid" },
+      { blockType: "comparisonColumns" },
+      { blockType: "cta" },
+    ],
+  },
 ];
 
 const payload = await getPayload({ config });

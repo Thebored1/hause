@@ -10,6 +10,23 @@ import {
   PromoBannerBlock,
   RegionsDirectoryBlock,
 } from "../blocks/pages";
+import {
+  PillarsGridBlock,
+  ComparisonColumnsBlock,
+  RatingBarBlock,
+  TestimonialsGridBlock,
+  PhotoStripBlock,
+  ProcessDeepDiveBlock,
+  CommitmentBarBlock,
+  ServicesShowcaseBlock,
+  AssuranceRibbonBlock,
+  StudioStoryBlock,
+  PhilosophyGridBlock,
+  TeamNetworkBlock,
+  GalleryRibbonBlock,
+  ValuesGridBlock,
+  ReachBarBlock,
+} from "../blocks/inner";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -48,6 +65,9 @@ export const Pages: CollectionConfig = {
         HeroBlock, ServicesGridBlock, PortfolioBlock, ProcessBlock, WhyUsBlock, LocationsBlock, CtaBlock,
         // Inner page sections
         PageHeroBlock, FAQSectionBlock, ProjectsSectionBlock, ContactDetailsBlock, PromoBannerBlock, RegionsDirectoryBlock,
+        PillarsGridBlock, ComparisonColumnsBlock, RatingBarBlock, TestimonialsGridBlock, PhotoStripBlock,
+        ProcessDeepDiveBlock, CommitmentBarBlock, ServicesShowcaseBlock, AssuranceRibbonBlock,
+        StudioStoryBlock, PhilosophyGridBlock, TeamNetworkBlock, GalleryRibbonBlock, ValuesGridBlock, ReachBarBlock,
         // Freeform canvas
         CanvasBlock,
       ],
