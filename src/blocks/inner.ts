@@ -529,3 +529,72 @@ export const StageGridBlock: Block = {
     },
   ],
 };
+
+export const LayoutCardsBlock: Block = {
+  slug: "layoutCards",
+  labels: { singular: "Layout Cards", plural: "Layout Cards" },
+  admin: { group: "Page sections" },
+  fields: [
+    { name: "eyebrow", type: "text", required: true },
+    { name: "title", type: "text", required: true },
+    { name: "intro", type: "textarea", required: true },
+    { name: "bestForLabel", type: "text" },
+    {
+      name: "options",
+      type: "array",
+      labels: { singular: "Option", plural: "Options" },
+      fields: [
+        { name: "name", type: "text", required: true },
+        { name: "bestFor", type: "text", required: true },
+        { name: "desc", type: "textarea", required: true },
+      ],
+    },
+  ],
+};
+
+export const SpecFeatureBlock: Block = {
+  slug: "specFeature",
+  labels: { singular: "Spec Feature", plural: "Spec Features" },
+  admin: { group: "Page sections" },
+  fields: [
+    { name: "eyebrow", type: "text", required: true },
+    { name: "title", type: "text", required: true },
+    { name: "body", type: "textarea", required: true },
+    {
+      name: "specs",
+      type: "array",
+      labels: { singular: "Spec", plural: "Specs" },
+      fields: [
+        { name: "category", type: "text", required: true },
+        { name: "options", type: "textarea", required: true },
+      ],
+    },
+    {
+      type: "row",
+      fields: [
+        { name: "image", type: "text", required: true, admin: { width: "50%" } },
+        { name: "imageAlt", type: "text", required: true, admin: { width: "50%" } },
+      ],
+    },
+  ],
+};
+
+export const DarkCardGridBlock: Block = {
+  slug: "darkCardGrid",
+  labels: { singular: "Dark Card Grid", plural: "Dark Card Grids" },
+  admin: { group: "Page sections" },
+  fields: [
+    { name: "eyebrow", type: "text", required: true },
+    { name: "title", type: "text", required: true },
+    { name: "intro", type: "textarea", required: true },
+    {
+      name: "cards",
+      type: "array",
+      labels: { singular: "Card", plural: "Cards" },
+      fields: [
+        { name: "title", type: "text", required: true },
+        { name: "desc", type: "textarea", required: true },
+      ],
+    },
+  ],
+};

@@ -31,6 +31,9 @@ import {
   CardListFeatureBlock,
   IconCardsBlock,
   StageGridBlock,
+  LayoutCardsBlock,
+  SpecFeatureBlock,
+  DarkCardGridBlock,
 } from "../blocks/inner";
 
 export const Pages: CollectionConfig = {
@@ -74,6 +77,7 @@ export const Pages: CollectionConfig = {
         ProcessDeepDiveBlock, CommitmentBarBlock, ServicesShowcaseBlock, AssuranceRibbonBlock,
         StudioStoryBlock, PhilosophyGridBlock, TeamNetworkBlock, GalleryRibbonBlock, ValuesGridBlock, ReachBarBlock,
         ChecklistFeatureBlock, NumberedCardsBlock, CardListFeatureBlock, IconCardsBlock, StageGridBlock,
+        LayoutCardsBlock, SpecFeatureBlock, DarkCardGridBlock,
         // Freeform canvas
         CanvasBlock,
       ],

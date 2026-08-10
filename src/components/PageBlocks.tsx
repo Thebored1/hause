@@ -35,6 +35,9 @@ import NumberedCards, { type NumberedCard } from "@/components/NumberedCards";
 import CardListFeature, { type FeatureCard } from "@/components/CardListFeature";
 import IconCards, { type IconCard } from "@/components/IconCards";
 import StageGrid, { type Stage } from "@/components/StageGrid";
+import LayoutCards, { type LayoutOption } from "@/components/LayoutCards";
+import SpecFeature, { type Spec } from "@/components/SpecFeature";
+import DarkCardGrid, { type DarkCard } from "@/components/DarkCardGrid";
 import { type FAQItem } from "@/components/FAQAccordion";
 import ContactModal from "@/components/ContactModal";
 import Navbar from "@/components/Navbar";
@@ -463,6 +466,42 @@ export default function PageBlocks({
                 title={String(block.title ?? "")}
                 intro={String(block.intro ?? "")}
                 stages={val<Stage[]>(block.stages) ?? []}
+              />
+            );
+
+          case "layoutCards":
+            return (
+              <LayoutCards
+                key={i}
+                eyebrow={String(block.eyebrow ?? "")}
+                title={String(block.title ?? "")}
+                intro={String(block.intro ?? "")}
+                bestForLabel={val<string>(block.bestForLabel)}
+                options={val<LayoutOption[]>(block.options) ?? []}
+              />
+            );
+
+          case "specFeature":
+            return (
+              <SpecFeature
+                key={i}
+                eyebrow={String(block.eyebrow ?? "")}
+                title={String(block.title ?? "")}
+                body={String(block.body ?? "")}
+                specs={val<Spec[]>(block.specs) ?? []}
+                image={String(block.image ?? "")}
+                imageAlt={String(block.imageAlt ?? "")}
+              />
+            );
+
+          case "darkCardGrid":
+            return (
+              <DarkCardGrid
+                key={i}
+                eyebrow={String(block.eyebrow ?? "")}
+                title={String(block.title ?? "")}
+                intro={String(block.intro ?? "")}
+                cards={val<DarkCard[]>(block.cards) ?? []}
               />
             );
 

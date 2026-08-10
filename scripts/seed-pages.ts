@@ -548,6 +548,111 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
       { blockType: "cta" },
     ],
   },
+  {
+    title: "Modular Kitchens & Wardrobes",
+    slug: "services/modular-kitchen-wardrobe-design",
+    meta: {
+      title: "Modular Kitchen & Wardrobe Designers Delhi NCR | Hause Interiors",
+      description:
+        "Custom modular kitchens and wardrobes in Delhi NCR \u2014 straight, L-shaped, U-shaped and island kitchens; sliding, hinged and walk-in wardrobes built with BWP marine-grade plywood and premium hardware.",
+    },
+    layout: [
+      {
+        blockType: "pageHero",
+        badge: "Kitchens & Wardrobes",
+        title: "Kitchens and wardrobes built to actually hold your life.",
+        subtitle:
+          "Storage needs to be engineered around the way you cook, dress, and live. Hause Interiors designs and executes precision modular kitchens and customized wardrobe systems across Delhi NCR using marine-grade materials and premium hardware.",
+        breadcrumbs: [home, { label: "Services", href: "/services" }, { label: "Modular Kitchen & Wardrobe Design" }],
+        bgImage: "/images/jaiswal/jaiswal-18.jpg",
+        primaryCtaText: "Design Your Kitchen",
+        primaryCtaHref: "/contact",
+        secondaryCtaText: "View Kitchen Portfolio",
+        secondaryCtaHref: "/projects",
+      },
+      {
+        blockType: "layoutCards",
+        eyebrow: "Ergonomics & Work Triangle",
+        title: "Modular Kitchen Layouts",
+        intro: "Every layout is tailored to your cooking habits, appliance requirements, and spatial dimensions.",
+        bestForLabel: "Best For:",
+        options: [
+          {
+            name: "L-Shaped Kitchen",
+            bestFor: "Small to mid-sized apartments",
+            desc: "Optimizes corner space while leaving the kitchen open to adjacent dining or living areas.",
+          },
+          {
+            name: "Parallel / Galley Kitchen",
+            bestFor: "Long, narrow kitchen rooms",
+            desc: "The most ergonomically efficient work triangle with opposing counters for prep and cooking.",
+          },
+          {
+            name: "U-Shaped Kitchen",
+            bestFor: "Independent homes and larger flats",
+            desc: "Maximum countertop workspace, continuous continuous storage, and dedicated appliance zones.",
+          },
+          {
+            name: "Island Kitchen",
+            bestFor: "Open-plan luxury residences",
+            desc: "A freestanding central counter that doubles as a social gathering spot and extra culinary prep surface.",
+          },
+        ],
+      },
+      {
+        blockType: "specFeature",
+        eyebrow: "Engineered for Longevity",
+        title: "Materials & Hardware That Endure",
+        body: "Indian cooking demands materials that withstand moisture, heat, and turmeric stains. We never compromise on core marine-grade plywood or branded German/Austrian hardware.",
+        specs: [
+          {
+            category: "Carcass Core",
+            options: "Boiling Water Proof (BWP) 710 Marine-Grade Plywood, HDHMR for wet zones",
+          },
+          {
+            category: "External Finishes",
+            options: "High-Gloss Acrylic, Anti-Fingerprint Matte Laminates, PU Paint, Natural Wood Veneer",
+          },
+          {
+            category: "Countertops",
+            options: "Engineered Quartz, Brazilian Granite, Nano White Slabs, Sintered Stone",
+          },
+          {
+            category: "Hardware & Fittings",
+            options: "Hettich, Blum, Hafele soft-close tandem boxes, lift-up shutters & pull-out pantries",
+          },
+        ],
+        image: "/images/jaiswal/jaiswal-21.jpg",
+        imageAlt: "Modular Kitchen Detail & Quartz Worktop",
+      },
+      {
+        blockType: "darkCardGrid",
+        eyebrow: "Bespoke Storage",
+        title: "Custom Wardrobe Systems",
+        intro:
+          "Wardrobe interiors customized down to the millimeter for your specific collection of garments, accessories, shoes, and jewelry.",
+        cards: [
+          {
+            title: "Sliding Door Wardrobes",
+            desc: "Space-saving designs ideal for compact bedrooms, with smooth soft-close bottom/top roller tracks.",
+          },
+          {
+            title: "Hinged / Swing Door Wardrobes",
+            desc: "Classic full-access design allowing you to view the entire wardrobe interior simultaneously.",
+          },
+          {
+            title: "Walk-in Dressing Suites",
+            desc: "Dedicated dressing rooms with integrated island jewelry drawers, bronze glass shutters, and sensor illumination.",
+          },
+          {
+            title: "Loft & Over-Door Storage",
+            desc: "Custom overhead cabinetry utilizing full vertical ceiling height for seasonal bedding and luggage storage.",
+          },
+        ],
+      },
+      { blockType: "cta" },
+    ],
+  },
 ];
 
 const payload = await getPayload({ config });

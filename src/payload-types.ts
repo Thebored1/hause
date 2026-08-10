@@ -761,6 +761,55 @@ export interface Page {
             blockType: 'stageGrid';
           }
         | {
+            eyebrow: string;
+            title: string;
+            intro: string;
+            bestForLabel?: string | null;
+            options?:
+              | {
+                  name: string;
+                  bestFor: string;
+                  desc: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'layoutCards';
+          }
+        | {
+            eyebrow: string;
+            title: string;
+            body: string;
+            specs?:
+              | {
+                  category: string;
+                  options: string;
+                  id?: string | null;
+                }[]
+              | null;
+            image: string;
+            imageAlt: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'specFeature';
+          }
+        | {
+            eyebrow: string;
+            title: string;
+            intro: string;
+            cards?:
+              | {
+                  title: string;
+                  desc: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'darkCardGrid';
+          }
+        | {
             content?:
               | {
                   [k: string]: unknown;
@@ -1570,6 +1619,58 @@ export interface PagesSelect<T extends boolean = true> {
                     title?: T;
                     desc?: T;
                     wide?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        layoutCards?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              intro?: T;
+              bestForLabel?: T;
+              options?:
+                | T
+                | {
+                    name?: T;
+                    bestFor?: T;
+                    desc?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        specFeature?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              body?: T;
+              specs?:
+                | T
+                | {
+                    category?: T;
+                    options?: T;
+                    id?: T;
+                  };
+              image?: T;
+              imageAlt?: T;
+              id?: T;
+              blockName?: T;
+            };
+        darkCardGrid?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              intro?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    desc?: T;
                     id?: T;
                   };
               id?: T;
