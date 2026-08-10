@@ -20,10 +20,28 @@ const securityHeaders = [
   { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
 ];
 
+/**
+ * Hosts the image optimiser may fetch from, as a comma-separated env value:
+ *
+ *   NEXT_IMAGE_HOSTS=xxxx.public.blob.vercel-storage.com
+ *
+ * Empty by default, and deliberately not `hostname: "**"` — a wildcard turns
+ * /_next/image into an open proxy that fetches arbitrary URLs on request.
+ *
+ * Set this in production if you enable Vercel Blob storage. Payload then serves
+ * the media collection from the blob host, and `next/image` refuses any remote
+ * URL that is not listed here, so uploaded images would silently fail to render.
+ * Images committed under /public are same-origin and need no entry.
+ */
+const imageHosts = (process.env.NEXT_IMAGE_HOSTS ?? "")
+  .split(",")
+  .map((host) => host.trim())
+  .filter(Boolean);
+
 const nextConfig: NextConfig = {
-  // No `images.remotePatterns` on purpose: every image is served from this
-  // origin, and a wildcard would turn /_next/image into an open proxy that
-  // fetches arbitrary URLs on request. Add specific hosts here if that changes.
+  images: {
+    remotePatterns: imageHosts.map((hostname) => ({ protocol: "https" as const, hostname })),
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

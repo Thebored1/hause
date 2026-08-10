@@ -235,6 +235,42 @@ at runtime.
 
 ---
 
+## Security
+
+What is in place:
+
+| | |
+| --- | --- |
+| Canvas rich text | Sanitised on write (a `beforeChange` scrub on the canvas field) **and** on render, so rows stored before the scrub existed cannot execute either |
+| Drafts | Private — anonymous reads of Pages and Posts are restricted to `_status: published`, and every query filters explicitly because the local API runs with `overrideAccess: true` and bypasses collection rules |
+| Enquiries | Public create for the form; read, update and delete need a login. Rate limited to 5 per address per 10 minutes |
+| CSP | Nonce-based `script-src` with `strict-dynamic` on `/`, `/cms/*` and `/blog/*` — the routes that render stored content — minted per request in `src/proxy.ts` |
+| Headers | nosniff, Referrer-Policy, Permissions-Policy, HSTS, `frame-ancestors 'self'` |
+| Images | Remote hosts allowlisted via `NEXT_IMAGE_HOSTS`, never wildcarded |
+| Secret | `PAYLOAD_SECRET` throws in production rather than falling back to a dev value |
+| Uploads | `image/*` only; writes require authentication |
+
+Where the edges are:
+
+- **`style-src` still allows `'unsafe-inline'`.** A nonce authorises a `<style>` element but not
+  a `style="…"` attribute, and the block views set inline style attributes throughout — that is
+  how the canvas expresses colour and layout. Script execution is what stored XSS needs, and
+  `script-src` is strict.
+- **The CSP does not cover the static pages or `/admin`.** A nonce forces dynamic rendering, and
+  the hand-written pages contain no stored content, so they stay static on the baseline headers.
+  The admin is Payload's own app, behind a login. If you add a route that renders stored content,
+  add it to the matcher in `src/proxy.ts`.
+- **Rate limiting is in-process memory.** Counters reset on deploy and each instance keeps its
+  own, so the effective limit is `5 × instances`. It stops a script hammering the form; it is not
+  a defence against a distributed flood. Moving it to Redis means replacing one function in
+  `src/lib/rate-limit.ts`. If your platform forwards neither `x-forwarded-for` nor `x-real-ip`,
+  every visitor collapses into one bucket and real users start seeing 429s.
+- **`npm audit` reports transitive advisories** via `@payloadcms/db-*` → `drizzle-kit` →
+  `@esbuild-kit/esm-loader`. Build-time tooling, not runtime, and not resolvable without an
+  upstream Payload bump.
+
+---
+
 ## Local setup
 
 ```bash

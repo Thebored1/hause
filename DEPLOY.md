@@ -40,6 +40,11 @@ Project → **Settings** → **Environment Variables**:
 | `PAYLOAD_SECRET` | a long random string | Signs session tokens. The build **fails deliberately** in production if this is missing. |
 | `DATABASE_URI` | the `postgres://…` string | Selects the Postgres adapter. |
 | `BLOB_READ_WRITE_TOKEN` | set by Vercel | Selects Blob storage for uploads. |
+| `NEXT_IMAGE_HOSTS` | `xxxx.public.blob.vercel-storage.com` | **Needed once Blob storage is on.** Uploads are then served from the blob host, and `next/image` refuses any remote host not listed — without this, uploaded images silently fail to render. Comma-separated; copy the hostname from any uploaded file's URL. |
+
+`NEXT_IMAGE_HOSTS` is an allowlist rather than a wildcard on purpose. `hostname: "**"`
+would let anyone hand `/_next/image` an arbitrary URL and have the server fetch it —
+an open proxy for laundering requests and burning your bandwidth.
 
 Generate a secret with:
 
