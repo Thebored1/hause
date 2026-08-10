@@ -692,6 +692,41 @@ export interface Page {
             blockType: 'numberedCards';
           }
         | {
+            eyebrow: string;
+            title: string;
+            body: string;
+            cards?:
+              | {
+                  title: string;
+                  desc: string;
+                  id?: string | null;
+                }[]
+              | null;
+            image: string;
+            imageAlt: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cardListFeature';
+          }
+        | {
+            eyebrow: string;
+            title: string;
+            intro: string;
+            cards?:
+              | {
+                  icon?:
+                    | ('clock' | 'layout-grid' | 'zap' | 'shield-check' | 'users' | 'building' | 'sparkles' | 'layers')
+                    | null;
+                  title: string;
+                  desc: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'iconCards';
+          }
+        | {
             content?:
               | {
                   [k: string]: unknown;
@@ -1449,6 +1484,41 @@ export interface PagesSelect<T extends boolean = true> {
                   };
               columns?: T;
               tone?: T;
+              id?: T;
+              blockName?: T;
+            };
+        cardListFeature?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              body?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    desc?: T;
+                    id?: T;
+                  };
+              image?: T;
+              imageAlt?: T;
+              id?: T;
+              blockName?: T;
+            };
+        iconCards?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              intro?: T;
+              cards?:
+                | T
+                | {
+                    icon?: T;
+                    title?: T;
+                    desc?: T;
+                    id?: T;
+                  };
               id?: T;
               blockName?: T;
             };

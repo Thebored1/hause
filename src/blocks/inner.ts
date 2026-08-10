@@ -437,3 +437,58 @@ export const NumberedCardsBlock: Block = {
     },
   ],
 };
+
+export const CardListFeatureBlock: Block = {
+  slug: "cardListFeature",
+  labels: { singular: "Card List Feature", plural: "Card List Features" },
+  admin: { group: "Page sections" },
+  fields: [
+    { name: "eyebrow", type: "text", required: true },
+    { name: "title", type: "text", required: true },
+    { name: "body", type: "textarea", required: true },
+    {
+      name: "cards",
+      type: "array",
+      labels: { singular: "Card", plural: "Cards" },
+      fields: [
+        { name: "title", type: "text", required: true },
+        { name: "desc", type: "textarea", required: true },
+      ],
+    },
+    {
+      type: "row",
+      fields: [
+        { name: "image", type: "text", required: true, admin: { width: "50%" } },
+        { name: "imageAlt", type: "text", required: true, admin: { width: "50%" } },
+      ],
+    },
+  ],
+};
+
+export const IconCardsBlock: Block = {
+  slug: "iconCards",
+  labels: { singular: "Icon Cards", plural: "Icon Cards" },
+  admin: { group: "Page sections" },
+  fields: [
+    { name: "eyebrow", type: "text", required: true },
+    { name: "title", type: "text", required: true },
+    { name: "intro", type: "textarea", required: true },
+    {
+      name: "cards",
+      type: "array",
+      labels: { singular: "Card", plural: "Cards" },
+      fields: [
+        {
+          name: "icon",
+          type: "select",
+          defaultValue: "clock",
+          options: ["clock", "layout-grid", "zap", "shield-check", "users", "building", "sparkles", "layers"].map(
+            (v) => ({ label: v, value: v }),
+          ),
+        },
+        { name: "title", type: "text", required: true },
+        { name: "desc", type: "textarea", required: true },
+      ],
+    },
+  ],
+};

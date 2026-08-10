@@ -32,6 +32,8 @@ import ValuesGrid, { type Value } from "@/components/ValuesGrid";
 import ReachBar from "@/components/ReachBar";
 import ChecklistFeature from "@/components/ChecklistFeature";
 import NumberedCards, { type NumberedCard } from "@/components/NumberedCards";
+import CardListFeature, { type FeatureCard } from "@/components/CardListFeature";
+import IconCards, { type IconCard } from "@/components/IconCards";
 import { type FAQItem } from "@/components/FAQAccordion";
 import ContactModal from "@/components/ContactModal";
 import Navbar from "@/components/Navbar";
@@ -424,6 +426,30 @@ export default function PageBlocks({
                 // Stored as a string because Payload selects are string-valued.
                 columns={val<string>(block.columns) ? (Number(block.columns) as 2 | 3 | 4) : undefined}
                 tone={val<"ivory" | "sand">(block.tone)}
+              />
+            );
+
+          case "cardListFeature":
+            return (
+              <CardListFeature
+                key={i}
+                eyebrow={String(block.eyebrow ?? "")}
+                title={String(block.title ?? "")}
+                body={String(block.body ?? "")}
+                cards={val<FeatureCard[]>(block.cards) ?? []}
+                image={String(block.image ?? "")}
+                imageAlt={String(block.imageAlt ?? "")}
+              />
+            );
+
+          case "iconCards":
+            return (
+              <IconCards
+                key={i}
+                eyebrow={String(block.eyebrow ?? "")}
+                title={String(block.title ?? "")}
+                intro={String(block.intro ?? "")}
+                cards={val<IconCard[]>(block.cards) ?? []}
               />
             );
 
