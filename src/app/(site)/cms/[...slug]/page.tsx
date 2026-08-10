@@ -10,12 +10,20 @@ export const dynamic = "force-dynamic";
 // Catch-all rather than [slug]: nested pages such as the service details are
 // stored under slugs like "services/renovation-remodeling".
 
-/** Fetches a CMS page by slug. Returns null when there isn't one. */
+/**
+ * Fetches a published CMS page by slug. Returns null when there isn't one.
+ *
+ * The `_status` filter is explicit because the local API runs with
+ * overrideAccess: true, so the collection's read access rule does not apply
+ * here — without it, drafts would be served to visitors.
+ */
 export async function getPageBySlug(slug: string) {
   const payload = await getPayload({ config });
   const { docs } = await payload.find({
     collection: "pages",
-    where: { slug: { equals: slug } },
+    where: {
+      and: [{ slug: { equals: slug } }, { _status: { equals: "published" } }],
+    },
     limit: 1,
     depth: 1,
   });

@@ -42,7 +42,10 @@ import {
 export const Pages: CollectionConfig = {
   slug: "pages",
   admin: { useAsTitle: "title", defaultColumns: ["title", "slug", "updatedAt"] },
-  access: { read: () => true },
+  access: {
+    // Drafts stay private; published pages are public. Same rule as Posts.
+    read: ({ req }) => (req.user ? true : { _status: { equals: "published" } }),
+  },
   versions: { drafts: { autosave: false }, maxPerDoc: 25 },
   fields: [
     { name: "title", type: "text", required: true },

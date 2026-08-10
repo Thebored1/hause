@@ -43,7 +43,7 @@ const wrap = (items: string[]) => items.map((value) => ({ value }));
 
 const home = { label: "Home", href: "/" };
 
-const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
+const pages: Pick<Page, "title" | "slug" | "meta" | "layout" | "_status">[] = [
   {
     title: "FAQs",
     slug: "faqs",
@@ -825,13 +825,15 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
 
 const payload = await getPayload({ config });
 
-for (const page of pages) {
+for (const entry of pages) {
   const { docs } = await payload.find({
     collection: "pages",
-    where: { slug: { equals: page.slug } },
+    where: { slug: { equals: entry.slug } },
     limit: 1,
     depth: 0,
   });
+
+  const page = { ...entry, _status: "published" as const };
 
   if (docs[0]) {
     await payload.update({ collection: "pages", id: docs[0].id, data: page });
