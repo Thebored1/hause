@@ -43,17 +43,27 @@ const val = <T,>(v: unknown): T | undefined => {
 export default function PageBlocks({
   blocks,
   withChrome = false,
+  contactModal = true,
+  activePath,
 }: {
   blocks: PageBlock[];
   /** Render the site navbar and footer around the blocks. */
   withChrome?: boolean;
+  /**
+   * Whether the nav and CTA buttons open the contact modal. The home page
+   * does; the inner pages link straight to /contact instead, so a CMS page
+   * standing in for one must be able to turn this off.
+   */
+  contactModal?: boolean;
+  /** The route this page stands in for, so the nav highlights the right link. */
+  activePath?: string;
 }) {
   const [contactOpen, setContactOpen] = useState(false);
-  const openContact = () => setContactOpen(true);
+  const openContact = contactModal ? () => setContactOpen(true) : undefined;
 
   return (
     <>
-      {withChrome ? <Navbar onOpenContact={openContact} /> : null}
+      {withChrome ? <Navbar onOpenContact={openContact} activePath={activePath} /> : null}
       {blocks.map((block, i) => {
         switch (block.blockType) {
           case "hero":
@@ -202,7 +212,9 @@ export default function PageBlocks({
 
       {withChrome ? <Footer /> : null}
 
-      <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
+      {contactModal ? (
+        <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />
+      ) : null}
     </>
   );
 }

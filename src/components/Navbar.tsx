@@ -8,6 +8,8 @@ import { Menu, X, ArrowUpRight, Phone, Mail, ChevronDown, Sparkles, Home, Buildi
 
 interface NavbarProps {
   onOpenContact?: () => void;
+  /** Overrides the route used to decide which nav link is highlighted. */
+  activePath?: string;
 }
 
 export const SERVICE_ITEMS = [
@@ -43,12 +45,15 @@ export const SERVICE_ITEMS = [
   },
 ];
 
-export default function Navbar({ onOpenContact }: NavbarProps) {
+export default function Navbar({ onOpenContact, activePath }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
+  const realPathname = usePathname();
+  // A CMS page served from /cms/<slug> still belongs to the route it stands in
+  // for, so the highlighted nav link comes from `activePath` when given.
+  const pathname = activePath ?? realPathname;
   const isHome = pathname === "/";
   const isServicePage = pathname.startsWith("/services");
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -66,7 +71,8 @@ export default function Navbar({ onOpenContact }: NavbarProps) {
     setMobileMenuOpen(false);
     setServicesDropdownOpen(false);
     setMobileServicesOpen(false);
-  }, [pathname]);
+    // Keyed off the real route: `pathname` may be pinned by `activePath`.
+  }, [realPathname]);
 
   // Click outside to close desktop dropdown
   useEffect(() => {

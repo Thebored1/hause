@@ -132,6 +132,10 @@ export interface Page {
   title: string;
   slug: string;
   /**
+   * Off means they link to /contact — how the inner pages behave.
+   */
+  contactModal?: boolean | null;
+  /**
    * Falls back to the page title and the site description.
    */
   meta?: {
@@ -603,6 +607,7 @@ export interface PayloadMigration {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  contactModal?: T;
   meta?:
     | T
     | {

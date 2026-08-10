@@ -20,6 +20,16 @@ export const Pages: CollectionConfig = {
     { name: "title", type: "text", required: true },
     { name: "slug", type: "text", required: true, unique: true, index: true },
     {
+      name: "contactModal",
+      type: "checkbox",
+      label: "Nav and CTA buttons open the contact modal",
+      defaultValue: false,
+      admin: {
+        position: "sidebar",
+        description: "Off means they link to /contact — how the inner pages behave.",
+      },
+    },
+    {
       name: "meta",
       type: "group",
       label: "SEO",

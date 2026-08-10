@@ -40,7 +40,12 @@ export default async function CmsPage({ params }: { params: Promise<{ slug: stri
   return (
     <SmoothScroll>
       <main className="min-h-screen bg-[#0c0d0e] text-[#f3efea] selection:bg-[#171717] selection:text-[#f3efea]">
-        <PageBlocks blocks={(page.layout ?? []) as PageBlock[]} withChrome />
+        <PageBlocks
+          blocks={(page.layout ?? []) as PageBlock[]}
+          withChrome
+          contactModal={Boolean(page.contactModal)}
+          activePath={`/${slug}`}
+        />
       </main>
     </SmoothScroll>
   );
