@@ -32,9 +32,14 @@ export interface ValuesGridProps {
   values?: Value[];
 }
 
+export const VALUES_GRID_DEFAULTS = {
+  eyebrow: "What We Stand For",
+  title: "Our Values",
+};
+
 export default function ValuesGrid({
-  eyebrow = "What We Stand For",
-  title = "Our Values",
+  eyebrow = VALUES_GRID_DEFAULTS.eyebrow,
+  title = VALUES_GRID_DEFAULTS.title,
   values = DEFAULT_VALUES,
 }: ValuesGridProps) {
   return (

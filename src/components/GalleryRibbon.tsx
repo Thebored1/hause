@@ -26,11 +26,18 @@ export interface GalleryRibbonProps {
   items?: GalleryItem[];
 }
 
+export const GALLERY_RIBBON_DEFAULTS = {
+  eyebrow: "Craft & Detailing",
+  title: "Materials, Joinery & Built Environments",
+  linkLabel: "View Full Portfolio",
+  linkHref: "/projects",
+};
+
 export default function GalleryRibbon({
-  eyebrow = "Craft & Detailing",
-  title = "Materials, Joinery & Built Environments",
-  linkLabel = "View Full Portfolio",
-  linkHref = "/projects",
+  eyebrow = GALLERY_RIBBON_DEFAULTS.eyebrow,
+  title = GALLERY_RIBBON_DEFAULTS.title,
+  linkLabel = GALLERY_RIBBON_DEFAULTS.linkLabel,
+  linkHref = GALLERY_RIBBON_DEFAULTS.linkHref,
   items = DEFAULT_GALLERY,
 }: GalleryRibbonProps) {
   return (

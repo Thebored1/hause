@@ -24,11 +24,18 @@ export interface PhotoStripProps {
   photos?: CompletedPhoto[];
 }
 
+export const PHOTO_STRIP_DEFAULTS = {
+  eyebrow: "Proof of Work",
+  title: "Handed-Over Residential & Commercial Spaces",
+  linkLabel: "View Full Portfolio",
+  linkHref: "/projects",
+};
+
 export default function PhotoStrip({
-  eyebrow = "Proof of Work",
-  title = "Handed-Over Residential & Commercial Spaces",
-  linkLabel = "View Full Portfolio",
-  linkHref = "/projects",
+  eyebrow = PHOTO_STRIP_DEFAULTS.eyebrow,
+  title = PHOTO_STRIP_DEFAULTS.title,
+  linkLabel = PHOTO_STRIP_DEFAULTS.linkLabel,
+  linkHref = PHOTO_STRIP_DEFAULTS.linkHref,
   photos = DEFAULT_COMPLETED_PHOTOS,
 }: PhotoStripProps) {
   return (

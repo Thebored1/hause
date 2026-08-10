@@ -12,12 +12,20 @@ export interface CommitmentBarProps {
   ctaHref?: string;
 }
 
+export const COMMITMENT_BAR_DEFAULTS = {
+  eyebrow: "The Hause Commitment",
+  title: "Locked BOQs. No Cost Escalations.",
+  body: "Once the scope of work and 3D visualization are approved, our Bill of Quantities remains locked. No mid-project price surprises or hidden contractor markups.",
+  ctaLabel: "Book Discovery Call",
+  ctaHref: "/contact",
+};
+
 export default function CommitmentBar({
-  eyebrow = "The Hause Commitment",
-  title = "Locked BOQs. No Cost Escalations.",
-  body = "Once the scope of work and 3D visualization are approved, our Bill of Quantities remains locked. No mid-project price surprises or hidden contractor markups.",
-  ctaLabel = "Book Discovery Call",
-  ctaHref = "/contact",
+  eyebrow = COMMITMENT_BAR_DEFAULTS.eyebrow,
+  title = COMMITMENT_BAR_DEFAULTS.title,
+  body = COMMITMENT_BAR_DEFAULTS.body,
+  ctaLabel = COMMITMENT_BAR_DEFAULTS.ctaLabel,
+  ctaHref = COMMITMENT_BAR_DEFAULTS.ctaHref,
 }: CommitmentBarProps) {
   return (
     <section className="py-24 px-6 sm:px-12 md:px-16 bg-[#f3efea] text-[#18181b] border-t border-black/10">

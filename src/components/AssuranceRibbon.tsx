@@ -11,7 +11,7 @@ export const RIBBON_ICONS: Record<string, LucideIcon> = {
 };
 
 export interface AssuranceCard {
-  icon: string;
+  icon: "shield-check" | "clock" | "award";
   title: string;
   body: string;
 }

@@ -19,7 +19,7 @@ export interface Pillar {
   tag: string;
   desc: string;
   details: string[];
-  icon: string;
+  icon: "shield-check" | "file-check" | "target" | "eye" | "globe";
 }
 
 export const DEFAULT_PILLARS: Pillar[] = [
@@ -91,9 +91,14 @@ export interface PillarsGridProps {
   pillars?: Pillar[];
 }
 
+export const PILLARS_GRID_DEFAULTS = {
+  eyebrow: "The Hause Foundation",
+  title: "Built on five core principles of accountability.",
+};
+
 export default function PillarsGrid({
-  eyebrow = "The Hause Foundation",
-  title = "Built on five core principles of accountability.",
+  eyebrow = PILLARS_GRID_DEFAULTS.eyebrow,
+  title = PILLARS_GRID_DEFAULTS.title,
   pillars = DEFAULT_PILLARS,
 }: PillarsGridProps) {
   return (

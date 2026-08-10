@@ -27,16 +27,27 @@ export interface StudioStoryProps {
   imageCaption?: string;
 }
 
+export const STUDIO_STORY_DEFAULTS = {
+  eyebrow: "Our Story",
+  title: "Born from digital precision. Built for physical spaces.",
+  body1: "Hause Interiors grew out of a digital design and technology studio built on measurable outcomes, obsessive attention to detail, and transparent communication. We realized that while 3D interior renders look stunning on screen, physical execution in India was plagued by broken promises, hidden costs, and chaotic contractor hand-offs.",
+  body2: "We built Hause Interiors to provide a single, accountable partner for homeowners and businesses — combining spatial architecture, photorealistic 3D visualization, detailed Bill of Quantities (BOQ) costing, and end-to-end site execution under one roof.",
+  image: "/images/jaiswal/jaiswal-03.jpg",
+  imageAlt: "Hause Interiors Executed Living Space",
+  imageEyebrow: "Featured Project",
+  imageCaption: "Living room joinery, ambient lighting & fluted wall paneling executed in Delhi NCR.",
+};
+
 export default function StudioStory({
-  eyebrow = "Our Story",
-  title = "Born from digital precision. Built for physical spaces.",
-  body1 = "Hause Interiors grew out of a digital design and technology studio built on measurable outcomes, obsessive attention to detail, and transparent communication. We realized that while 3D interior renders look stunning on screen, physical execution in India was plagued by broken promises, hidden costs, and chaotic contractor hand-offs.",
-  body2 = "We built Hause Interiors to provide a single, accountable partner for homeowners and businesses — combining spatial architecture, photorealistic 3D visualization, detailed Bill of Quantities (BOQ) costing, and end-to-end site execution under one roof.",
+  eyebrow = STUDIO_STORY_DEFAULTS.eyebrow,
+  title = STUDIO_STORY_DEFAULTS.title,
+  body1 = STUDIO_STORY_DEFAULTS.body1,
+  body2 = STUDIO_STORY_DEFAULTS.body2,
   stats = DEFAULT_STORY_STATS,
-  image = "/images/jaiswal/jaiswal-03.jpg",
-  imageAlt = "Hause Interiors Executed Living Space",
-  imageEyebrow = "Featured Project",
-  imageCaption = "Living room joinery, ambient lighting & fluted wall paneling executed in Delhi NCR.",
+  image = STUDIO_STORY_DEFAULTS.image,
+  imageAlt = STUDIO_STORY_DEFAULTS.imageAlt,
+  imageEyebrow = STUDIO_STORY_DEFAULTS.imageEyebrow,
+  imageCaption = STUDIO_STORY_DEFAULTS.imageCaption,
 }: StudioStoryProps) {
   return (
     <section className="py-24 px-6 sm:px-12 md:px-16 bg-[#f9f8f6] text-[#18181b]">

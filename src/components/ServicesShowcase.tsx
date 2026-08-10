@@ -13,8 +13,7 @@ export interface ServiceEntry {
   desc: string;
   features: string[];
   image: string;
-  /** "light" | "dark" | "sand" — anything else falls back to light. */
-  theme: string;
+  theme: "light" | "sand" | "dark";
   /** Links to /contact rather than /services/<slug>. */
   isExternalOrContact?: boolean;
 }
@@ -113,9 +112,14 @@ export interface ServicesShowcaseProps {
   services?: ServiceEntry[];
 }
 
+export const SERVICES_SHOWCASE_DEFAULTS = {
+  eyebrow: "End-to-End Capabilities",
+  title: "Specialized practices for residential and commercial environments.",
+};
+
 export default function ServicesShowcase({
-  eyebrow = "End-to-End Capabilities",
-  title = "Specialized practices for residential and commercial environments.",
+  eyebrow = SERVICES_SHOWCASE_DEFAULTS.eyebrow,
+  title = SERVICES_SHOWCASE_DEFAULTS.title,
   services = DEFAULT_SERVICES_LIST,
 }: ServicesShowcaseProps) {
   return (

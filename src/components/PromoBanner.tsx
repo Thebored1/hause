@@ -20,15 +20,26 @@ export interface PromoBannerProps {
 
 const isExternal = (href: string) => /^(https?:)?\/\/|^mailto:|^tel:/.test(href);
 
+export const PROMO_BANNER_DEFAULTS = {
+  eyebrow: "In-Person Consultations",
+  title: "Visit Our Studio & Experience Materials Hands-On",
+  body: "Feel high-gloss acrylics, touch textured fluted panels, inspect soft-close German tandem boxes, and compare quartz stone samples before making design decisions.",
+  ctaLabel: "Open in Maps",
+  ctaHref: "https://maps.google.com/?q=2nd+A+255+Nehru+Nagar+Ghaziabad",
+  spacing: "normal" as const,
+  cardShadow: "sm" as const,
+  showArrow: true,
+};
+
 export default function PromoBanner({
-  eyebrow = "In-Person Consultations",
-  title = "Visit Our Studio & Experience Materials Hands-On",
-  body = "Feel high-gloss acrylics, touch textured fluted panels, inspect soft-close German tandem boxes, and compare quartz stone samples before making design decisions.",
-  ctaLabel = "Open in Maps",
-  ctaHref = "https://maps.google.com/?q=2nd+A+255+Nehru+Nagar+Ghaziabad",
-  spacing = "normal",
-  cardShadow = "sm",
-  showArrow = true,
+  eyebrow = PROMO_BANNER_DEFAULTS.eyebrow,
+  title = PROMO_BANNER_DEFAULTS.title,
+  body = PROMO_BANNER_DEFAULTS.body,
+  ctaLabel = PROMO_BANNER_DEFAULTS.ctaLabel,
+  ctaHref = PROMO_BANNER_DEFAULTS.ctaHref,
+  spacing = PROMO_BANNER_DEFAULTS.spacing,
+  cardShadow = PROMO_BANNER_DEFAULTS.cardShadow,
+  showArrow = PROMO_BANNER_DEFAULTS.showArrow,
 }: PromoBannerProps) {
   const base =
     "px-7 py-3.5 bg-[#18181b] text-white text-xs font-bold tracking-[0.16em] uppercase hover:bg-black transition-colors rounded-full shadow-lg";

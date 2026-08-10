@@ -67,10 +67,15 @@ export interface RegionsDirectoryProps {
   ctaHref?: string;
 }
 
+export const REGIONS_DIRECTORY_DEFAULTS = {
+  specialtiesLabel: "Key Project Focus:",
+  ctaHref: "/contact",
+};
+
 export default function RegionsDirectory({
   regions = DEFAULT_REGIONS,
-  specialtiesLabel = "Key Project Focus:",
-  ctaHref = "/contact",
+  specialtiesLabel = REGIONS_DIRECTORY_DEFAULTS.specialtiesLabel,
+  ctaHref = REGIONS_DIRECTORY_DEFAULTS.ctaHref,
 }: RegionsDirectoryProps) {
   return (
     <section className="py-24 px-6 sm:px-12 md:px-16 bg-[#f9f8f6] text-[#18181b]">

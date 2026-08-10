@@ -16,12 +16,19 @@ export interface FAQSectionProps {
   askHref?: string;
 }
 
+export const FAQ_SECTION_DEFAULTS = {
+  askTitle: "Have a specific question not answered here?",
+  askBody: "Our design directors are happy to answer your specific spatial, timeline, or material queries.",
+  askLabel: "Ask Us Directly",
+  askHref: "/contact",
+};
+
 export default function FAQSection({
   items,
-  askTitle = "Have a specific question not answered here?",
-  askBody = "Our design directors are happy to answer your specific spatial, timeline, or material queries.",
-  askLabel = "Ask Us Directly",
-  askHref = "/contact",
+  askTitle = FAQ_SECTION_DEFAULTS.askTitle,
+  askBody = FAQ_SECTION_DEFAULTS.askBody,
+  askLabel = FAQ_SECTION_DEFAULTS.askLabel,
+  askHref = FAQ_SECTION_DEFAULTS.askHref,
 }: FAQSectionProps) {
   return (
     <section className="py-24 px-6 sm:px-12 md:px-16 bg-[#f9f8f6] text-[#18181b]">

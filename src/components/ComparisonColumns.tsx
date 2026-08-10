@@ -26,12 +26,19 @@ export const DEFAULT_POSITIVES = [
   "Contractual delivery milestones and weekly transparent progress reporting.",
 ];
 
+export const COMPARISON_COLUMNS_DEFAULTS = {
+  eyebrow: "The Difference",
+  title: "Traditional Interior Contractors vs. Hause Interiors",
+  negativeLabel: "Traditional Multi-Vendor Route",
+  positiveLabel: "The Hause Interiors Standard",
+};
+
 export default function ComparisonColumns({
-  eyebrow = "The Difference",
-  title = "Traditional Interior Contractors vs. Hause Interiors",
-  negativeLabel = "Traditional Multi-Vendor Route",
+  eyebrow = COMPARISON_COLUMNS_DEFAULTS.eyebrow,
+  title = COMPARISON_COLUMNS_DEFAULTS.title,
+  negativeLabel = COMPARISON_COLUMNS_DEFAULTS.negativeLabel,
   negatives = DEFAULT_NEGATIVES,
-  positiveLabel = "The Hause Interiors Standard",
+  positiveLabel = COMPARISON_COLUMNS_DEFAULTS.positiveLabel,
   positives = DEFAULT_POSITIVES,
 }: ComparisonColumnsProps) {
   return (

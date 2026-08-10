@@ -12,6 +12,35 @@ import { getPayload } from "payload";
 import config from "../src/payload.config";
 import type { Page } from "../src/payload-types";
 
+// Section content comes from the components' own exported defaults, so the
+// seeded pages carry the real copy instead of relying on fallbacks — and the
+// two can never disagree.
+import { defaultFAQs } from "../src/components/FAQAccordion";
+import { DEFAULT_REGIONS } from "../src/components/RegionsDirectory";
+import { STUDIO_STORY_DEFAULTS, DEFAULT_STORY_STATS } from "../src/components/StudioStory";
+import { PHILOSOPHY_GRID_DEFAULTS, DEFAULT_PHILOSOPHIES } from "../src/components/PhilosophyGrid";
+import { TEAM_NETWORK_DEFAULTS, DEFAULT_TEAM_POINTS } from "../src/components/TeamNetwork";
+import { GALLERY_RIBBON_DEFAULTS, DEFAULT_GALLERY } from "../src/components/GalleryRibbon";
+import { VALUES_GRID_DEFAULTS, DEFAULT_VALUES } from "../src/components/ValuesGrid";
+import { REACH_BAR_DEFAULTS } from "../src/components/ReachBar";
+import { SERVICES_SHOWCASE_DEFAULTS, DEFAULT_SERVICES_LIST } from "../src/components/ServicesShowcase";
+import { DEFAULT_ASSURANCES } from "../src/components/AssuranceRibbon";
+import { PROCESS_DEEP_DIVE_DEFAULTS, DEFAULT_PROCESS_STEPS } from "../src/components/ProcessDeepDive";
+import { COMMITMENT_BAR_DEFAULTS } from "../src/components/CommitmentBar";
+import { RATING_BAR_DEFAULTS, DEFAULT_RATING_FACTS } from "../src/components/RatingBar";
+import { DEFAULT_TESTIMONIALS } from "../src/components/TestimonialsGrid";
+import { PHOTO_STRIP_DEFAULTS, DEFAULT_COMPLETED_PHOTOS } from "../src/components/PhotoStrip";
+import { PILLARS_GRID_DEFAULTS, DEFAULT_PILLARS } from "../src/components/PillarsGrid";
+import {
+  COMPARISON_COLUMNS_DEFAULTS,
+  DEFAULT_NEGATIVES,
+  DEFAULT_POSITIVES,
+} from "../src/components/ComparisonColumns";
+
+/** Payload arrays can't hold bare strings, so string lists are wrapped. */
+const wrap = (items: string[]) => items.map((value) => ({ value }));
+
+
 const home = { label: "Home", href: "/" };
 
 const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
@@ -40,6 +69,7 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
       // No items: the standard question set lives in FAQAccordion.
       {
         blockType: "faqSection",
+        items: defaultFAQs.map((f) => ({ ...f, category: f.category ?? null })),
         askTitle: "Have a specific question not answered here?",
         askBody:
           "Our design directors are happy to answer your specific spatial, timeline, or material queries.",
@@ -154,7 +184,16 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
         secondaryCtaHref: "/services",
       },
       // No regions: the standard service-area list lives in RegionsDirectory.
-      { blockType: "regionsDirectory", specialtiesLabel: "Key Project Focus:", ctaHref: "/contact" },
+      {
+        blockType: "regionsDirectory",
+        specialtiesLabel: "Key Project Focus:",
+        ctaHref: "/contact",
+        regions: DEFAULT_REGIONS.map((r) => ({
+          ...r,
+          highlight: r.highlight ?? false,
+          specialties: wrap(r.specialties),
+        })),
+      },
       {
         blockType: "promoBanner",
         eyebrow: "Central Studio",
@@ -191,12 +230,12 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
         secondaryCtaText: "View Our Work",
         secondaryCtaHref: "/projects",
       },
-      { blockType: "studioStory" },
-      { blockType: "philosophyGrid" },
-      { blockType: "teamNetwork" },
-      { blockType: "galleryRibbon" },
-      { blockType: "valuesGrid" },
-      { blockType: "reachBar" },
+      { blockType: "studioStory", ...STUDIO_STORY_DEFAULTS, stats: DEFAULT_STORY_STATS },
+      { blockType: "philosophyGrid", ...PHILOSOPHY_GRID_DEFAULTS, philosophies: DEFAULT_PHILOSOPHIES },
+      { blockType: "teamNetwork", ...TEAM_NETWORK_DEFAULTS, points: wrap(DEFAULT_TEAM_POINTS) },
+      { blockType: "galleryRibbon", ...GALLERY_RIBBON_DEFAULTS, items: DEFAULT_GALLERY },
+      { blockType: "valuesGrid", ...VALUES_GRID_DEFAULTS, values: DEFAULT_VALUES },
+      { blockType: "reachBar", ...REACH_BAR_DEFAULTS },
       { blockType: "cta", bgImage: "/images/jaiswal/jaiswal-01.jpg" },
     ],
   },
@@ -222,8 +261,16 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
         secondaryCtaText: "View Portfolio",
         secondaryCtaHref: "/projects",
       },
-      { blockType: "servicesShowcase" },
-      { blockType: "assuranceRibbon" },
+      {
+        blockType: "servicesShowcase",
+        ...SERVICES_SHOWCASE_DEFAULTS,
+        services: DEFAULT_SERVICES_LIST.map((sv) => ({
+          ...sv,
+          isExternalOrContact: sv.isExternalOrContact ?? false,
+          features: wrap(sv.features),
+        })),
+      },
+      { blockType: "assuranceRibbon", cards: DEFAULT_ASSURANCES },
       { blockType: "cta", bgImage: "/images/jaiswal/jaiswal-03.jpg" },
     ],
   },
@@ -249,8 +296,12 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
         secondaryCtaText: "View Portfolio",
         secondaryCtaHref: "/projects",
       },
-      { blockType: "processDeepDive" },
-      { blockType: "commitmentBar" },
+      {
+        blockType: "processDeepDive",
+        ...PROCESS_DEEP_DIVE_DEFAULTS,
+        steps: DEFAULT_PROCESS_STEPS.map((st) => ({ ...st, deliverables: wrap(st.deliverables) })),
+      },
+      { blockType: "commitmentBar", ...COMMITMENT_BAR_DEFAULTS },
       { blockType: "cta", bgImage: "/images/jaiswal/jaiswal-24.jpg" },
     ],
   },
@@ -276,9 +327,12 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
         secondaryCtaText: "View Portfolio",
         secondaryCtaHref: "/projects",
       },
-      { blockType: "ratingBar" },
-      { blockType: "testimonialsGrid" },
-      { blockType: "photoStrip" },
+      { blockType: "ratingBar", ...RATING_BAR_DEFAULTS, facts: wrap(DEFAULT_RATING_FACTS) },
+      {
+        blockType: "testimonialsGrid",
+        testimonials: DEFAULT_TESTIMONIALS.map((t) => ({ ...t, tags: wrap(t.tags) })),
+      },
+      { blockType: "photoStrip", ...PHOTO_STRIP_DEFAULTS, photos: DEFAULT_COMPLETED_PHOTOS },
       { blockType: "cta" },
     ],
   },
@@ -304,8 +358,17 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
         secondaryCtaText: "Explore Our Work",
         secondaryCtaHref: "/projects",
       },
-      { blockType: "pillarsGrid" },
-      { blockType: "comparisonColumns" },
+      {
+        blockType: "pillarsGrid",
+        ...PILLARS_GRID_DEFAULTS,
+        pillars: DEFAULT_PILLARS.map((pl) => ({ ...pl, details: wrap(pl.details) })),
+      },
+      {
+        blockType: "comparisonColumns",
+        ...COMPARISON_COLUMNS_DEFAULTS,
+        negatives: wrap(DEFAULT_NEGATIVES),
+        positives: wrap(DEFAULT_POSITIVES),
+      },
       { blockType: "cta" },
     ],
   },

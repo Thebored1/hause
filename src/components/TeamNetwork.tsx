@@ -22,14 +22,24 @@ export const DEFAULT_TEAM_POINTS = [
   "Factory-partnered modular cabinetry production facilities in NCR",
 ];
 
+export const TEAM_NETWORK_DEFAULTS = {
+  image: "/images/jaiswal/jaiswal-10.jpg",
+  imageAlt: "Design and Project Supervision Team",
+  imageEyebrow: "On-Site Craftsmanship",
+  imageCaption: "100% on-ground site supervision by dedicated project architects.",
+  eyebrow: "The People Behind The Craft",
+  title: "Our Team & Execution Network",
+  body: "Hause Interiors is run by an in-house team of interior designers and project managers, supported by empanelled architects, site supervisors, and a vetted network of carpentry, electrical, civil, and fabrication partners.",
+};
+
 export default function TeamNetwork({
-  image = "/images/jaiswal/jaiswal-10.jpg",
-  imageAlt = "Design and Project Supervision Team",
-  imageEyebrow = "On-Site Craftsmanship",
-  imageCaption = "100% on-ground site supervision by dedicated project architects.",
-  eyebrow = "The People Behind The Craft",
-  title = "Our Team & Execution Network",
-  body = "Hause Interiors is run by an in-house team of interior designers and project managers, supported by empanelled architects, site supervisors, and a vetted network of carpentry, electrical, civil, and fabrication partners.",
+  image = TEAM_NETWORK_DEFAULTS.image,
+  imageAlt = TEAM_NETWORK_DEFAULTS.imageAlt,
+  imageEyebrow = TEAM_NETWORK_DEFAULTS.imageEyebrow,
+  imageCaption = TEAM_NETWORK_DEFAULTS.imageCaption,
+  eyebrow = TEAM_NETWORK_DEFAULTS.eyebrow,
+  title = TEAM_NETWORK_DEFAULTS.title,
+  body = TEAM_NETWORK_DEFAULTS.body,
   points = DEFAULT_TEAM_POINTS,
 }: TeamNetworkProps) {
   return (

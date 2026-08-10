@@ -13,12 +13,20 @@ export interface ReachBarProps {
   ctaHref?: string;
 }
 
+export const REACH_BAR_DEFAULTS = {
+  eyebrow: "Location & Reach",
+  title: "Serving All of Delhi NCR & Select Pan-India Projects",
+  body: "Headquartered in Ghaziabad with on-ground execution teams actively operating across Delhi, Gurugram, Noida, Greater Noida, and Faridabad.",
+  ctaLabel: "Explore Locations",
+  ctaHref: "/locations",
+};
+
 export default function ReachBar({
-  eyebrow = "Location & Reach",
-  title = "Serving All of Delhi NCR & Select Pan-India Projects",
-  body = "Headquartered in Ghaziabad with on-ground execution teams actively operating across Delhi, Gurugram, Noida, Greater Noida, and Faridabad.",
-  ctaLabel = "Explore Locations",
-  ctaHref = "/locations",
+  eyebrow = REACH_BAR_DEFAULTS.eyebrow,
+  title = REACH_BAR_DEFAULTS.title,
+  body = REACH_BAR_DEFAULTS.body,
+  ctaLabel = REACH_BAR_DEFAULTS.ctaLabel,
+  ctaHref = REACH_BAR_DEFAULTS.ctaHref,
 }: ReachBarProps) {
   return (
     <section className="py-20 px-6 sm:px-12 md:px-16 bg-[#0c0d0e] border-t border-white/10">

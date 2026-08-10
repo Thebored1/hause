@@ -46,15 +46,26 @@ export interface ContactDetailsProps {
 /** Strips everything a `tel:` href can't carry. */
 const telHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, "")}`;
 
+export const CONTACT_DETAILS_DEFAULTS = {
+  eyebrow: "Studio & Direct Details",
+  title: "Reach our design directors directly.",
+  body: "We look forward to discussing your upcoming residential or commercial project. Reach out by phone, email, or visit our studio in Ghaziabad.",
+  phone: "+91 80065 59900",
+  email: "interiors@hause.agency",
+  address: "2nd A 255 Nehru Nagar,\nGhaziabad, 201001, Uttar Pradesh",
+  hours: "Monday – Saturday: 10:00 AM – 7:00 PM IST",
+  nextStepsLabel: "What Happens Next?",
+};
+
 export default function ContactDetails({
-  eyebrow = "Studio & Direct Details",
-  title = "Reach our design directors directly.",
-  body = "We look forward to discussing your upcoming residential or commercial project. Reach out by phone, email, or visit our studio in Ghaziabad.",
-  phone = "+91 80065 59900",
-  email = "interiors@hause.agency",
-  address = "2nd A 255 Nehru Nagar,\nGhaziabad, 201001, Uttar Pradesh",
-  hours = "Monday – Saturday: 10:00 AM – 7:00 PM IST",
-  nextStepsLabel = "What Happens Next?",
+  eyebrow = CONTACT_DETAILS_DEFAULTS.eyebrow,
+  title = CONTACT_DETAILS_DEFAULTS.title,
+  body = CONTACT_DETAILS_DEFAULTS.body,
+  phone = CONTACT_DETAILS_DEFAULTS.phone,
+  email = CONTACT_DETAILS_DEFAULTS.email,
+  address = CONTACT_DETAILS_DEFAULTS.address,
+  hours = CONTACT_DETAILS_DEFAULTS.hours,
+  nextStepsLabel = CONTACT_DETAILS_DEFAULTS.nextStepsLabel,
   nextSteps = DEFAULT_NEXT_STEPS,
 }: ContactDetailsProps) {
   const addressLines = address.split("\n");

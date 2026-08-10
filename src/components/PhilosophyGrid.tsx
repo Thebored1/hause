@@ -15,7 +15,7 @@ export interface Philosophy {
   num: string;
   title: string;
   desc: string;
-  icon: string;
+  icon: "compass" | "sliders" | "shield-check" | "award";
 }
 
 export const DEFAULT_PHILOSOPHIES: Philosophy[] = [
@@ -52,10 +52,16 @@ export interface PhilosophyGridProps {
   philosophies?: Philosophy[];
 }
 
+export const PHILOSOPHY_GRID_DEFAULTS = {
+  eyebrow: "Guiding Principles",
+  title: "Our Design Philosophy",
+  intro: "We believe exceptional spaces are born from deliberate constraints, relentless attention to detail, and a deep empathy for the people who inhabit them.",
+};
+
 export default function PhilosophyGrid({
-  eyebrow = "Guiding Principles",
-  title = "Our Design Philosophy",
-  intro = "We believe exceptional spaces are born from deliberate constraints, relentless attention to detail, and a deep empathy for the people who inhabit them.",
+  eyebrow = PHILOSOPHY_GRID_DEFAULTS.eyebrow,
+  title = PHILOSOPHY_GRID_DEFAULTS.title,
+  intro = PHILOSOPHY_GRID_DEFAULTS.intro,
   philosophies = DEFAULT_PHILOSOPHIES,
 }: PhilosophyGridProps) {
   return (

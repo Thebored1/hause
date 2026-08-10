@@ -13,7 +13,7 @@ export interface ProcessDeepStep {
   desc: string;
   deliverables: string[];
   image: string;
-  theme: string;
+  theme: "light" | "sand" | "dark";
 }
 
 export const DEFAULT_PROCESS_STEPS: ProcessDeepStep[] = [
@@ -101,10 +101,16 @@ export interface ProcessDeepDiveProps {
   steps?: ProcessDeepStep[];
 }
 
+export const PROCESS_DEEP_DIVE_DEFAULTS = {
+  eyebrow: "Five Structured Milestones",
+  title: "From initial site survey to move-in day.",
+  deliverablesLabel: "Key Deliverables In This Phase:",
+};
+
 export default function ProcessDeepDive({
-  eyebrow = "Five Structured Milestones",
-  title = "From initial site survey to move-in day.",
-  deliverablesLabel = "Key Deliverables In This Phase:",
+  eyebrow = PROCESS_DEEP_DIVE_DEFAULTS.eyebrow,
+  title = PROCESS_DEEP_DIVE_DEFAULTS.title,
+  deliverablesLabel = PROCESS_DEEP_DIVE_DEFAULTS.deliverablesLabel,
   steps = DEFAULT_PROCESS_STEPS,
 }: ProcessDeepDiveProps) {
   return (

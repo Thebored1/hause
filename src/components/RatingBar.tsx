@@ -9,10 +9,20 @@ export interface RatingBarProps {
   facts?: string[];
 }
 
+export const RATING_BAR_DEFAULTS = {
+  stars: 5,
+  summary: "4.9 / 5.0 Average Client Satisfaction",
+};
+
+export const DEFAULT_RATING_FACTS = [
+  "100+ Spaces Delivered",
+  "100% On-Ground Site Supervision",
+];
+
 export default function RatingBar({
-  stars = 5,
-  summary = "4.9 / 5.0 Average Client Satisfaction",
-  facts = ["100+ Spaces Delivered", "100% On-Ground Site Supervision"],
+  stars = RATING_BAR_DEFAULTS.stars,
+  summary = RATING_BAR_DEFAULTS.summary,
+  facts = DEFAULT_RATING_FACTS,
 }: RatingBarProps) {
   return (
     <section className="py-8 px-6 sm:px-12 md:px-16 bg-[#f3efea] text-[#18181b] border-b border-black/10">
