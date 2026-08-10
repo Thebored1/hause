@@ -1,4 +1,10 @@
 import type { CollectionConfig } from "payload";
+import { APIError } from "payload";
+import { clientIp, hit } from "../lib/rate-limit";
+
+/** Submissions allowed per address per window. */
+const LIMIT = 5;
+const WINDOW_MS = 10 * 60 * 1000;
 
 /**
  * Contact form submissions.
@@ -15,6 +21,26 @@ export const Enquiries: CollectionConfig = {
     useAsTitle: "name",
     defaultColumns: ["name", "email", "status", "createdAt"],
     group: "Enquiries",
+  },
+  hooks: {
+    beforeValidate: [
+      ({ req, operation }) => {
+        // Public HTTP creates only. Staff adding an enquiry by hand, any
+        // update, and server-side local-API calls (seed scripts, imports) all
+        // go through untouched. The local check is `payloadAPI`, not the
+        // absence of headers: Payload gives local calls a headers object too,
+        // so keying on that silently rate-limited trusted server code.
+        if (operation !== "create" || req.user || req.payloadAPI === "local") return;
+
+        const { ok, retryAfter } = hit(`enquiry:${clientIp(req.headers)}`, LIMIT, WINDOW_MS);
+        if (!ok) {
+          throw new APIError(
+            `Too many enquiries from this address. Try again in ${retryAfter} seconds.`,
+            429,
+          );
+        }
+      },
+    ],
   },
   access: {
     create: () => true, // the public contact form
