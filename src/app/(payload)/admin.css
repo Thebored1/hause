@@ -120,3 +120,26 @@
   border-radius: 14px 14px 0 0;
   border-bottom: 1px solid rgb(24 24 27 / 0.12);
 }
+
+/* Same treatment for the node types added to the toolbar, so the editor keeps
+   matching the published article. */
+:is(.blog-body, #field-content) .ContentEditable__root :where(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.8em 0;
+  font-size: 0.94em;
+}
+:is(.blog-body, #field-content) .ContentEditable__root :where(th, td) {
+  border: 1px solid rgb(24 24 27 / 0.12);
+  padding: 0.6em 0.8em;
+  text-align: left;
+  vertical-align: top;
+}
+:is(.blog-body, #field-content) .ContentEditable__root :where(th) {
+  background: rgb(24 24 27 / 0.04);
+  font-weight: 600;
+  color: #18181b;
+}
+:is(.blog-body, #field-content) .ContentEditable__root :where(sub, sup) { font-size: 0.72em; line-height: 0; }
+:is(.blog-body, #field-content) .ContentEditable__root :where(sup) { vertical-align: super; }
+:is(.blog-body, #field-content) .ContentEditable__root :where(sub) { vertical-align: sub; }

@@ -10,7 +10,12 @@ import {
   HeadingFeature,
   UnorderedListFeature,
   OrderedListFeature,
+  ChecklistFeature,
   BlockquoteFeature,
+  SubscriptFeature,
+  SuperscriptFeature,
+  RelationshipFeature,
+  EXPERIMENTAL_TableFeature,
   LinkFeature,
   UploadFeature,
   HorizontalRuleFeature,
@@ -70,11 +75,19 @@ export const Posts: CollectionConfig = {
           InlineCodeFeature(),
           UnorderedListFeature(),
           OrderedListFeature(),
+          ChecklistFeature(),
           BlockquoteFeature(),
           LinkFeature({ enabledCollections: ["posts", "pages"] }),
           // `collections` needs a `fields` array per slug; use enabledCollections
           // to simply restrict which upload collections may be inserted.
           UploadFeature({ enabledCollections: ["media"] }),
+          SubscriptFeature(),
+          SuperscriptFeature(),
+          // Inline links to other posts/pages that survive a slug change.
+          RelationshipFeature({ enabledCollections: ["posts", "pages"] }),
+          // Marked experimental upstream; kept because a materials or costs
+          // comparison is exactly what this blog needs a table for.
+          EXPERIMENTAL_TableFeature(),
           HorizontalRuleFeature(),
           AlignFeature(),
           IndentFeature(),

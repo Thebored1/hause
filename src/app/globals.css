@@ -200,3 +200,54 @@ html.lenis, html.lenis body {
   margin: 1.6em 0;
 }
 .nb-prose :where(pre code) { background: none; padding: 0; font-size: 0.86em; }
+
+/* Node types added to the blog editor: tables, checklists, sub/superscript. */
+.nb-prose :where(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.8em 0;
+  font-size: 0.94em;
+}
+.nb-prose :where(th, td) {
+  border: 1px solid rgb(24 24 27 / 0.12);
+  padding: 0.6em 0.8em;
+  text-align: left;
+  vertical-align: top;
+}
+.nb-prose :where(th) {
+  background: rgb(24 24 27 / 0.04);
+  font-weight: 600;
+  color: #18181b;
+}
+/* Checklists render as list items carrying a checked state. */
+.nb-prose :where(ul[class*="checklist"]) { list-style: none; padding-left: 0.2em; }
+.nb-prose :where(li[role="checkbox"]) { position: relative; padding-left: 1.7em; list-style: none; }
+.nb-prose :where(li[role="checkbox"])::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 0.95em;
+  height: 0.95em;
+  border: 1px solid rgb(24 24 27 / 0.35);
+  border-radius: 4px;
+}
+.nb-prose :where(li[aria-checked="true"]) { color: #8a8578; }
+.nb-prose :where(li[aria-checked="true"])::before {
+  background: #18181b;
+  border-color: #18181b;
+}
+.nb-prose :where(li[aria-checked="true"])::after {
+  content: "";
+  position: absolute;
+  left: 0.3em;
+  top: 0.62em;
+  width: 0.3em;
+  height: 0.16em;
+  border-left: 1.5px solid #f9f8f6;
+  border-bottom: 1.5px solid #f9f8f6;
+  transform: rotate(-45deg);
+}
+.nb-prose :where(sub, sup) { font-size: 0.72em; line-height: 0; }
+.nb-prose :where(sup) { vertical-align: super; }
+.nb-prose :where(sub) { vertical-align: sub; }
