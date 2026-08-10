@@ -810,6 +810,53 @@ export interface Page {
             blockType: 'darkCardGrid';
           }
         | {
+            eyebrow: string;
+            title: string;
+            intro: string;
+            types?:
+              | {
+                  title: string;
+                  desc: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'propertyCards';
+          }
+        | {
+            eyebrow: string;
+            title: string;
+            linkLabel: string;
+            linkHref: string;
+            photos?:
+              | {
+                  src: string;
+                  title: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'projectRibbon';
+          }
+        | {
+            eyebrow: string;
+            title: string;
+            intro: string;
+            steps?:
+              | {
+                  step: string;
+                  title: string;
+                  desc: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'darkStepCards';
+          }
+        | {
             content?:
               | {
                   [k: string]: unknown;
@@ -1669,6 +1716,56 @@ export interface PagesSelect<T extends boolean = true> {
               cards?:
                 | T
                 | {
+                    title?: T;
+                    desc?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        propertyCards?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              intro?: T;
+              types?:
+                | T
+                | {
+                    title?: T;
+                    desc?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        projectRibbon?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              linkLabel?: T;
+              linkHref?: T;
+              photos?:
+                | T
+                | {
+                    src?: T;
+                    title?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        darkStepCards?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              intro?: T;
+              steps?:
+                | T
+                | {
+                    step?: T;
                     title?: T;
                     desc?: T;
                     id?: T;

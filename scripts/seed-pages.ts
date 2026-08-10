@@ -653,6 +653,111 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
       { blockType: "cta" },
     ],
   },
+  {
+    title: "Residential Interior Design",
+    slug: "services/residential-interior-design",
+    meta: {
+      title: "Residential Interior Designers in Delhi NCR | Hause Interiors",
+      description:
+        "Full-home and room-wise residential interior design in Delhi NCR — apartments, villas and builder-floor homes designed and executed end-to-end by Hause Interiors.",
+    },
+    layout: [
+      {
+        blockType: "pageHero",
+        badge: "Residential Design",
+        title: "Homes designed around how you live.",
+        subtitle:
+          "A home should adapt to the people in it — not the other way around. Hause Interiors designs residential interiors across Delhi NCR that balance everyday function with a look that feels considered, not generic.",
+        breadcrumbs: [home, { label: "Services", href: "/services" }, { label: "Residential Interior Design" }],
+        bgImage: "/images/jaiswal/jaiswal-06.jpg",
+        primaryCtaText: "Start Your Home Project",
+        primaryCtaHref: "/contact",
+        secondaryCtaText: "View Residential Portfolio",
+        secondaryCtaHref: "/projects",
+      },
+      {
+        blockType: "checklistFeature",
+        eyebrow: "Scope of Design",
+        title: "What We Design",
+        body: "Whether you are outfitting a newly handed-over apartment or revitalizing an established family home, we deliver complete room-wise and full-home design solutions tailored to your routine.",
+        items: ([
+  "Living & dining spaces with architectural paneling",
+  "Master and children's bedrooms with custom wardrobes",
+  "Modular kitchens with ergonomic workflow storage",
+  "False ceiling & layered architectural cove lighting",
+  "Pooja rooms with customized CNC marble & wood elements",
+  "Home offices & quiet study sanctuaries",
+  "Balconies, terraces & utility zones",
+  "Full-home turnkey residential transformations",
+]).map((value) => ({ value })),
+        image: "/images/jaiswal/jaiswal-03.jpg",
+        imageAlt: "Residential Living Room Interior",
+        imageSide: "right",
+        tone: "ivory",
+      },
+      {
+        blockType: "propertyCards",
+        eyebrow: "Tailored Solutions",
+        title: "Who We Design For",
+        intro: "Every property type has unique structural characteristics and municipal guidelines. We tailor our engineering and aesthetics accordingly.",
+        types: [
+  {
+    title: "Apartments & Flats",
+    desc: "From 2BHK to expansive 4BHK society flats in Noida, Gurugram, and Ghaziabad, maximizing spatial efficiency and storage.",
+  },
+  {
+    title: "Independent Villas & Builder Floors",
+    desc: "Multi-level homes across South Delhi and Delhi NCR requiring cohesive architectural themes and custom woodwork.",
+  },
+  {
+    title: "Duplexes & Penthouses",
+    desc: "High-ceiling residences with grand double-height living areas, feature staircases, and terrace entertainment zones.",
+  },
+  {
+    title: "Resale-Home Makeovers",
+    desc: "Transforming older properties into contemporary, modern-living spaces with updated MEP and refined finishes.",
+  },
+],
+      },
+      {
+        blockType: "projectRibbon",
+        eyebrow: "Delivered Residences",
+        title: "Real Residential Projects in Delhi NCR",
+        linkLabel: "View All Projects",
+        linkHref: "/projects",
+        photos: [
+  { src: "/images/jaiswal/jaiswal-08.jpg", title: "Living Area & Wall Joinery" },
+  { src: "/images/jaiswal/jaiswal-11.jpg", title: "Master Bedroom & Wardrobe" },
+  { src: "/images/jaiswal/jaiswal-17.jpg", title: "Dining & Ambient Fixtures" },
+],
+      },
+      {
+        blockType: "darkStepCards",
+        eyebrow: "Execution Methodology",
+        title: "Our Residential Approach",
+        intro:
+          "We start with a detailed site visit and lifestyle discussion \u2014 how many people live in the home, how each room is actually used, storage needs, and budget.",
+        steps: [
+  {
+    step: "01",
+    title: "Lifestyle Discovery & Site Visit",
+    desc: "We study family routines, traffic flow, natural daylight patterns, storage pain points, and target budgets.",
+  },
+  {
+    step: "02",
+    title: "Spatial Layout & 3D Visualization",
+    desc: "Photorealistic 3D renders let you see furniture proportions, texture palettes, and lighting before site work starts.",
+  },
+  {
+    step: "03",
+    title: "Turnkey Execution & Supervision",
+    desc: "One dedicated team handles civil, electrical, carpentry, paint, and final styling under constant site supervision.",
+  },
+],
+      },
+      { blockType: "cta" },
+    ],
+  },
 ];
 
 const payload = await getPayload({ config });

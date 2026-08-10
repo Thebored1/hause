@@ -1,19 +1,21 @@
 import React from "react";
 import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
+import ChecklistFeature from "@/components/ChecklistFeature";
+import PropertyCards from "@/components/PropertyCards";
+import ProjectRibbon from "@/components/ProjectRibbon";
+import DarkStepCards from "@/components/DarkStepCards";
 import CTASection from "@/components/CTASection";
 import SmoothScroll from "@/components/SmoothScroll";
-import { Check, Home, Compass, Eye, ShieldCheck, ArrowRight, Sparkles } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Residential Interior Designers in Delhi NCR | Hause Interiors",
   description:
     "Full-home and room-wise residential interior design in Delhi NCR — apartments, villas and builder-floor homes designed and executed end-to-end by Hause Interiors.",
 };
+
 
 const WHAT_WE_DESIGN = [
   "Living & dining spaces with architectural paneling",
@@ -93,152 +95,39 @@ export default function ResidentialServicePage() {
         />
 
         {/* SECTION 1: Scope of Design (Crisp Light Ivory Background: #f9f8f6) */}
-        <section className="py-24 px-6 sm:px-12 md:px-16 bg-[#f9f8f6] text-[#18181b]">
-          <div className="max-w-[1280px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-6 space-y-6">
-              <span className="text-xs font-semibold tracking-[0.22em] text-[#8a8578] uppercase">
-                Scope of Design
-              </span>
-              <h2 className="text-3xl sm:text-4xl md:text-[42px] font-normal tracking-tight text-[#18181b] leading-tight">
-                What We Design
-              </h2>
-              <p className="text-sm sm:text-base text-[#6b6559] font-normal leading-relaxed">
-                Whether you are outfitting a newly handed-over apartment or revitalizing an established family home, we deliver complete room-wise and full-home design solutions tailored to your routine.
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
-                {WHAT_WE_DESIGN.map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-[#18181b]">
-                    <Check size={16} className="text-[#8a8578] shrink-0 mt-0.5" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="lg:col-span-6 relative aspect-[4/3] rounded-3xl overflow-hidden border border-black/10 shadow-2xl group">
-              <Image
-                src="/images/jaiswal/jaiswal-03.jpg"
-                alt="Residential Living Room Interior"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-            </div>
-          </div>
-        </section>
+        <ChecklistFeature
+          eyebrow="Scope of Design"
+          title="What We Design"
+          body="Whether you are outfitting a newly handed-over apartment or revitalizing an established family home, we deliver complete room-wise and full-home design solutions tailored to your routine."
+          items={WHAT_WE_DESIGN}
+          image="/images/jaiswal/jaiswal-03.jpg"
+          imageAlt="Residential Living Room Interior"
+        />
 
         {/* SECTION 2: Who We Design For (Warm Sand Background: #f3efea) */}
-        <section className="py-28 px-6 sm:px-12 md:px-16 bg-[#f3efea] text-[#18181b] border-t border-black/10">
-          <div className="max-w-[1280px] mx-auto space-y-16">
-            <div className="max-w-2xl">
-              <span className="text-xs font-semibold tracking-[0.22em] text-[#8a8578] uppercase">
-                Tailored Solutions
-              </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-normal tracking-tight text-[#18181b] leading-tight">
-                Who We Design For
-              </h2>
-              <p className="mt-3 text-sm sm:text-base text-[#6b6559] font-normal leading-relaxed">
-                Every property type has unique structural characteristics and municipal guidelines. We tailor our engineering and aesthetics accordingly.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {WHO_WE_DESIGN_FOR.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="p-8 bg-white border border-black/10 hover:border-black/25 rounded-2xl transition-all shadow-sm flex flex-col justify-between"
-                >
-                  <div>
-                    <span className="text-xs font-mono text-[#8a8578] block mb-4 font-semibold">0{idx + 1}</span>
-                    <h3 className="text-lg font-medium text-[#18181b] mb-3">{item.title}</h3>
-                    <p className="text-xs sm:text-sm text-[#6b6559] font-normal leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <PropertyCards
+          eyebrow="Tailored Solutions"
+          title="Who We Design For"
+          intro="Every property type has unique structural characteristics and municipal guidelines. We tailor our engineering and aesthetics accordingly."
+          types={WHO_WE_DESIGN_FOR}
+        />
 
         {/* SECTION 3: Residential Photography Ribbon (Photo Showcase) */}
-        <section className="py-20 px-6 sm:px-12 md:px-16 bg-[#121316] border-t border-white/10">
-          <div className="max-w-[1280px] mx-auto space-y-10">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-              <div>
-                <span className="text-xs font-semibold tracking-[0.22em] text-white/50 uppercase">
-                  Delivered Residences
-                </span>
-                <h3 className="mt-2 text-2xl sm:text-3xl font-medium text-white">
-                  Real Residential Projects in Delhi NCR
-                </h3>
-              </div>
-              <Link
-                href="/projects"
-                className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.16em] uppercase text-white hover:text-white/80 transition-colors"
-              >
-                <span>View All Projects</span>
-                <ArrowRight size={14} />
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {RESIDENTIAL_GALLERY.map((g, idx) => (
-                <div key={idx} className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10 group">
-                  <Image
-                    src={g.src}
-                    alt={g.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  <div className="absolute bottom-5 left-5 right-5 text-white">
-                    <p className="text-sm font-medium">{g.title}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <ProjectRibbon
+          eyebrow="Delivered Residences"
+          title="Real Residential Projects in Delhi NCR"
+          linkLabel="View All Projects"
+          linkHref="/projects"
+          photos={RESIDENTIAL_GALLERY}
+        />
 
         {/* SECTION 4: Our Approach (Dark Obsidian Background: #0c0d0e) */}
-        <section className="py-24 px-6 sm:px-12 md:px-16 bg-[#0c0d0e] border-t border-white/10">
-          <div className="max-w-[1280px] mx-auto space-y-14">
-            <div className="max-w-2xl">
-              <span className="text-xs font-semibold tracking-[0.22em] text-white/50 uppercase">
-                Execution Methodology
-              </span>
-              <h2 className="mt-4 text-3xl sm:text-4xl font-medium tracking-tight text-white leading-tight">
-                Our Residential Approach
-              </h2>
-              <p className="mt-3 text-sm sm:text-base text-white/60 font-light leading-relaxed">
-                We start with a detailed site visit and lifestyle discussion — how many people live in the home, how each room is actually used, storage needs, and budget.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {APPROACH_STEPS.map((step) => (
-                <div
-                  key={step.step}
-                  className="p-8 bg-[#141618] border border-white/10 rounded-2xl flex flex-col justify-between shadow-md"
-                >
-                  <div>
-                    <span className="text-2xl font-light text-white/40 block mb-4 font-mono">
-                      {step.step}
-                    </span>
-                    <h3 className="text-xl font-medium text-white mb-3">
-                      {step.title}
-                    </h3>
-                    <p className="text-sm text-white/60 font-light leading-relaxed">
-                      {step.desc}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <DarkStepCards
+          eyebrow="Execution Methodology"
+          title="Our Residential Approach"
+          intro="We start with a detailed site visit and lifestyle discussion — how many people live in the home, how each room is actually used, storage needs, and budget."
+          steps={APPROACH_STEPS}
+        />
 
         {/* Global CTA */}
         <CTASection />

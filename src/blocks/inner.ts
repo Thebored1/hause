@@ -598,3 +598,70 @@ export const DarkCardGridBlock: Block = {
     },
   ],
 };
+
+export const PropertyCardsBlock: Block = {
+  slug: "propertyCards",
+  labels: { singular: "Property Cards", plural: "Property Cards" },
+  admin: { group: "Page sections" },
+  fields: [
+    { name: "eyebrow", type: "text", required: true },
+    { name: "title", type: "text", required: true },
+    { name: "intro", type: "textarea", required: true },
+    {
+      name: "types",
+      type: "array",
+      labels: { singular: "Type", plural: "Types" },
+      fields: [
+        { name: "title", type: "text", required: true },
+        { name: "desc", type: "textarea", required: true },
+      ],
+    },
+  ],
+};
+
+export const ProjectRibbonBlock: Block = {
+  slug: "projectRibbon",
+  labels: { singular: "Project Ribbon", plural: "Project Ribbons" },
+  admin: { group: "Page sections" },
+  fields: [
+    { name: "eyebrow", type: "text", required: true },
+    { name: "title", type: "text", required: true },
+    {
+      type: "row",
+      fields: [
+        { name: "linkLabel", type: "text", required: true, admin: { width: "50%" } },
+        { name: "linkHref", type: "text", required: true, admin: { width: "50%" } },
+      ],
+    },
+    {
+      name: "photos",
+      type: "array",
+      labels: { singular: "Photo", plural: "Photos" },
+      fields: [
+        { name: "src", type: "text", required: true },
+        { name: "title", type: "text", required: true },
+      ],
+    },
+  ],
+};
+
+export const DarkStepCardsBlock: Block = {
+  slug: "darkStepCards",
+  labels: { singular: "Dark Step Cards", plural: "Dark Step Cards" },
+  admin: { group: "Page sections" },
+  fields: [
+    { name: "eyebrow", type: "text", required: true },
+    { name: "title", type: "text", required: true },
+    { name: "intro", type: "textarea", required: true },
+    {
+      name: "steps",
+      type: "array",
+      labels: { singular: "Step", plural: "Steps" },
+      fields: [
+        { name: "step", type: "text", required: true },
+        { name: "title", type: "text", required: true },
+        { name: "desc", type: "textarea", required: true },
+      ],
+    },
+  ],
+};

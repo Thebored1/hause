@@ -38,6 +38,9 @@ import StageGrid, { type Stage } from "@/components/StageGrid";
 import LayoutCards, { type LayoutOption } from "@/components/LayoutCards";
 import SpecFeature, { type Spec } from "@/components/SpecFeature";
 import DarkCardGrid, { type DarkCard } from "@/components/DarkCardGrid";
+import PropertyCards, { type PropertyType } from "@/components/PropertyCards";
+import ProjectRibbon, { type ProjectPhoto } from "@/components/ProjectRibbon";
+import DarkStepCards, { type DarkStep } from "@/components/DarkStepCards";
 import { type FAQItem } from "@/components/FAQAccordion";
 import ContactModal from "@/components/ContactModal";
 import Navbar from "@/components/Navbar";
@@ -502,6 +505,40 @@ export default function PageBlocks({
                 title={String(block.title ?? "")}
                 intro={String(block.intro ?? "")}
                 cards={val<DarkCard[]>(block.cards) ?? []}
+              />
+            );
+
+          case "propertyCards":
+            return (
+              <PropertyCards
+                key={i}
+                eyebrow={String(block.eyebrow ?? "")}
+                title={String(block.title ?? "")}
+                intro={String(block.intro ?? "")}
+                types={val<PropertyType[]>(block.types) ?? []}
+              />
+            );
+
+          case "projectRibbon":
+            return (
+              <ProjectRibbon
+                key={i}
+                eyebrow={String(block.eyebrow ?? "")}
+                title={String(block.title ?? "")}
+                linkLabel={String(block.linkLabel ?? "")}
+                linkHref={String(block.linkHref ?? "")}
+                photos={val<ProjectPhoto[]>(block.photos) ?? []}
+              />
+            );
+
+          case "darkStepCards":
+            return (
+              <DarkStepCards
+                key={i}
+                eyebrow={String(block.eyebrow ?? "")}
+                title={String(block.title ?? "")}
+                intro={String(block.intro ?? "")}
+                steps={val<DarkStep[]>(block.steps) ?? []}
               />
             );
 
