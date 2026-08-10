@@ -209,6 +209,29 @@ Each of these cost real debugging time. They are not optional.
 | API 500s, `no such column: …` | schema not pushed | run `npm run dev` once, then restart |
 | Site stylesheet leaking into the admin | one shared root layout | keep `(site)` and `(payload)` as separate root layouts |
 | CMS content ignored, defaults render | a prop binding silently not applied | grep for the old constant in the component |
+| Newly added block stays a grey skeleton; `Failed to find Server Action` in the log; `POST /admin/... 404` | **Turbopack does not register the server action** declared in `(payload)/layout.tsx` | keep `--webpack` on `dev` **and** `build` |
+| Whole document form read-only, Save greyed out | `next build` was run while `next dev` was running — both write `.next/` | stop the server, `rm -rf .next`, restart |
+
+### Why this project does not use Turbopack
+
+Next 16 defaults to Turbopack for both `dev` and `build`. Under Turbopack the
+server action that Payload declares in `(payload)/layout.tsx` is never registered,
+so the `POST` the admin makes to fetch a newly added block's fields returns 404:
+
+```
+Error: Failed to find Server Action "40230ceb07…". This request might be from an older or newer deployment.
+POST /admin/collections/pages/17 404
+```
+
+The block then renders as an empty skeleton for ever. It affects **every** block,
+not just the canvas, and it affects the **production build too** — so a Turbopack
+build ships an admin where nobody can add a block. `next build --webpack` and
+`next dev --webpack` both work.
+
+`dev:turbo` and `build:turbo` are kept so this can be retested against a future
+Next release. Verify by adding a block and checking it renders its fields; do not
+switch back on a clean compile alone, because Turbopack compiles fine — it fails
+at runtime.
 
 ---
 
