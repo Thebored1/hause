@@ -472,7 +472,16 @@ export const IconCardsBlock: Block = {
   fields: [
     { name: "eyebrow", type: "text", required: true },
     { name: "title", type: "text", required: true },
-    { name: "intro", type: "textarea", required: true },
+    { name: "intro", type: "textarea", admin: { description: "Leave empty for no lead paragraph." } },
+    {
+      name: "titleTracking",
+      type: "select",
+      defaultValue: "tight",
+      options: [
+        { label: "Tight", value: "tight" },
+        { label: "Normal", value: "normal" },
+      ],
+    },
     {
       name: "cards",
       type: "array",
@@ -482,12 +491,40 @@ export const IconCardsBlock: Block = {
           name: "icon",
           type: "select",
           defaultValue: "clock",
-          options: ["clock", "layout-grid", "zap", "shield-check", "users", "building", "sparkles", "layers"].map(
+          options: ["clock", "layout-grid", "zap", "shield-check", "users", "building", "sparkles", "layers", "check-circle"].map(
             (v) => ({ label: v, value: v }),
           ),
         },
         { name: "title", type: "text", required: true },
         { name: "desc", type: "textarea", required: true },
+      ],
+    },
+  ],
+};
+
+export const StageGridBlock: Block = {
+  slug: "stageGrid",
+  labels: { singular: "Stage Grid", plural: "Stage Grids" },
+  admin: { group: "Page sections" },
+  fields: [
+    { name: "eyebrow", type: "text", required: true },
+    { name: "title", type: "text", required: true },
+    { name: "intro", type: "textarea", required: true },
+    {
+      name: "stages",
+      type: "array",
+      labels: { singular: "Stage", plural: "Stages" },
+      fields: [
+        { name: "num", type: "text", required: true },
+        { name: "title", type: "text", required: true },
+        { name: "desc", type: "textarea", required: true },
+        {
+          name: "wide",
+          type: "checkbox",
+          label: "Span the full row",
+          defaultValue: false,
+          admin: { description: "Use for a trailing card that would otherwise leave a gap." },
+        },
       ],
     },
   ],

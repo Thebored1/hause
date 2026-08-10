@@ -711,11 +711,25 @@ export interface Page {
         | {
             eyebrow: string;
             title: string;
-            intro: string;
+            /**
+             * Leave empty for no lead paragraph.
+             */
+            intro?: string | null;
+            titleTracking?: ('tight' | 'normal') | null;
             cards?:
               | {
                   icon?:
-                    | ('clock' | 'layout-grid' | 'zap' | 'shield-check' | 'users' | 'building' | 'sparkles' | 'layers')
+                    | (
+                        | 'clock'
+                        | 'layout-grid'
+                        | 'zap'
+                        | 'shield-check'
+                        | 'users'
+                        | 'building'
+                        | 'sparkles'
+                        | 'layers'
+                        | 'check-circle'
+                      )
                     | null;
                   title: string;
                   desc: string;
@@ -725,6 +739,26 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'iconCards';
+          }
+        | {
+            eyebrow: string;
+            title: string;
+            intro: string;
+            stages?:
+              | {
+                  num: string;
+                  title: string;
+                  desc: string;
+                  /**
+                   * Use for a trailing card that would otherwise leave a gap.
+                   */
+                  wide?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'stageGrid';
           }
         | {
             content?:
@@ -1511,12 +1545,31 @@ export interface PagesSelect<T extends boolean = true> {
               eyebrow?: T;
               title?: T;
               intro?: T;
+              titleTracking?: T;
               cards?:
                 | T
                 | {
                     icon?: T;
                     title?: T;
                     desc?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        stageGrid?:
+          | T
+          | {
+              eyebrow?: T;
+              title?: T;
+              intro?: T;
+              stages?:
+                | T
+                | {
+                    num?: T;
+                    title?: T;
+                    desc?: T;
+                    wide?: T;
                     id?: T;
                   };
               id?: T;

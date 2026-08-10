@@ -34,6 +34,7 @@ import ChecklistFeature from "@/components/ChecklistFeature";
 import NumberedCards, { type NumberedCard } from "@/components/NumberedCards";
 import CardListFeature, { type FeatureCard } from "@/components/CardListFeature";
 import IconCards, { type IconCard } from "@/components/IconCards";
+import StageGrid, { type Stage } from "@/components/StageGrid";
 import { type FAQItem } from "@/components/FAQAccordion";
 import ContactModal from "@/components/ContactModal";
 import Navbar from "@/components/Navbar";
@@ -448,8 +449,20 @@ export default function PageBlocks({
                 key={i}
                 eyebrow={String(block.eyebrow ?? "")}
                 title={String(block.title ?? "")}
-                intro={String(block.intro ?? "")}
+                intro={val<string>(block.intro)}
                 cards={val<IconCard[]>(block.cards) ?? []}
+                titleTracking={val<"tight" | "normal">(block.titleTracking)}
+              />
+            );
+
+          case "stageGrid":
+            return (
+              <StageGrid
+                key={i}
+                eyebrow={String(block.eyebrow ?? "")}
+                title={String(block.title ?? "")}
+                intro={String(block.intro ?? "")}
+                stages={val<Stage[]>(block.stages) ?? []}
               />
             );
 

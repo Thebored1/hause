@@ -8,6 +8,7 @@ import {
   Building2,
   Sparkles,
   Layers,
+  CheckCircle2,
   type LucideIcon,
 } from "lucide-react";
 
@@ -25,6 +26,7 @@ export const CARD_ICONS: Record<string, LucideIcon> = {
   building: Building2,
   sparkles: Sparkles,
   layers: Layers,
+  "check-circle": CheckCircle2,
 };
 
 export interface IconCard {
@@ -36,11 +38,20 @@ export interface IconCard {
 export interface IconCardsProps {
   eyebrow: string;
   title: string;
-  intro: string;
+  /** Omit to render the heading with no lead paragraph. */
+  intro?: string;
   cards: IconCard[];
+  /** Card headings are tracked tight unless told otherwise. */
+  titleTracking?: "tight" | "normal";
 }
 
-export default function IconCards({ eyebrow, title, intro, cards }: IconCardsProps) {
+export default function IconCards({
+  eyebrow,
+  title,
+  intro,
+  cards,
+  titleTracking = "tight",
+}: IconCardsProps) {
   return (
     <section className="py-28 px-6 sm:px-12 md:px-16 bg-[#f3efea] text-[#18181b] border-t border-black/10">
       <div className="max-w-[1280px] mx-auto space-y-16">
@@ -51,9 +62,11 @@ export default function IconCards({ eyebrow, title, intro, cards }: IconCardsPro
           <h2 className="mt-4 text-3xl sm:text-4xl font-normal tracking-tight text-[#18181b] leading-tight">
             {title}
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-[#6b6559] font-normal leading-relaxed">
-            {intro}
-          </p>
+          {intro ? (
+            <p className="mt-3 text-sm sm:text-base text-[#6b6559] font-normal leading-relaxed">
+              {intro}
+            </p>
+          ) : null}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -68,7 +81,11 @@ export default function IconCards({ eyebrow, title, intro, cards }: IconCardsPro
                   <div className="w-12 h-12 rounded-full bg-[#18181b] text-white flex items-center justify-center mb-6 shadow-md">
                     <Icon size={20} />
                   </div>
-                  <h3 className="text-xl font-medium text-[#18181b] mb-3 tracking-tight">
+                  <h3
+                    className={`text-xl font-medium text-[#18181b] mb-3${
+                      titleTracking === "tight" ? " tracking-tight" : ""
+                    }`}
+                  >
                     {card.title}
                   </h3>
                   <p className="text-sm text-[#6b6559] font-normal leading-relaxed">

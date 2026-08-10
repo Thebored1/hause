@@ -30,6 +30,7 @@ import {
   NumberedCardsBlock,
   CardListFeatureBlock,
   IconCardsBlock,
+  StageGridBlock,
 } from "../blocks/inner";
 
 export const Pages: CollectionConfig = {
@@ -72,7 +73,7 @@ export const Pages: CollectionConfig = {
         PillarsGridBlock, ComparisonColumnsBlock, RatingBarBlock, TestimonialsGridBlock, PhotoStripBlock,
         ProcessDeepDiveBlock, CommitmentBarBlock, ServicesShowcaseBlock, AssuranceRibbonBlock,
         StudioStoryBlock, PhilosophyGridBlock, TeamNetworkBlock, GalleryRibbonBlock, ValuesGridBlock, ReachBarBlock,
-        ChecklistFeatureBlock, NumberedCardsBlock, CardListFeatureBlock, IconCardsBlock,
+        ChecklistFeatureBlock, NumberedCardsBlock, CardListFeatureBlock, IconCardsBlock, StageGridBlock,
         // Freeform canvas
         CanvasBlock,
       ],

@@ -456,6 +456,98 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout">[] = [
       { blockType: "cta" },
     ],
   },
+  {
+    title: "Turnkey Interior Solutions",
+    slug: "services/turnkey-interior-solutions",
+    meta: {
+      title: "Turnkey Interior Solutions Delhi NCR | Hause Interiors",
+      description:
+        "End-to-end turnkey interior design and execution in Delhi NCR \u2014 one team handling design, civil, electrical, carpentry, paint and styling with zero hassle.",
+    },
+    layout: [
+      {
+        blockType: "pageHero",
+        badge: "Turnkey Solutions",
+        title: "One design partner. Zero coordination headaches.",
+        subtitle:
+          "Managing an interior project shouldn't feel like a full-time job. Hause Interiors delivers complete turnkey interior solutions across Delhi NCR \u2014 from design concept to final handover, managed by one team under one timeline.",
+        breadcrumbs: [home, { label: "Services", href: "/services" }, { label: "Turnkey Interior Solutions" }],
+        bgImage: "/images/jaiswal/jaiswal-07.jpg",
+        primaryCtaText: "Book a Turnkey Consultation",
+        primaryCtaHref: "/contact",
+        secondaryCtaText: "View Our Projects",
+        secondaryCtaHref: "/projects",
+      },
+      {
+        blockType: "stageGrid",
+        eyebrow: "End-to-End Scope",
+        title: "What's Included in Our Turnkey Service",
+        intro: "We take total responsibility for your site from day one to key handover.",
+        stages: [
+          {
+            num: "01",
+            title: "Detailed 3D Renders & Technical Blueprints",
+            desc: "Complete architectural drawings, 2D electrical/plumbing layouts, and photorealistic 3D visualization.",
+          },
+          {
+            num: "02",
+            title: "Civil & Structural Modifications",
+            desc: "Demolition, partition creation, flooring leveling, waterproofing, and tile/marble laying.",
+          },
+          {
+            num: "03",
+            title: "Electrical, Plumbing & HVAC Integration",
+            desc: "Concealed conduit wiring, switchboard placement, plumbing fixtures, and AC drainage routing.",
+          },
+          {
+            num: "04",
+            title: "False Ceiling & Architectural Lighting",
+            desc: "Gypsum board framing, cove lighting, magnetic track lights, and profile LED illumination.",
+          },
+          {
+            num: "05",
+            title: "Custom Carpentry & Modular Joinery",
+            desc: "Modular kitchens, sliding/hinged wardrobes, vanity counters, and bespoke media consoles.",
+          },
+          {
+            num: "06",
+            title: "Painting, Wall Textures & Finishes",
+            desc: "Wall putty, primer coats, premium emulsions, fluted paneling, wallpaper, and PU finishes.",
+          },
+          {
+            num: "07",
+            title: "Deep Cleaning, Styling & Handover",
+            desc: "Post-construction chemical deep clean, soft furnishing placement, and final snag-list walkthrough.",
+            wide: true,
+          },
+        ],
+      },
+      {
+        blockType: "iconCards",
+        eyebrow: "Ideal For",
+        title: "Who Is Turnkey Right For?",
+        titleTracking: "normal",
+        cards: [
+          {
+            icon: "check-circle",
+            title: "Busy Professionals & Families",
+            desc: "Clients who don't have the time to coordinate with 5 different contractors, carpenters, and painters every weekend.",
+          },
+          {
+            icon: "check-circle",
+            title: "Out-of-Town & NRI Homeowners",
+            desc: "Property owners living outside Delhi NCR or overseas who require rigorous local site management and digital milestone reporting.",
+          },
+          {
+            icon: "check-circle",
+            title: "Fixed-Budget Projects",
+            desc: "Clients who want guaranteed cost certainty through a locked Bill of Quantities before work starts.",
+          },
+        ],
+      },
+      { blockType: "cta" },
+    ],
+  },
 ];
 
 const payload = await getPayload({ config });
