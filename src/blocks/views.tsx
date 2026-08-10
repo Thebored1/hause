@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { styleToCss, innerCss, measureCss, type BlockStyle } from "./style";
+import { sanitizeHtml } from "@/lib/doc";
 
 // ============================================================
 // Pure presentational block views.
@@ -299,7 +300,9 @@ export function TextView({
         }}
       >
         {slotContent ?? (
-          <div className="nb-rt" dangerouslySetInnerHTML={{ __html: html ?? "" }} />
+          // Scrubbed here, not just on write: this also protects rows that were
+          // stored before the write-side hook existed.
+          <div className="nb-rt" dangerouslySetInnerHTML={{ __html: sanitizeHtml(html ?? "") }} />
         )}
       </div>
     </div>
