@@ -5,6 +5,8 @@ import { importMap } from "./admin/importMap";
 // Prebuilt stylesheet: Payload's SCSS source does not compile under
 // Turbopack, which leaves the admin unstyled.
 import "@payloadcms/next/css";
+// Our own admin styling — must come after Payload's so it can override.
+import "./admin.css";
 
 export { metadata } from "@payloadcms/next/layouts";
 

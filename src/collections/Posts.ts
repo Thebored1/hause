@@ -53,6 +53,9 @@ export const Posts: CollectionConfig = {
     {
       name: "content",
       type: "richText",
+      // Scopes the WYSIWYG styling in (payload)/admin.css to this field, so
+      // the page canvas's inline rich text is untouched.
+      admin: { className: "blog-body" },
       // Pinned rather than relying on lexicalEditor()'s defaults, which vary
       // by release. Everything enabled here has matching styles in .nb-prose.
       editor: lexicalEditor({

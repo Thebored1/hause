@@ -1,0 +1,116 @@
+/* ============================================================
+   Admin-only styling.
+
+   Makes the blog body field a true WYSIWYG surface: the editor is rendered
+   as the published article looks — light "paper", the site's ink colour, the
+   same heading scale, list markers, blockquote rule and measure — so what you
+   type is what the post will look like.
+
+   Scoped to the blog body field only, so the page canvas's inline rich text
+   keeps Payload's own styling. Matches either the field's admin.className
+   (.blog-body) or Payload's generated #field-content id — belt and braces, so
+   the styling still lands if one of the two changes. The canvas's field is
+   nested and gets a different id, so it is not caught by either.
+   ============================================================ */
+
+:is(.blog-body, #field-content) .rich-text-lexical {
+  --blog-ink: #18181b;
+  --blog-muted: #6b6559;
+  --blog-rule: rgb(24 24 27 / 0.12);
+}
+
+/* The editing surface itself: paper, not a form input. */
+:is(.blog-body, #field-content) .ContentEditable__root {
+  background: #f9f8f6;
+  color: var(--blog-ink);
+  border-radius: 14px;
+  padding: 2.4rem 2.6rem;
+  min-height: 26rem;
+  font-size: 17px;
+  line-height: 1.75;
+  /* Matches the article's measure so line breaks land where they will live. */
+  max-width: 46rem;
+}
+
+:is(.blog-body, #field-content) .ContentEditable__root :where(p) {
+  margin: 0 0 1.15em;
+  color: #3f3b34;
+}
+:is(.blog-body, #field-content) .ContentEditable__root :where(p):last-child { margin-bottom: 0; }
+
+:is(.blog-body, #field-content) .ContentEditable__root :where(h2) {
+  font-size: 1.9em;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--blog-ink);
+  margin: 1.8em 0 0.5em;
+}
+:is(.blog-body, #field-content) .ContentEditable__root :where(h3) {
+  font-size: 1.35em;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--blog-ink);
+  margin: 1.6em 0 0.45em;
+}
+:is(.blog-body, #field-content) .ContentEditable__root :where(h4) {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--blog-ink);
+  margin: 1.4em 0 0.4em;
+}
+:is(.blog-body, #field-content) .ContentEditable__root :where(h2, h3, h4):first-child { margin-top: 0; }
+
+:is(.blog-body, #field-content) .ContentEditable__root :where(ul) { list-style: disc; padding-left: 1.35em; margin: 0 0 1.15em; }
+:is(.blog-body, #field-content) .ContentEditable__root :where(ol) { list-style: decimal; padding-left: 1.35em; margin: 0 0 1.15em; }
+:is(.blog-body, #field-content) .ContentEditable__root :where(li) { margin: 0.35em 0; padding-left: 0.2em; }
+:is(.blog-body, #field-content) .ContentEditable__root :where(li)::marker { color: #a19c8f; }
+
+:is(.blog-body, #field-content) .ContentEditable__root :where(a) {
+  color: var(--blog-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgb(24 24 27 / 0.35);
+}
+
+:is(.blog-body, #field-content) .ContentEditable__root :where(strong) { font-weight: 600; color: var(--blog-ink); }
+:is(.blog-body, #field-content) .ContentEditable__root :where(em) { font-style: italic; }
+
+:is(.blog-body, #field-content) .ContentEditable__root :where(blockquote) {
+  margin: 1.7em 0;
+  padding: 0.15em 0 0.15em 1.3em;
+  border-left: 2px solid #d8d2c6;
+  color: var(--blog-muted);
+  font-style: italic;
+}
+
+:is(.blog-body, #field-content) .ContentEditable__root :where(hr) {
+  border: 0;
+  border-top: 1px solid var(--blog-rule);
+  margin: 2.4em 0;
+}
+
+:is(.blog-body, #field-content) .ContentEditable__root :where(img) {
+  border-radius: 14px;
+  margin: 1.6em 0;
+  max-width: 100%;
+  height: auto;
+}
+
+:is(.blog-body, #field-content) .ContentEditable__root :where(code) {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.88em;
+  background: rgb(24 24 27 / 0.06);
+  padding: 0.15em 0.4em;
+  border-radius: 5px;
+}
+
+/* Uploaded images sit in a Lexical node wrapper; keep it on the paper. */
+:is(.blog-body, #field-content) .ContentEditable__root [class*="lexical-upload"] { margin: 1.6em 0; }
+
+/* Toolbar reads as part of the page rather than floating over dark chrome. */
+:is(.blog-body, #field-content) .fixed-toolbar {
+  border-radius: 14px 14px 0 0;
+  border-bottom: 1px solid var(--blog-rule);
+}
