@@ -62,7 +62,15 @@ const plugins = BLOB_TOKEN
   : [];
 
 export default buildConfig({
-  admin: { user: Users.slug, importMap: { baseDir: path.resolve(dirname) } },
+  admin: {
+    user: Users.slug,
+    importMap: { baseDir: path.resolve(dirname) },
+    // Puts the state of the site above the collection grid instead of leaving
+    // it a list of names. The accompanying stylesheet is imported in
+    // (payload)/layout.tsx — there is no `css` option on this config.
+    components: { beforeDashboard: ["/admin/BeforeDashboard#default"] },
+    meta: { titleSuffix: " — Hause Interiors" },
+  },
   collections: [Pages, Posts, Enquiries, Media, Users],
   globals: [SiteSettings],
   editor: lexicalEditor(),
