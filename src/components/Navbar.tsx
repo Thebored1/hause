@@ -56,13 +56,17 @@ export default function Navbar({ onOpenContact, activePath, header = HEADER_DEFA
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close menus on route change
-  useEffect(() => {
+  // Close menus on route change. Adjusted during render rather than in an
+  // effect: an effect would paint the new route with the old menu still open
+  // for a frame, then close it. Keyed off the real route, because `pathname`
+  // may be pinned by `activePath`.
+  const [lastPath, setLastPath] = useState(realPathname);
+  if (realPathname !== lastPath) {
+    setLastPath(realPathname);
     setMobileMenuOpen(false);
     setServicesDropdownOpen(false);
     setMobileServicesOpen(false);
-    // Keyed off the real route: `pathname` may be pinned by `activePath`.
-  }, [realPathname]);
+  }
 
   // Click outside to close desktop dropdown
   useEffect(() => {

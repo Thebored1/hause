@@ -34,15 +34,19 @@ export function LayoutCanvas({ path }: { path?: string }) {
   //    then push that over a real layout — silent data loss.
   //  - Never re-feed `value` afterwards; that would reset the
   //    editor mid-edit and fight the user's caret.
-  const initialRef = useRef<string | undefined>(undefined);
-  const [ready, setReady] = useState(false);
+  // Held in state, not a ref: a ref read during render is exactly the trap
+  // this guards against, and the capture has to survive re-renders untouched.
+  // Wrapped in an object so "captured, and it was empty" stays distinct from
+  // "not captured yet".
+  const [captured, setCaptured] = useState<{ json: string | undefined } | null>(null);
 
-  useEffect(() => {
-    if (ready || formInitializing) return;
-    initialRef.current =
-      value && Object.keys(value).length ? JSON.stringify(value) : undefined;
-    setReady(true);
-  }, [ready, formInitializing, value]);
+  if (captured === null && !formInitializing) {
+    // Set during render, not in an effect: React re-renders immediately
+    // without committing, so the blank starter page is never painted.
+    setCaptured({
+      json: value && Object.keys(value).length ? JSON.stringify(value) : undefined,
+    });
+  }
 
   // Debounced so a burst of typing becomes one form-state write.
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -62,7 +66,7 @@ export function LayoutCanvas({ path }: { path?: string }) {
 
   useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
-  if (!ready) {
+  if (captured === null) {
     return (
       <div className="nb-canvas-root" style={{ display: "grid", placeItems: "center" }}>
         <span style={{ fontSize: 13, opacity: 0.5 }}>Loading canvas…</span>
@@ -73,7 +77,7 @@ export function LayoutCanvas({ path }: { path?: string }) {
   return (
     <div className="nb-canvas-root">
       <Editor resolver={resolver} onNodesChange={(query) => push(query.serialize())}>
-        <CanvasBody initial={initialRef.current} />
+        <CanvasBody initial={captured.json} />
       </Editor>
     </div>
   );
