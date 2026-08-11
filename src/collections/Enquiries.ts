@@ -1,6 +1,7 @@
 import type { CollectionConfig } from "payload";
 import { APIError } from "payload";
 import { clientIp, hit } from "../lib/rate-limit";
+import { enquiryRecipient } from "../lib/email";
 
 /** Submissions allowed per address per window. */
 const LIMIT = 5;
@@ -37,6 +38,44 @@ export const Enquiries: CollectionConfig = {
           throw new APIError(
             `Too many enquiries from this address. Try again in ${retryAfter} seconds.`,
             429,
+          );
+        }
+      },
+    ],
+    afterChange: [
+      async ({ doc, operation, req }) => {
+        if (operation !== "create") return;
+
+        const to = enquiryRecipient();
+        if (!to) return; // nothing configured; the row is still saved
+
+        const field = (key: string) => {
+          const value = (doc as Record<string, unknown>)[key];
+          return value ? String(value) : "";
+        };
+        const lines = [
+          ["Name", field("name")],
+          ["Email", field("email")],
+          ["Phone", field("phone")],
+          ["Location", field("location")],
+          ["Project type", field("projectType")],
+          ["Budget", field("budget")],
+          ["Message", field("message")],
+        ].filter(([, v]) => v);
+
+        try {
+          await req.payload.sendEmail({
+            to,
+            replyTo: field("email") || undefined,
+            subject: `New enquiry — ${field("name") || "website"}`,
+            text: lines.map(([k, v]) => `${k}: ${v}`).join("\n"),
+          });
+        } catch (error) {
+          // Never fail the submission over a mail problem: the visitor has
+          // already been told it worked, and the enquiry is safely stored.
+          req.payload.logger.error(
+            { err: error },
+            "Enquiry saved but the notification email failed to send",
           );
         }
       },

@@ -10,10 +10,8 @@ npm run dev          # http://localhost:3000
 
 | Route | What it is |
 | --- | --- |
-| `/` | Home, from the CMS |
+| `/` and every page (`/about`, `/services/*`, …) | Served from the CMS by one catch-all route |
 | `/blog`, `/blog/[slug]` | Blog, from Payload |
-| `/cms/[...slug]` | Every other page, from the CMS |
-| the hand-coded routes (`/about`, `/services/*`, …) | Still served, and still the source of truth for layout |
 | `/admin` | Payload admin — pages, posts, enquiries, media, users |
 | `/api/*` | Payload REST (and `/api/graphql`) |
 
@@ -30,9 +28,16 @@ Payload documents whose blocks are rendered by the site's own components, editab
 | The five service detail pages | |
 | Blog posts, enquiries, media | |
 
-Each CMS page renders **markup identical** to the hand-coded route it stands in for — every
-class and attribute — so it is a drop-in replacement. The hand-coded routes are still what
-Next serves today; the CMS copies live under `/cms/...` until you point the routes at them.
+**The CMS now serves the site.** Editing a page in the admin changes what visitors see. The
+hand-coded page files have been deleted; every route resolves through
+`src/app/(site)/[[...slug]]/page.tsx`, which looks the slug up in Payload.
+
+The switch was verified by diffing the full rendered markup of all fifteen routes — every class
+and attribute — against captures taken immediately before it. All fifteen are identical. The
+previous versions remain on the `main` branch.
+
+One consequence: pages are now server-rendered per request rather than prerendered, because they
+come from the database. Add caching if that matters.
 
 `/` falls back to the original hand-coded home page if no CMS page with slug `home` exists,
 so a fresh database or a failed lookup never leaves the site blank.

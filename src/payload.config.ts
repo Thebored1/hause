@@ -5,6 +5,7 @@ import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { emailAdapter } from "./lib/email";
 import sharp from "sharp";
 
 import { Users } from "./collections/Users";
@@ -55,6 +56,9 @@ export default buildConfig({
   admin: { user: Users.slug, importMap: { baseDir: path.resolve(dirname) } },
   collections: [Pages, Posts, Enquiries, Media, Users],
   editor: lexicalEditor(),
+  // Resend or SMTP when credentials are present; otherwise Payload logs to
+  // the console, which is fine locally and silent in production.
+  email: emailAdapter(),
   secret: payloadSecret(),
   db,
   plugins,

@@ -1,23 +1,16 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 /**
- * Nonce-based Content-Security-Policy for the routes that render stored content.
+ * Nonce-based Content-Security-Policy for the public site.
  *
- * Why only some routes
- * --------------------
- * A nonce has to be minted per request, so a page carrying one cannot be
- * statically rendered — Next bakes static HTML at build time, when there is no
- * request to mint from. Applying this everywhere would turn the whole site
- * dynamic and give up static generation.
+ * A nonce is minted per request, so a page carrying one cannot be statically
+ * rendered. That used to mean scoping this carefully — but every page is now
+ * served from the CMS through one `force-dynamic` catch-all, so the whole site
+ * is server-rendered anyway and the policy costs nothing.
  *
- * The routes that render untrusted content — the CMS pages and the blog — are
- * already `force-dynamic`, so scoping the policy to them costs nothing. The
- * remaining pages are hand-written copy with no stored content in them; they
- * keep the baseline headers from next.config.ts and stay static.
- *
- * `/admin` is excluded on purpose: it is Payload's own application, it is
- * behind a login, and a strict policy there risks breaking the editor for no
- * gain against stored XSS.
+ * `/admin` and `/api` are excluded on purpose: the admin is Payload's own
+ * application, behind a login, and a strict policy there risks breaking the
+ * editor for no gain against stored XSS, which is a public-site concern.
  *
  * Why style-src still allows 'unsafe-inline'
  * ------------------------------------------
@@ -63,24 +56,14 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // The dynamic, content-rendering routes only — see the note above.
-    // Prefetches are skipped: they fetch data, not a document to protect.
+    /*
+     * The whole public site. Excluded:
+     * - admin, api (see the note above)
+     * - _next/static, _next/image, favicon.ico (static assets)
+     * Prefetches are skipped: they fetch data, not a document to protect.
+     */
     {
-      source: "/",
-      missing: [
-        { type: "header", key: "next-router-prefetch" },
-        { type: "header", key: "purpose", value: "prefetch" },
-      ],
-    },
-    {
-      source: "/cms/:path*",
-      missing: [
-        { type: "header", key: "next-router-prefetch" },
-        { type: "header", key: "purpose", value: "prefetch" },
-      ],
-    },
-    {
-      source: "/blog/:path*",
+      source: "/((?!admin|api|_next/static|_next/image|favicon.ico).*)",
       missing: [
         { type: "header", key: "next-router-prefetch" },
         { type: "header", key: "purpose", value: "prefetch" },

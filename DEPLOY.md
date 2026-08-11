@@ -42,6 +42,50 @@ Project → **Settings** → **Environment Variables**:
 | `BLOB_READ_WRITE_TOKEN` | set by Vercel | Selects Blob storage for uploads. |
 | `NEXT_IMAGE_HOSTS` | `xxxx.public.blob.vercel-storage.com` | **Needed once Blob storage is on.** Uploads are then served from the blob host, and `next/image` refuses any remote host not listed — without this, uploaded images silently fail to render. Comma-separated; copy the hostname from any uploaded file's URL. |
 
+### Email (enquiry notifications)
+
+Without one of these, a contact-form submission is saved to the database and **nobody is
+notified** — Payload writes the message to the server log instead. Set whichever provider you
+use; the adapter is chosen from whichever variables are present.
+
+| Variable | For | Notes |
+| --- | --- | --- |
+| `RESEND_API_KEY` | Resend | Takes priority if set. |
+| `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS` | Brevo, Postmark, any SMTP | `SMTP_PORT` defaults to 587 (STARTTLS); 465 switches to implicit TLS. |
+| `EMAIL_FROM` | both | **Required.** Without it the adapter falls back to console logging and warns. Must be a verified sender. |
+| `EMAIL_FROM_NAME` | both | Defaults to "Hause Interiors". |
+| `ENQUIRY_NOTIFY_TO` | both | Where enquiries go. Falls back to `EMAIL_FROM`. |
+
+The send is non-blocking: if the provider is down the visitor still gets a success response and
+the enquiry is still saved, with the failure logged. Losing a notification is recoverable — the
+row is in the admin. Losing the enquiry is not.
+
+### Database — Supabase
+
+Payload has no database of its own; it uses whatever `DATABASE_URI` points at. Supabase is
+Postgres, so its tables live in your Supabase project alongside everything else — there is no
+second database to manage.
+
+Use the **session pooler** connection string from Supabase → Settings → Database. Payload holds
+pooled connections, which suits a long-lived server; on serverless, the transaction pooler
+(port 6543) is the safer choice.
+
+```
+DATABASE_URI=postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres
+```
+
+The adapter is picked from the string: anything starting `postgres` uses Postgres, otherwise
+SQLite. Local development keeps using the SQLite file unless you point it at Supabase too.
+
+**Schema.** `npm run dev` pushes schema changes automatically; that does not happen in
+production. Before the first deploy, generate migrations against the same Postgres you will
+deploy to and commit them:
+
+```bash
+DATABASE_URI=<your postgres url> npx payload migrate:create
+DATABASE_URI=<your postgres url> npx payload migrate
+```
+
 `NEXT_IMAGE_HOSTS` is an allowlist rather than a wildcard on purpose. `hostname: "**"`
 would let anyone hand `/_next/image` an arbitrary URL and have the server fetch it —
 an open proxy for laundering requests and burning your bandwidth.
