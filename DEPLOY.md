@@ -91,6 +91,25 @@ Or add it to the build so each deploy applies anything outstanding:
 "build": "payload migrate && next build --webpack"
 ```
 
+**Or paste it into Supabase.** `src/migrations/20260811_125959_initial.sql` is the same
+migration as plain SQL — open the Supabase SQL editor, paste the whole file, run it once
+against the empty database. No CLI, no local Postgres URL.
+
+It is the `up` block extracted verbatim, wrapped in a transaction and followed by an insert
+into `payload_migrations`. That last row matters: without it Payload treats the migration as
+outstanding and a later `payload migrate` would try to apply it again, failing on tables that
+already exist.
+
+Verified by executing it against a throwaway Postgres: 192 tables, 34 enum types, 190 foreign
+keys, 683 indexes. Pasting it a second time is rejected on the first statement and rolls back,
+leaving the existing schema untouched — so a double-paste is harmless, not destructive.
+
+Regenerate it after changing a collection with:
+
+```bash
+npx payload migrate:create   # then re-extract the SQL from the new .ts
+```
+
 The migration is **Postgres**, generated with `DATABASE_URI` pointed at a `postgres://` string.
 The adapter is chosen from that string, and the SQL differs by dialect — generating while the
 local SQLite database is active produces backtick-quoted SQLite DDL that Postgres rejects. If
