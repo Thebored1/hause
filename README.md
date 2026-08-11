@@ -66,6 +66,32 @@ defaults to the copy already shipped, so hard-coded pages render byte-identicall
 page can drive the same component with stored content. There is only one implementation of
 each section, so the CMS and the design cannot drift apart.
 
+## Tests
+
+```bash
+npm test                  # everything
+npm run test:unit         # pure functions, no database — a few seconds
+npm run test:integration  # boots Payload against a scratch SQLite file
+```
+
+The integration suite creates a throwaway database in the OS temp directory and deletes it
+afterwards, so it never touches your development data and needs no Supabase credentials.
+
+What is covered, and why those things in particular:
+
+| Area | Why it is tested |
+| --- | --- |
+| `sanitizeHtml` | Rich text reaches `dangerouslySetInnerHTML` and can be written over the API by an agent — a regression here is stored XSS |
+| Rate limiting | Guards the public enquiry endpoint; off by one either way is a rejected visitor or an open form |
+| Nav/footer merge | An editor clearing a field must fall back to the defaults, not render a site with no navigation |
+| Enquiry fields | The contact form's answers must survive the round trip — a field the collection lacks is dropped silently, which has happened |
+| Draft privacy | Unpublished pages must stay invisible to anonymous readers |
+| Canvas scrub | The stored-XSS path through a JSON block tree, which needs a walk rather than a field check |
+
+The suite was checked by breaking the code on purpose: removing the inline-handler scrub, the
+canvas scrub and the drafts access rule, and shifting the rate limit by one. Every one of those
+was caught. A test that cannot fail is not covering anything.
+
 ## Project layout
 
 ```
