@@ -78,13 +78,30 @@ The adapter is picked from the string: anything starting `postgres` uses Postgre
 SQLite. Local development keeps using the SQLite file unless you point it at Supabase too.
 
 **Schema.** `npm run dev` pushes schema changes automatically; that does not happen in
-production. Before the first deploy, generate migrations against the same Postgres you will
-deploy to and commit them:
+production. An initial Postgres migration is committed at `src/migrations/`, so the first
+deploy can create every table. Run it once the environment variables are set:
 
 ```bash
-DATABASE_URI=<your postgres url> npx payload migrate:create
-DATABASE_URI=<your postgres url> npx payload migrate
+DATABASE_URI=<your supabase url> npx payload migrate
 ```
+
+Or add it to the build so each deploy applies anything outstanding:
+
+```json
+"build": "payload migrate && next build --webpack"
+```
+
+The migration is **Postgres**, generated with `DATABASE_URI` pointed at a `postgres://` string.
+The adapter is chosen from that string, and the SQL differs by dialect — generating while the
+local SQLite database is active produces backtick-quoted SQLite DDL that Postgres rejects. If
+you regenerate after changing a collection, set `DATABASE_URI` to your Postgres URL first:
+
+```bash
+DATABASE_URI=<your supabase url> npx payload migrate:create
+```
+
+Generation does not connect to the database, so any well-formed `postgres://` string selects the
+right dialect. Applying them obviously does.
 
 `NEXT_IMAGE_HOSTS` is an allowlist rather than a wildcard on purpose. `hostname: "**"`
 would let anyone hand `/_next/image` an arbitrary URL and have the server fetch it —
