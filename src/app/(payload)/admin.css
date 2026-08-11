@@ -162,7 +162,14 @@
   --hause-cream: #f3efea;
   --hause-muted: #8a8578;
   --hause-line: rgba(243, 239, 234, 0.12);
-  --hause-accent: #c9a227;
+
+  /* Square the whole admin, not just the dashboard. Payload drives every
+     corner - buttons, inputs, popups, drawers - from these three, so setting
+     them here keeps the chrome consistent instead of leaving rounded controls
+     sitting inside square panels. */
+  --style-radius-s: 0;
+  --style-radius-m: 0;
+  --style-radius-l: 0;
 }
 
 /* ---------- dark theme: warm the greys ---------- */
@@ -219,10 +226,9 @@
 }
 
 .card {
-  position: relative;
-  overflow: hidden;
   border: 1px solid var(--theme-border-color);
-  border-radius: 12px;
+  /* Square: the rounded corners softened a grid that reads better sharp. */
+  border-radius: 0;
   background:
     linear-gradient(180deg, rgba(243, 239, 234, 0.035), rgba(243, 239, 234, 0) 60%),
     var(--theme-elevation-50);
@@ -233,35 +239,12 @@
     background-color 0.18s ease;
 }
 
-/* A hairline of colour per collection, so the eye can tell them apart at a
-   glance instead of reading every label. */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 2px;
-  background: var(--card-accent, var(--hause-accent));
-  opacity: 0.55;
-  transition: opacity 0.18s ease;
-}
-
-.card-pages { --card-accent: #c9a227; }
-.card-posts { --card-accent: #6a8caf; }
-.card-media { --card-accent: #8f7a9e; }
-.card-users { --card-accent: #7fa07f; }
-.card-enquiries { --card-accent: #c98a5e; }
-.card-site-settings { --card-accent: #9a9184; }
-
 .card--has-onclick:hover {
   transform: translateY(-2px);
   border-color: rgba(243, 239, 234, 0.22);
   background:
     linear-gradient(180deg, rgba(243, 239, 234, 0.06), rgba(243, 239, 234, 0) 60%),
     var(--theme-elevation-100);
-}
-
-.card--has-onclick:hover::before {
-  opacity: 1;
 }
 
 .card h5,
@@ -273,7 +256,7 @@
 
 /* Keyboard users get the same affordance as the mouse. */
 .card--has-onclick:focus-within {
-  border-color: var(--card-accent, var(--hause-accent));
+  border-color: var(--theme-elevation-800);
   outline: none;
 }
 
@@ -326,7 +309,7 @@
   gap: 0.35rem;
   padding: 1rem 1.1rem;
   border: 1px solid var(--theme-border-color);
-  border-radius: 12px;
+  border-radius: 0;
   background: var(--theme-elevation-50);
   text-decoration: none;
   color: inherit;
@@ -378,7 +361,7 @@
   align-items: center;
   padding: 0.6rem 1.15rem;
   border: 1px solid var(--theme-border-color);
-  border-radius: 999px;
+  border-radius: 0;
   font-size: 13px;
   font-weight: 500;
   text-decoration: none;
