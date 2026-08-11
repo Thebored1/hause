@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PageBlocks, { type PageBlock } from "@/components/PageBlocks";
 import SmoothScroll from "@/components/SmoothScroll";
-import HomeHardcoded from "@/components/HomeHardcoded";
 import { getPageBySlug } from "@/lib/pages";
 import { getChrome } from "@/lib/site-settings";
 
@@ -18,10 +17,10 @@ export const dynamic = "force-dynamic";
  * More specific routes still win: `/blog`, `/admin` and `/api` have their own
  * files and are never reached by this one.
  *
- * `/` falls back to the original hand-coded page when no `home` document
- * exists, so a fresh database or a failed lookup cannot leave the site blank.
- * Every other path 404s, which is the correct answer for a page that is not
- * there.
+ * A path with no document 404s, `/` included. There is no hand-coded
+ * fallback: a second copy of the homepage would drift from the CMS without
+ * anyone noticing, and a missing `home` document is a broken install, which
+ * is better shown than papered over.
  */
 type Params = { params: Promise<{ slug?: string[] }> };
 
@@ -47,10 +46,7 @@ export default async function SitePage({ params }: Params) {
     getChrome(),
   ]);
 
-  if (!page) {
-    if (path === "home") return <HomeHardcoded />;
-    notFound();
-  }
+  if (!page) notFound();
 
   return (
     <SmoothScroll>
