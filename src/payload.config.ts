@@ -41,7 +41,15 @@ function payloadSecret(): string {
  * there; set DATABASE_URI to a postgres:// URL when deploying.
  */
 const db = DATABASE_URI.startsWith("postgres")
-  ? postgresAdapter({ pool: { connectionString: DATABASE_URI } })
+  ? postgresAdapter({
+      pool: { connectionString: DATABASE_URI },
+      // Postgres is managed by the committed migrations, so never let the
+      // dev-mode schema push run against it. Push introspects the whole
+      // remote schema and can stop for an interactive prompt, which over a
+      // pooled connection looks exactly like a hang — the CLI sits there
+      // forever and nothing is written.
+      push: false,
+    })
   : sqliteAdapter({ client: { url: DATABASE_URI } });
 
 /**
