@@ -1039,6 +1039,7 @@ export interface Enquiry {
   phone?: string | null;
   location?: string | null;
   projectType?: string | null;
+  budget?: string | null;
   message?: string | null;
   /**
    * Which page or component the enquiry came from.
@@ -1972,6 +1973,7 @@ export interface EnquiriesSelect<T extends boolean = true> {
   phone?: T;
   location?: T;
   projectType?: T;
+  budget?: T;
   message?: T;
   source?: T;
   status?: T;

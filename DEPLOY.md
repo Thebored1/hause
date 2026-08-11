@@ -91,7 +91,7 @@ Or add it to the build so each deploy applies anything outstanding:
 "build": "payload migrate && next build --webpack"
 ```
 
-**Or paste it into Supabase.** `src/migrations/20260811_125959_initial.sql` is the same
+**Or paste it into Supabase.** `src/migrations/20260811_142757_initial.sql` is the same
 migration as plain SQL — open the Supabase SQL editor, paste the whole file, run it once
 against the empty database. No CLI, no local Postgres URL.
 
@@ -107,8 +107,22 @@ leaving the existing schema untouched — so a double-paste is harmless, not des
 Regenerate it after changing a collection with:
 
 ```bash
-npx payload migrate:create   # then re-extract the SQL from the new .ts
+DATABASE_URI=<a postgres:// url> npx payload migrate:create
+python scripts/extract-migration-sql.py    # retarget the filename at the top first
 ```
+
+**If you already ran the earlier `20260811_125959_initial.sql`**, do not paste the new file —
+it will fail on tables that already exist. The only difference between the two is one column,
+added when the contact form started recording the visitor's budget. Run this instead:
+
+```sql
+ALTER TABLE "enquiries" ADD COLUMN IF NOT EXISTS "budget" varchar;
+UPDATE "payload_migrations" SET "name" = '20260811_142757_initial'
+ WHERE "name" = '20260811_125959_initial';
+```
+
+The `UPDATE` keeps the recorded migration name matching the file on disk, so Payload does not
+see the new one as outstanding and try to apply the whole schema again.
 
 The migration is **Postgres**, generated with `DATABASE_URI` pointed at a `postgres://` string.
 The adapter is chosen from that string, and the SQL differs by dialect — generating while the

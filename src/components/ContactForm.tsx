@@ -49,16 +49,52 @@ export default function ContactForm({
 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const isLight = theme === "light";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  /** Saves the enquiry to Payload so it shows up in /admin. */
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate submission
-    setTimeout(() => {
-      setLoading(false);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/enquiries", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        // Mapped to the collection's field names.
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+          phone: formData.phone,
+          location: formData.city,
+          projectType: formData.projectType,
+          budget: formData.budgetRange,
+          message: formData.message,
+          source: "Contact page",
+        }),
+      });
+
+      if (!res.ok) {
+        // The rate limiter explains itself; pass that through rather than
+        // replacing it with a generic failure.
+        const detail = await res
+          .json()
+          .then((body) => body?.errors?.[0]?.message as string | undefined)
+          .catch(() => undefined);
+        throw new Error(detail || "");
+      }
+
       setSubmitted(true);
-    }, 600);
+    } catch (err) {
+      const detail = err instanceof Error ? err.message : "";
+      setError(
+        detail ||
+          "Sorry \u2014 that didn't send. Please email interiors@hause.agency instead.",
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -314,6 +350,17 @@ export default function ContactForm({
           }`}
         />
       </div>
+
+      {error ? (
+        <p
+          role="alert"
+          className={`text-xs leading-relaxed ${
+            isLight ? "text-red-700" : "text-red-300"
+          }`}
+        >
+          {error}
+        </p>
+      ) : null}
 
       <button
         type="submit"

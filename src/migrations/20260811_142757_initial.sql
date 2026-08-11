@@ -1,7 +1,17 @@
-import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+-- Hause Interiors - initial schema for Supabase (Postgres)
+--
+-- Extracted verbatim from src/migrations/20260811_142757_initial.ts, which is what
+-- `payload migrate` would run. Paste the whole file into the Supabase SQL
+-- editor and run it once, against an empty database.
+--
+-- Wrapped in a transaction: if any statement fails, nothing is applied and you
+-- can fix and re-run, rather than being left half-migrated.
+--
+-- The final INSERT records the migration in `payload_migrations`. Without it
+-- Payload considers this migration outstanding and would try to apply it again
+-- on your next deploy, which would fail on tables that already exist.
 
-export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
-  await db.execute(sql`
+BEGIN;
    CREATE TYPE "public"."enum_pages_blocks_services_grid_services_icon" AS ENUM('home', 'globe', 'sparkles', 'zap', 'layers', 'box');
   CREATE TYPE "public"."enum_pages_blocks_promo_banner_spacing" AS ENUM('normal', 'loose');
   CREATE TYPE "public"."enum_pages_blocks_promo_banner_card_shadow" AS ENUM('sm', 'md');
@@ -1961,6 +1971,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"phone" varchar,
   	"location" varchar,
   	"project_type" varchar,
+  	"budget" varchar,
   	"message" varchar,
   	"source" varchar,
   	"status" "enum_enquiries_status" DEFAULT 'new',
@@ -2795,235 +2806,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "site_settings_footer_columns_order_idx" ON "site_settings_footer_columns" USING btree ("_order");
   CREATE INDEX "site_settings_footer_columns_parent_id_idx" ON "site_settings_footer_columns" USING btree ("_parent_id");
   CREATE INDEX "site_settings_footer_bottom_notes_order_idx" ON "site_settings_footer_bottom_notes" USING btree ("_order");
-  CREATE INDEX "site_settings_footer_bottom_notes_parent_id_idx" ON "site_settings_footer_bottom_notes" USING btree ("_parent_id");`)
-}
+  CREATE INDEX "site_settings_footer_bottom_notes_parent_id_idx" ON "site_settings_footer_bottom_notes" USING btree ("_parent_id");
 
-export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
-  await db.execute(sql`
-   DROP TABLE "pages_blocks_hero_spaces" CASCADE;
-  DROP TABLE "pages_blocks_hero_stats" CASCADE;
-  DROP TABLE "pages_blocks_hero" CASCADE;
-  DROP TABLE "pages_blocks_services_grid_services" CASCADE;
-  DROP TABLE "pages_blocks_services_grid" CASCADE;
-  DROP TABLE "pages_blocks_portfolio_cards" CASCADE;
-  DROP TABLE "pages_blocks_portfolio_strip" CASCADE;
-  DROP TABLE "pages_blocks_portfolio" CASCADE;
-  DROP TABLE "pages_blocks_process_steps" CASCADE;
-  DROP TABLE "pages_blocks_process" CASCADE;
-  DROP TABLE "pages_blocks_why_us_reasons" CASCADE;
-  DROP TABLE "pages_blocks_why_us" CASCADE;
-  DROP TABLE "pages_blocks_locations_cities" CASCADE;
-  DROP TABLE "pages_blocks_locations" CASCADE;
-  DROP TABLE "pages_blocks_cta" CASCADE;
-  DROP TABLE "pages_blocks_page_hero_breadcrumbs" CASCADE;
-  DROP TABLE "pages_blocks_page_hero" CASCADE;
-  DROP TABLE "pages_blocks_faq_section_items" CASCADE;
-  DROP TABLE "pages_blocks_faq_section" CASCADE;
-  DROP TABLE "pages_blocks_projects_section_projects_highlights" CASCADE;
-  DROP TABLE "pages_blocks_projects_section_projects" CASCADE;
-  DROP TABLE "pages_blocks_projects_section" CASCADE;
-  DROP TABLE "pages_blocks_contact_details_project_types" CASCADE;
-  DROP TABLE "pages_blocks_contact_details_budgets" CASCADE;
-  DROP TABLE "pages_blocks_contact_details_next_steps" CASCADE;
-  DROP TABLE "pages_blocks_contact_details" CASCADE;
-  DROP TABLE "pages_blocks_promo_banner" CASCADE;
-  DROP TABLE "pages_blocks_regions_directory_regions_specialties" CASCADE;
-  DROP TABLE "pages_blocks_regions_directory_regions" CASCADE;
-  DROP TABLE "pages_blocks_regions_directory" CASCADE;
-  DROP TABLE "pages_blocks_pillars_grid_pillars_details" CASCADE;
-  DROP TABLE "pages_blocks_pillars_grid_pillars" CASCADE;
-  DROP TABLE "pages_blocks_pillars_grid" CASCADE;
-  DROP TABLE "pages_blocks_comparison_columns_negatives" CASCADE;
-  DROP TABLE "pages_blocks_comparison_columns_positives" CASCADE;
-  DROP TABLE "pages_blocks_comparison_columns" CASCADE;
-  DROP TABLE "pages_blocks_rating_bar_facts" CASCADE;
-  DROP TABLE "pages_blocks_rating_bar" CASCADE;
-  DROP TABLE "pages_blocks_testimonials_grid_testimonials_tags" CASCADE;
-  DROP TABLE "pages_blocks_testimonials_grid_testimonials" CASCADE;
-  DROP TABLE "pages_blocks_testimonials_grid" CASCADE;
-  DROP TABLE "pages_blocks_photo_strip_photos" CASCADE;
-  DROP TABLE "pages_blocks_photo_strip" CASCADE;
-  DROP TABLE "pages_blocks_process_deep_dive_steps_deliverables" CASCADE;
-  DROP TABLE "pages_blocks_process_deep_dive_steps" CASCADE;
-  DROP TABLE "pages_blocks_process_deep_dive" CASCADE;
-  DROP TABLE "pages_blocks_commitment_bar" CASCADE;
-  DROP TABLE "pages_blocks_services_showcase_services_features" CASCADE;
-  DROP TABLE "pages_blocks_services_showcase_services" CASCADE;
-  DROP TABLE "pages_blocks_services_showcase" CASCADE;
-  DROP TABLE "pages_blocks_assurance_ribbon_cards" CASCADE;
-  DROP TABLE "pages_blocks_assurance_ribbon" CASCADE;
-  DROP TABLE "pages_blocks_studio_story_stats" CASCADE;
-  DROP TABLE "pages_blocks_studio_story" CASCADE;
-  DROP TABLE "pages_blocks_philosophy_grid_philosophies" CASCADE;
-  DROP TABLE "pages_blocks_philosophy_grid" CASCADE;
-  DROP TABLE "pages_blocks_team_network_points" CASCADE;
-  DROP TABLE "pages_blocks_team_network" CASCADE;
-  DROP TABLE "pages_blocks_gallery_ribbon_items" CASCADE;
-  DROP TABLE "pages_blocks_gallery_ribbon" CASCADE;
-  DROP TABLE "pages_blocks_values_grid_values" CASCADE;
-  DROP TABLE "pages_blocks_values_grid" CASCADE;
-  DROP TABLE "pages_blocks_reach_bar" CASCADE;
-  DROP TABLE "pages_blocks_checklist_feature_items" CASCADE;
-  DROP TABLE "pages_blocks_checklist_feature" CASCADE;
-  DROP TABLE "pages_blocks_numbered_cards_cards" CASCADE;
-  DROP TABLE "pages_blocks_numbered_cards" CASCADE;
-  DROP TABLE "pages_blocks_card_list_feature_cards" CASCADE;
-  DROP TABLE "pages_blocks_card_list_feature" CASCADE;
-  DROP TABLE "pages_blocks_icon_cards_cards" CASCADE;
-  DROP TABLE "pages_blocks_icon_cards" CASCADE;
-  DROP TABLE "pages_blocks_stage_grid_stages" CASCADE;
-  DROP TABLE "pages_blocks_stage_grid" CASCADE;
-  DROP TABLE "pages_blocks_layout_cards_options" CASCADE;
-  DROP TABLE "pages_blocks_layout_cards" CASCADE;
-  DROP TABLE "pages_blocks_spec_feature_specs" CASCADE;
-  DROP TABLE "pages_blocks_spec_feature" CASCADE;
-  DROP TABLE "pages_blocks_dark_card_grid_cards" CASCADE;
-  DROP TABLE "pages_blocks_dark_card_grid" CASCADE;
-  DROP TABLE "pages_blocks_property_cards_types" CASCADE;
-  DROP TABLE "pages_blocks_property_cards" CASCADE;
-  DROP TABLE "pages_blocks_project_ribbon_photos" CASCADE;
-  DROP TABLE "pages_blocks_project_ribbon" CASCADE;
-  DROP TABLE "pages_blocks_dark_step_cards_steps" CASCADE;
-  DROP TABLE "pages_blocks_dark_step_cards" CASCADE;
-  DROP TABLE "pages_blocks_canvas" CASCADE;
-  DROP TABLE "pages" CASCADE;
-  DROP TABLE "_pages_v_blocks_hero_spaces" CASCADE;
-  DROP TABLE "_pages_v_blocks_hero_stats" CASCADE;
-  DROP TABLE "_pages_v_blocks_hero" CASCADE;
-  DROP TABLE "_pages_v_blocks_services_grid_services" CASCADE;
-  DROP TABLE "_pages_v_blocks_services_grid" CASCADE;
-  DROP TABLE "_pages_v_blocks_portfolio_cards" CASCADE;
-  DROP TABLE "_pages_v_blocks_portfolio_strip" CASCADE;
-  DROP TABLE "_pages_v_blocks_portfolio" CASCADE;
-  DROP TABLE "_pages_v_blocks_process_steps" CASCADE;
-  DROP TABLE "_pages_v_blocks_process" CASCADE;
-  DROP TABLE "_pages_v_blocks_why_us_reasons" CASCADE;
-  DROP TABLE "_pages_v_blocks_why_us" CASCADE;
-  DROP TABLE "_pages_v_blocks_locations_cities" CASCADE;
-  DROP TABLE "_pages_v_blocks_locations" CASCADE;
-  DROP TABLE "_pages_v_blocks_cta" CASCADE;
-  DROP TABLE "_pages_v_blocks_page_hero_breadcrumbs" CASCADE;
-  DROP TABLE "_pages_v_blocks_page_hero" CASCADE;
-  DROP TABLE "_pages_v_blocks_faq_section_items" CASCADE;
-  DROP TABLE "_pages_v_blocks_faq_section" CASCADE;
-  DROP TABLE "_pages_v_blocks_projects_section_projects_highlights" CASCADE;
-  DROP TABLE "_pages_v_blocks_projects_section_projects" CASCADE;
-  DROP TABLE "_pages_v_blocks_projects_section" CASCADE;
-  DROP TABLE "_pages_v_blocks_contact_details_project_types" CASCADE;
-  DROP TABLE "_pages_v_blocks_contact_details_budgets" CASCADE;
-  DROP TABLE "_pages_v_blocks_contact_details_next_steps" CASCADE;
-  DROP TABLE "_pages_v_blocks_contact_details" CASCADE;
-  DROP TABLE "_pages_v_blocks_promo_banner" CASCADE;
-  DROP TABLE "_pages_v_blocks_regions_directory_regions_specialties" CASCADE;
-  DROP TABLE "_pages_v_blocks_regions_directory_regions" CASCADE;
-  DROP TABLE "_pages_v_blocks_regions_directory" CASCADE;
-  DROP TABLE "_pages_v_blocks_pillars_grid_pillars_details" CASCADE;
-  DROP TABLE "_pages_v_blocks_pillars_grid_pillars" CASCADE;
-  DROP TABLE "_pages_v_blocks_pillars_grid" CASCADE;
-  DROP TABLE "_pages_v_blocks_comparison_columns_negatives" CASCADE;
-  DROP TABLE "_pages_v_blocks_comparison_columns_positives" CASCADE;
-  DROP TABLE "_pages_v_blocks_comparison_columns" CASCADE;
-  DROP TABLE "_pages_v_blocks_rating_bar_facts" CASCADE;
-  DROP TABLE "_pages_v_blocks_rating_bar" CASCADE;
-  DROP TABLE "_pages_v_blocks_testimonials_grid_testimonials_tags" CASCADE;
-  DROP TABLE "_pages_v_blocks_testimonials_grid_testimonials" CASCADE;
-  DROP TABLE "_pages_v_blocks_testimonials_grid" CASCADE;
-  DROP TABLE "_pages_v_blocks_photo_strip_photos" CASCADE;
-  DROP TABLE "_pages_v_blocks_photo_strip" CASCADE;
-  DROP TABLE "_pages_v_blocks_process_deep_dive_steps_deliverables" CASCADE;
-  DROP TABLE "_pages_v_blocks_process_deep_dive_steps" CASCADE;
-  DROP TABLE "_pages_v_blocks_process_deep_dive" CASCADE;
-  DROP TABLE "_pages_v_blocks_commitment_bar" CASCADE;
-  DROP TABLE "_pages_v_blocks_services_showcase_services_features" CASCADE;
-  DROP TABLE "_pages_v_blocks_services_showcase_services" CASCADE;
-  DROP TABLE "_pages_v_blocks_services_showcase" CASCADE;
-  DROP TABLE "_pages_v_blocks_assurance_ribbon_cards" CASCADE;
-  DROP TABLE "_pages_v_blocks_assurance_ribbon" CASCADE;
-  DROP TABLE "_pages_v_blocks_studio_story_stats" CASCADE;
-  DROP TABLE "_pages_v_blocks_studio_story" CASCADE;
-  DROP TABLE "_pages_v_blocks_philosophy_grid_philosophies" CASCADE;
-  DROP TABLE "_pages_v_blocks_philosophy_grid" CASCADE;
-  DROP TABLE "_pages_v_blocks_team_network_points" CASCADE;
-  DROP TABLE "_pages_v_blocks_team_network" CASCADE;
-  DROP TABLE "_pages_v_blocks_gallery_ribbon_items" CASCADE;
-  DROP TABLE "_pages_v_blocks_gallery_ribbon" CASCADE;
-  DROP TABLE "_pages_v_blocks_values_grid_values" CASCADE;
-  DROP TABLE "_pages_v_blocks_values_grid" CASCADE;
-  DROP TABLE "_pages_v_blocks_reach_bar" CASCADE;
-  DROP TABLE "_pages_v_blocks_checklist_feature_items" CASCADE;
-  DROP TABLE "_pages_v_blocks_checklist_feature" CASCADE;
-  DROP TABLE "_pages_v_blocks_numbered_cards_cards" CASCADE;
-  DROP TABLE "_pages_v_blocks_numbered_cards" CASCADE;
-  DROP TABLE "_pages_v_blocks_card_list_feature_cards" CASCADE;
-  DROP TABLE "_pages_v_blocks_card_list_feature" CASCADE;
-  DROP TABLE "_pages_v_blocks_icon_cards_cards" CASCADE;
-  DROP TABLE "_pages_v_blocks_icon_cards" CASCADE;
-  DROP TABLE "_pages_v_blocks_stage_grid_stages" CASCADE;
-  DROP TABLE "_pages_v_blocks_stage_grid" CASCADE;
-  DROP TABLE "_pages_v_blocks_layout_cards_options" CASCADE;
-  DROP TABLE "_pages_v_blocks_layout_cards" CASCADE;
-  DROP TABLE "_pages_v_blocks_spec_feature_specs" CASCADE;
-  DROP TABLE "_pages_v_blocks_spec_feature" CASCADE;
-  DROP TABLE "_pages_v_blocks_dark_card_grid_cards" CASCADE;
-  DROP TABLE "_pages_v_blocks_dark_card_grid" CASCADE;
-  DROP TABLE "_pages_v_blocks_property_cards_types" CASCADE;
-  DROP TABLE "_pages_v_blocks_property_cards" CASCADE;
-  DROP TABLE "_pages_v_blocks_project_ribbon_photos" CASCADE;
-  DROP TABLE "_pages_v_blocks_project_ribbon" CASCADE;
-  DROP TABLE "_pages_v_blocks_dark_step_cards_steps" CASCADE;
-  DROP TABLE "_pages_v_blocks_dark_step_cards" CASCADE;
-  DROP TABLE "_pages_v_blocks_canvas" CASCADE;
-  DROP TABLE "_pages_v" CASCADE;
-  DROP TABLE "posts" CASCADE;
-  DROP TABLE "_posts_v" CASCADE;
-  DROP TABLE "enquiries" CASCADE;
-  DROP TABLE "media" CASCADE;
-  DROP TABLE "users_sessions" CASCADE;
-  DROP TABLE "users" CASCADE;
-  DROP TABLE "payload_kv" CASCADE;
-  DROP TABLE "payload_locked_documents" CASCADE;
-  DROP TABLE "payload_locked_documents_rels" CASCADE;
-  DROP TABLE "payload_preferences" CASCADE;
-  DROP TABLE "payload_preferences_rels" CASCADE;
-  DROP TABLE "payload_migrations" CASCADE;
-  DROP TABLE "site_settings_header_nav_links" CASCADE;
-  DROP TABLE "site_settings_header_service_items" CASCADE;
-  DROP TABLE "site_settings_footer_columns_links" CASCADE;
-  DROP TABLE "site_settings_footer_columns" CASCADE;
-  DROP TABLE "site_settings_footer_bottom_notes" CASCADE;
-  DROP TABLE "site_settings" CASCADE;
-  DROP TYPE "public"."enum_pages_blocks_services_grid_services_icon";
-  DROP TYPE "public"."enum_pages_blocks_promo_banner_spacing";
-  DROP TYPE "public"."enum_pages_blocks_promo_banner_card_shadow";
-  DROP TYPE "public"."enum_pages_blocks_pillars_grid_pillars_icon";
-  DROP TYPE "public"."enum_pages_blocks_process_deep_dive_steps_theme";
-  DROP TYPE "public"."enum_pages_blocks_services_showcase_services_theme";
-  DROP TYPE "public"."enum_pages_blocks_assurance_ribbon_cards_icon";
-  DROP TYPE "public"."enum_pages_blocks_philosophy_grid_philosophies_icon";
-  DROP TYPE "public"."enum_pages_blocks_checklist_feature_image_side";
-  DROP TYPE "public"."enum_pages_blocks_checklist_feature_tone";
-  DROP TYPE "public"."enum_pages_blocks_numbered_cards_columns";
-  DROP TYPE "public"."enum_pages_blocks_numbered_cards_tone";
-  DROP TYPE "public"."enum_pages_blocks_icon_cards_cards_icon";
-  DROP TYPE "public"."enum_pages_blocks_icon_cards_title_tracking";
-  DROP TYPE "public"."enum_pages_status";
-  DROP TYPE "public"."enum__pages_v_blocks_services_grid_services_icon";
-  DROP TYPE "public"."enum__pages_v_blocks_promo_banner_spacing";
-  DROP TYPE "public"."enum__pages_v_blocks_promo_banner_card_shadow";
-  DROP TYPE "public"."enum__pages_v_blocks_pillars_grid_pillars_icon";
-  DROP TYPE "public"."enum__pages_v_blocks_process_deep_dive_steps_theme";
-  DROP TYPE "public"."enum__pages_v_blocks_services_showcase_services_theme";
-  DROP TYPE "public"."enum__pages_v_blocks_assurance_ribbon_cards_icon";
-  DROP TYPE "public"."enum__pages_v_blocks_philosophy_grid_philosophies_icon";
-  DROP TYPE "public"."enum__pages_v_blocks_checklist_feature_image_side";
-  DROP TYPE "public"."enum__pages_v_blocks_checklist_feature_tone";
-  DROP TYPE "public"."enum__pages_v_blocks_numbered_cards_columns";
-  DROP TYPE "public"."enum__pages_v_blocks_numbered_cards_tone";
-  DROP TYPE "public"."enum__pages_v_blocks_icon_cards_cards_icon";
-  DROP TYPE "public"."enum__pages_v_blocks_icon_cards_title_tracking";
-  DROP TYPE "public"."enum__pages_v_version_status";
-  DROP TYPE "public"."enum_posts_status";
-  DROP TYPE "public"."enum__posts_v_version_status";
-  DROP TYPE "public"."enum_enquiries_status";
-  DROP TYPE "public"."enum_site_settings_header_service_items_icon";`)
-}
+-- Mark this migration as applied, exactly as `payload migrate` would.
+INSERT INTO "payload_migrations" ("name", "batch", "updated_at", "created_at")
+VALUES ('20260811_142757_initial', 1, now(), now());
+
+COMMIT;

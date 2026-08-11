@@ -19,9 +19,9 @@ is not literal SQL.
 import io
 import re
 
-SRC = 'src/migrations/20260811_125959_initial.ts'
-NAME = '20260811_125959_initial'
-OUT = 'src/migrations/20260811_125959_initial.sql'
+SRC = 'src/migrations/20260811_142757_initial.ts'
+NAME = '20260811_142757_initial'
+OUT = 'src/migrations/20260811_142757_initial.sql'
 
 s = io.open(SRC, encoding='utf-8').read()
 

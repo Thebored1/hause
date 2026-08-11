@@ -102,7 +102,20 @@ export const Enquiries: CollectionConfig = {
         { name: "location", type: "text", admin: { readOnly: true, width: "50%" } },
       ],
     },
-    { name: "projectType", type: "text", admin: { readOnly: true } },
+    {
+      type: "row",
+      fields: [
+        { name: "projectType", type: "text", admin: { readOnly: true, width: "50%" } },
+        {
+          // Free text, not a select: the contact form's budget bands are
+          // editable content, so a fixed enum here would reject a band the
+          // moment someone revised it.
+          name: "budget",
+          type: "text",
+          admin: { readOnly: true, width: "50%" },
+        },
+      ],
+    },
     { name: "message", type: "textarea", admin: { readOnly: true } },
     {
       name: "source",

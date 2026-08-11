@@ -20157,6 +20157,12 @@
           "primaryKey": false,
           "notNull": false
         },
+        "budget": {
+          "name": "budget",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
         "message": {
           "name": "message",
           "type": "varchar",
@@ -22174,6 +22180,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "d75727c0-232a-4203-b91d-0a5a0fe9e6cf",
+  "id": "af3a7576-4706-40bb-b917-2ab8f3af81f4",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }
