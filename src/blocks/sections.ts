@@ -108,20 +108,76 @@ export const LocationsBlock: Block = {
 
 export const PortfolioBlock: Block = {
   slug: "portfolio",
-  labels: { singular: "Portfolio", plural: "Portfolio sections" },
-  // Placement only for now — the project list still lives in the
-  // component and is not editable here yet.
-  fields: [],
+  labels: { singular: "Portfolio", plural: "Portfolios" },
+  fields: [
+    { name: "eyebrow", type: "text" },
+    { name: "title", type: "text" },
+    { name: "intro", type: "textarea" },
+    {
+      name: "cards",
+      type: "array",
+      labels: { singular: "Card", plural: "Feature cards" },
+      admin: {
+        description:
+          "Three works best: the first spans two rows, the other two stack beside it. Leave empty to keep the current set.",
+      },
+      fields: [
+        { name: "tag", type: "text", required: true },
+        { name: "title", type: "text", required: true },
+        { name: "image", type: "text", required: true },
+        { name: "href", type: "text", admin: { description: "Defaults to the CTA link." } },
+      ],
+    },
+    {
+      name: "strip",
+      type: "array",
+      labels: { singular: "Image", plural: "Image strip" },
+      admin: { description: "Two image-only cards below the features; the note card sits beside them." },
+      fields: [
+        { name: "image", type: "text", required: true },
+        { name: "alt", type: "text", required: true },
+        { name: "href", type: "text" },
+      ],
+    },
+    { name: "note", type: "textarea" },
+    {
+      type: "row",
+      fields: [
+        { name: "ctaLabel", type: "text", admin: { width: "50%" } },
+        { name: "ctaHref", type: "text", admin: { width: "50%" } },
+      ],
+    },
+  ],
 };
 
 export const CtaBlock: Block = {
   slug: "cta",
   labels: { singular: "Closing CTA", plural: "Closing CTAs" },
   fields: [
+    { name: "eyebrow", type: "text" },
+    { name: "title", type: "text" },
+    { name: "body", type: "textarea" },
+    { name: "bgImage", type: "text", admin: { description: "e.g. /images/jaiswal/jaiswal-07.jpg" } },
     {
-      name: "bgImage",
-      type: "text",
-      admin: { description: "Background photograph, e.g. /images/jaiswal/jaiswal-07.jpg" },
+      type: "row",
+      fields: [
+        { name: "studioLabel", type: "text", admin: { width: "50%" } },
+        { name: "contactLabel", type: "text", admin: { width: "50%" } },
+      ],
+    },
+    {
+      type: "row",
+      fields: [
+        { name: "studioAddress", type: "textarea", admin: { width: "50%", description: "One line per line break." } },
+        { name: "contactDetails", type: "textarea", admin: { width: "50%", description: "One line per line break." } },
+      ],
+    },
+    {
+      type: "row",
+      fields: [
+        { name: "ctaLabel", type: "text", admin: { width: "50%" } },
+        { name: "ctaHref", type: "text", admin: { width: "50%" } },
+      ],
     },
   ],
 };

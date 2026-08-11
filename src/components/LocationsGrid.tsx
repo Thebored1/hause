@@ -10,7 +10,7 @@ export interface City {
   tag: string;
 }
 
-const CITIES: City[] = [
+export const DEFAULT_CITIES: City[] = [
   { name: "Delhi", body: "South Delhi apartments to independent floors in older colonies.", tag: "On ground" },
   { name: "Gurugram", body: "High-rise apartments, builder floors and corporate offices.", tag: "On ground" },
   { name: "Noida & Greater Noida", body: "Growing apartment societies, plus office and retail fit-outs.", tag: "On ground" },
@@ -24,7 +24,7 @@ interface LocationsGridProps {
   cities?: City[];
 }
 
-export default function LocationsGrid({ cities = CITIES }: LocationsGridProps) {
+export default function LocationsGrid({ cities = DEFAULT_CITIES }: LocationsGridProps) {
   return (
     <section id="locations" className="bg-[#f9f8f6] text-[#18181b] py-24 px-6 sm:px-12 md:px-16">
       <div className="max-w-[1280px] mx-auto flex flex-col gap-14">

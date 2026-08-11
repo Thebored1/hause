@@ -4,7 +4,10 @@ import { useState } from "react";
 
 import HeroSpaceSwitcher, { type HeroStat } from "@/components/HeroSpaceSwitcher";
 import ServicesGrid, { type ServiceItem } from "@/components/ServicesGrid";
-import PortfolioShowcase from "@/components/PortfolioShowcase";
+import PortfolioShowcase, {
+  type PortfolioCard,
+  type PortfolioStripImage,
+} from "@/components/PortfolioShowcase";
 import ProcessTimeline, { type ProcessStep } from "@/components/ProcessTimeline";
 import WhyUs, { type Reason } from "@/components/WhyUs";
 import LocationsGrid, { type City } from "@/components/LocationsGrid";
@@ -12,7 +15,9 @@ import CTASection from "@/components/CTASection";
 import PageHero from "@/components/PageHero";
 import FAQSection from "@/components/FAQSection";
 import ProjectsSection from "@/components/ProjectsSection";
+import { type ProjectItem } from "@/components/ProjectFilterGrid";
 import ContactDetails, { type NextStep } from "@/components/ContactDetails";
+import { type SelectOption } from "@/components/ContactForm";
 import PromoBanner from "@/components/PromoBanner";
 import RegionsDirectory, { type Region } from "@/components/RegionsDirectory";
 import PillarsGrid, { type Pillar } from "@/components/PillarsGrid";
@@ -143,7 +148,19 @@ export default function PageBlocks({
             );
 
           case "portfolio":
-            return <PortfolioShowcase key={i} />;
+            return (
+              <PortfolioShowcase
+                key={i}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                intro={val<string>(block.intro)}
+                cards={val<PortfolioCard[]>(block.cards)}
+                strip={val<PortfolioStripImage[]>(block.strip)}
+                note={val<string>(block.note)}
+                ctaLabel={val<string>(block.ctaLabel)}
+                ctaHref={val<string>(block.ctaHref)}
+              />
+            );
 
           case "process":
             return <ProcessTimeline key={i} steps={val<ProcessStep[]>(block.steps)} />;
@@ -155,7 +172,22 @@ export default function PageBlocks({
             return <LocationsGrid key={i} cities={val<City[]>(block.cities)} />;
 
           case "cta":
-            return <CTASection key={i} onOpenContact={openContact} bgImage={val<string>(block.bgImage)} />;
+            return (
+              <CTASection
+                key={i}
+                onOpenContact={openContact}
+                bgImage={val<string>(block.bgImage)}
+                eyebrow={val<string>(block.eyebrow)}
+                title={val<string>(block.title)}
+                body={val<string>(block.body)}
+                studioLabel={val<string>(block.studioLabel)}
+                studioAddress={val<string>(block.studioAddress)}
+                contactLabel={val<string>(block.contactLabel)}
+                contactDetails={val<string>(block.contactDetails)}
+                ctaLabel={val<string>(block.ctaLabel)}
+                ctaHref={val<string>(block.ctaHref)}
+              />
+            );
 
           case "pageHero": {
             const crumbs = val<{ label: string; href?: string }[]>(block.breadcrumbs);
@@ -188,8 +220,21 @@ export default function PageBlocks({
               />
             );
 
-          case "projectsSection":
-            return <ProjectsSection key={i} />;
+          case "projectsSection": {
+            // Payload arrays cannot hold bare strings, so highlights arrive wrapped.
+            const rows = val<(Omit<ProjectItem, "highlights"> & { highlights?: { value: string }[] })[]>(
+              block.projects,
+            );
+            return (
+              <ProjectsSection
+                key={i}
+                projects={rows?.map((r) => ({
+                  ...r,
+                  highlights: (r.highlights ?? []).map((h) => h.value),
+                }))}
+              />
+            );
+          }
 
           case "contactDetails":
             return (
@@ -204,6 +249,8 @@ export default function PageBlocks({
                 hours={val<string>(block.hours)}
                 nextStepsLabel={val<string>(block.nextStepsLabel)}
                 nextSteps={val<NextStep[]>(block.nextSteps)}
+                projectTypes={val<SelectOption[]>(block.projectTypes)}
+                budgets={val<SelectOption[]>(block.budgets)}
               />
             );
 

@@ -9,7 +9,7 @@ export interface Reason {
   body: string;
 }
 
-const REASONS: Reason[] = [
+export const DEFAULT_REASONS: Reason[] = [
   {
     title: "Single point of responsibility",
     body: "One team for design and execution, so nothing gets lost between the architect, contractor and carpenter.",
@@ -37,7 +37,7 @@ interface WhyUsProps {
   reasons?: Reason[];
 }
 
-export default function WhyUs({ reasons = REASONS }: WhyUsProps) {
+export default function WhyUs({ reasons = DEFAULT_REASONS }: WhyUsProps) {
   return (
     <section className="bg-[#141618] text-white py-24 px-6 sm:px-12 md:px-16 border-t border-white/10">
       <div className="max-w-[1280px] mx-auto">

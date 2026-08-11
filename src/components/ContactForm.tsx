@@ -3,11 +3,40 @@
 import React, { useState } from "react";
 import { CheckCircle2, ArrowRight, Clock, ShieldCheck } from "lucide-react";
 
-interface ContactFormProps {
-  theme?: "light" | "dark";
+export interface SelectOption {
+  /** Stored on the enquiry. Keep stable even if the label changes. */
+  value: string;
+  label: string;
 }
 
-export default function ContactForm({ theme = "dark" }: ContactFormProps) {
+interface ContactFormProps {
+  theme?: "light" | "dark";
+  projectTypes?: SelectOption[];
+  budgets?: SelectOption[];
+}
+
+export const DEFAULT_PROJECT_TYPES: SelectOption[] = [
+  { value: "Residential", label: "Residential Interior (Apartment / Villa)" },
+  { value: "Commercial & Office", label: "Commercial & Office Interior" },
+  { value: "Modular Kitchen & Wardrobe", label: "Modular Kitchen & Wardrobe" },
+  { value: "Turnkey Interior Solutions", label: "Turnkey Interior Solutions" },
+  { value: "Renovation & Remodeling", label: "Renovation & Remodeling" },
+  { value: "3D Visualization & Consultation", label: "3D Visualization & Consultation" },
+];
+
+export const DEFAULT_BUDGETS: SelectOption[] = [
+  { value: "\u20b95L - \u20b915L", label: "\u20b95 Lakhs \u2013 \u20b915 Lakhs" },
+  { value: "\u20b915L - \u20b930L", label: "\u20b915 Lakhs \u2013 \u20b930 Lakhs" },
+  { value: "\u20b930L - \u20b960L", label: "\u20b930 Lakhs \u2013 \u20b960 Lakhs" },
+  { value: "\u20b960L+", label: "\u20b960 Lakhs +" },
+  { value: "To be determined", label: "Undecided / Need Consultation" },
+];
+
+export default function ContactForm({
+  theme = "dark",
+  projectTypes = DEFAULT_PROJECT_TYPES,
+  budgets = DEFAULT_BUDGETS,
+}: ContactFormProps) {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -231,12 +260,11 @@ export default function ContactForm({ theme = "dark" }: ContactFormProps) {
                 : "bg-[#0c0d0e] border border-white/15 text-[#f3efea] focus:border-white/50"
             }`}
           >
-            <option value="Residential">Residential Interior (Apartment / Villa)</option>
-            <option value="Commercial & Office">Commercial &amp; Office Interior</option>
-            <option value="Modular Kitchen & Wardrobe">Modular Kitchen &amp; Wardrobe</option>
-            <option value="Turnkey Interior Solutions">Turnkey Interior Solutions</option>
-            <option value="Renovation & Remodeling">Renovation &amp; Remodeling</option>
-            <option value="3D Visualization & Consultation">3D Visualization &amp; Consultation</option>
+            {projectTypes.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -257,11 +285,11 @@ export default function ContactForm({ theme = "dark" }: ContactFormProps) {
                 : "bg-[#0c0d0e] border border-white/15 text-[#f3efea] focus:border-white/50"
             }`}
           >
-            <option value="₹5L - ₹15L">₹5 Lakhs – ₹15 Lakhs</option>
-            <option value="₹15L - ₹30L">₹15 Lakhs – ₹30 Lakhs</option>
-            <option value="₹30L - ₹60L">₹30 Lakhs – ₹60 Lakhs</option>
-            <option value="₹60L+">₹60 Lakhs +</option>
-            <option value="To be determined">Undecided / Need Consultation</option>
+            {budgets.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </select>
         </div>
       </div>

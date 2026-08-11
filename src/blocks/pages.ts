@@ -79,11 +79,45 @@ export const FAQSectionBlock: Block = {
 export const ProjectsSectionBlock: Block = {
   slug: "projectsSection",
   labels: { singular: "Projects Grid", plural: "Projects Grids" },
-  admin: {
-    group: "Page sections",
-    // Placement only, like the portfolio block on the home page.
-  },
-  fields: [],
+  admin: { group: "Page sections" },
+  fields: [
+    {
+      name: "projects",
+      type: "array",
+      labels: { singular: "Project", plural: "Projects" },
+      admin: {
+        description:
+          "The filter tabs are built from the categories used here. Leave empty to keep the current set.",
+      },
+      fields: [
+        { name: "id", type: "text", required: true, admin: { description: "Unique key, e.g. villa-entrance" } },
+        { name: "title", type: "text", required: true },
+        { name: "category", type: "text", required: true },
+        {
+          type: "row",
+          fields: [
+            { name: "location", type: "text", required: true, admin: { width: "50%" } },
+            { name: "area", type: "text", required: true, admin: { width: "50%" } },
+          ],
+        },
+        {
+          type: "row",
+          fields: [
+            { name: "scope", type: "text", required: true, admin: { width: "50%" } },
+            { name: "timeline", type: "text", required: true, admin: { width: "50%" } },
+          ],
+        },
+        { name: "image", type: "text", required: true },
+        { name: "description", type: "textarea", required: true },
+        {
+          name: "highlights",
+          type: "array",
+          labels: { singular: "Highlight", plural: "Highlights" },
+          fields: [{ name: "value", type: "text", required: true }],
+        },
+      ],
+    },
+  ],
 };
 
 export const ContactDetailsBlock: Block = {
@@ -108,6 +142,31 @@ export const ContactDetailsBlock: Block = {
     },
     { name: "hours", type: "text" },
     { name: "nextStepsLabel", type: "text" },
+    {
+      type: "collapsible",
+      label: "Enquiry form options",
+      admin: { initCollapsed: true, description: "Leave empty to keep the current options." },
+      fields: [
+        {
+          name: "projectTypes",
+          type: "array",
+          labels: { singular: "Project type", plural: "Project types" },
+          fields: [
+            { name: "value", type: "text", required: true, admin: { description: "Stored on the enquiry; keep stable." } },
+            { name: "label", type: "text", required: true },
+          ],
+        },
+        {
+          name: "budgets",
+          type: "array",
+          labels: { singular: "Budget band", plural: "Budget bands" },
+          fields: [
+            { name: "value", type: "text", required: true, admin: { description: "Stored on the enquiry; keep stable." } },
+            { name: "label", type: "text", required: true },
+          ],
+        },
+      ],
+    },
     {
       name: "nextSteps",
       type: "array",

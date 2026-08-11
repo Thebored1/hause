@@ -10,7 +10,7 @@ export interface ProcessStep {
   body: string;
 }
 
-const STEPS: ProcessStep[] = [
+export const DEFAULT_STEPS: ProcessStep[] = [
   {
     n: "01",
     title: "Discovery & site visit",
@@ -43,7 +43,7 @@ interface ProcessTimelineProps {
   steps?: ProcessStep[];
 }
 
-export default function ProcessTimeline({ steps = STEPS }: ProcessTimelineProps) {
+export default function ProcessTimeline({ steps = DEFAULT_STEPS }: ProcessTimelineProps) {
   return (
     <section id="process" className="bg-[#0c0d0e] text-white py-28 px-6 sm:px-12 md:px-16 border-t border-white/10">
       <div className="max-w-[1280px] mx-auto flex flex-col gap-20">

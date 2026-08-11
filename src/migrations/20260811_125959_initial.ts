@@ -99,11 +99,36 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
+  CREATE TABLE "pages_blocks_portfolio_cards" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"tag" varchar,
+  	"title" varchar,
+  	"image" varchar,
+  	"href" varchar
+  );
+  
+  CREATE TABLE "pages_blocks_portfolio_strip" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"image" varchar,
+  	"alt" varchar,
+  	"href" varchar
+  );
+  
   CREATE TABLE "pages_blocks_portfolio" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
+  	"eyebrow" varchar,
+  	"title" varchar,
+  	"intro" varchar,
+  	"note" varchar,
+  	"cta_label" varchar,
+  	"cta_href" varchar,
   	"block_name" varchar
   );
   
@@ -162,7 +187,16 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_parent_id" integer NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
+  	"eyebrow" varchar,
+  	"title" varchar,
+  	"body" varchar,
   	"bg_image" varchar,
+  	"studio_label" varchar,
+  	"contact_label" varchar,
+  	"studio_address" varchar,
+  	"contact_details" varchar,
+  	"cta_label" varchar,
+  	"cta_href" varchar,
   	"block_name" varchar
   );
   
@@ -211,12 +245,49 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
+  CREATE TABLE "pages_blocks_projects_section_projects_highlights" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"value" varchar
+  );
+  
+  CREATE TABLE "pages_blocks_projects_section_projects" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar,
+  	"category" varchar,
+  	"location" varchar,
+  	"area" varchar,
+  	"scope" varchar,
+  	"timeline" varchar,
+  	"image" varchar,
+  	"description" varchar
+  );
+  
   CREATE TABLE "pages_blocks_projects_section" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"_path" text NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"block_name" varchar
+  );
+  
+  CREATE TABLE "pages_blocks_contact_details_project_types" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"value" varchar,
+  	"label" varchar
+  );
+  
+  CREATE TABLE "pages_blocks_contact_details_budgets" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"value" varchar,
+  	"label" varchar
   );
   
   CREATE TABLE "pages_blocks_contact_details_next_steps" (
@@ -931,11 +1002,38 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
+  CREATE TABLE "_pages_v_blocks_portfolio_cards" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"tag" varchar,
+  	"title" varchar,
+  	"image" varchar,
+  	"href" varchar,
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_portfolio_strip" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"image" varchar,
+  	"alt" varchar,
+  	"href" varchar,
+  	"_uuid" varchar
+  );
+  
   CREATE TABLE "_pages_v_blocks_portfolio" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"_path" text NOT NULL,
   	"id" serial PRIMARY KEY NOT NULL,
+  	"eyebrow" varchar,
+  	"title" varchar,
+  	"intro" varchar,
+  	"note" varchar,
+  	"cta_label" varchar,
+  	"cta_href" varchar,
   	"_uuid" varchar,
   	"block_name" varchar
   );
@@ -1001,7 +1099,16 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_parent_id" integer NOT NULL,
   	"_path" text NOT NULL,
   	"id" serial PRIMARY KEY NOT NULL,
+  	"eyebrow" varchar,
+  	"title" varchar,
+  	"body" varchar,
   	"bg_image" varchar,
+  	"studio_label" varchar,
+  	"contact_label" varchar,
+  	"studio_address" varchar,
+  	"contact_details" varchar,
+  	"cta_label" varchar,
+  	"cta_href" varchar,
   	"_uuid" varchar,
   	"block_name" varchar
   );
@@ -1055,6 +1162,29 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"block_name" varchar
   );
   
+  CREATE TABLE "_pages_v_blocks_projects_section_projects_highlights" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"value" varchar,
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_projects_section_projects" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"_uuid" varchar,
+  	"title" varchar,
+  	"category" varchar,
+  	"location" varchar,
+  	"area" varchar,
+  	"scope" varchar,
+  	"timeline" varchar,
+  	"image" varchar,
+  	"description" varchar
+  );
+  
   CREATE TABLE "_pages_v_blocks_projects_section" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -1062,6 +1192,24 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"id" serial PRIMARY KEY NOT NULL,
   	"_uuid" varchar,
   	"block_name" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_contact_details_project_types" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"value" varchar,
+  	"label" varchar,
+  	"_uuid" varchar
+  );
+  
+  CREATE TABLE "_pages_v_blocks_contact_details_budgets" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"value" varchar,
+  	"label" varchar,
+  	"_uuid" varchar
   );
   
   CREATE TABLE "_pages_v_blocks_contact_details_next_steps" (
@@ -1972,6 +2120,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "pages_blocks_hero" ADD CONSTRAINT "pages_blocks_hero_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_services_grid_services" ADD CONSTRAINT "pages_blocks_services_grid_services_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_services_grid"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_services_grid" ADD CONSTRAINT "pages_blocks_services_grid_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_portfolio_cards" ADD CONSTRAINT "pages_blocks_portfolio_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_portfolio_strip" ADD CONSTRAINT "pages_blocks_portfolio_strip_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_portfolio"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_portfolio" ADD CONSTRAINT "pages_blocks_portfolio_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_process_steps" ADD CONSTRAINT "pages_blocks_process_steps_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_process"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_process" ADD CONSTRAINT "pages_blocks_process_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
@@ -1984,7 +2134,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "pages_blocks_page_hero" ADD CONSTRAINT "pages_blocks_page_hero_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_faq_section_items" ADD CONSTRAINT "pages_blocks_faq_section_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_faq_section"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_faq_section" ADD CONSTRAINT "pages_blocks_faq_section_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_projects_section_projects_highlights" ADD CONSTRAINT "pages_blocks_projects_section_projects_highlights_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_projects_section_projects"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_projects_section_projects" ADD CONSTRAINT "pages_blocks_projects_section_projects_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_projects_section"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_projects_section" ADD CONSTRAINT "pages_blocks_projects_section_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_contact_details_project_types" ADD CONSTRAINT "pages_blocks_contact_details_project_types_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_contact_details"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "pages_blocks_contact_details_budgets" ADD CONSTRAINT "pages_blocks_contact_details_budgets_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_contact_details"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_contact_details_next_steps" ADD CONSTRAINT "pages_blocks_contact_details_next_steps_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_contact_details"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_contact_details" ADD CONSTRAINT "pages_blocks_contact_details_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_promo_banner" ADD CONSTRAINT "pages_blocks_promo_banner_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
@@ -2052,6 +2206,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "_pages_v_blocks_hero" ADD CONSTRAINT "_pages_v_blocks_hero_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_services_grid_services" ADD CONSTRAINT "_pages_v_blocks_services_grid_services_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_services_grid"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_services_grid" ADD CONSTRAINT "_pages_v_blocks_services_grid_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_portfolio_cards" ADD CONSTRAINT "_pages_v_blocks_portfolio_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_portfolio"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_portfolio_strip" ADD CONSTRAINT "_pages_v_blocks_portfolio_strip_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_portfolio"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_portfolio" ADD CONSTRAINT "_pages_v_blocks_portfolio_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_process_steps" ADD CONSTRAINT "_pages_v_blocks_process_steps_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_process"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_process" ADD CONSTRAINT "_pages_v_blocks_process_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
@@ -2064,7 +2220,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "_pages_v_blocks_page_hero" ADD CONSTRAINT "_pages_v_blocks_page_hero_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_faq_section_items" ADD CONSTRAINT "_pages_v_blocks_faq_section_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_faq_section"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_faq_section" ADD CONSTRAINT "_pages_v_blocks_faq_section_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_projects_section_projects_highlights" ADD CONSTRAINT "_pages_v_blocks_projects_section_projects_highlights_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_projects_section_projects"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_projects_section_projects" ADD CONSTRAINT "_pages_v_blocks_projects_section_projects_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_projects_section"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_projects_section" ADD CONSTRAINT "_pages_v_blocks_projects_section_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_contact_details_project_types" ADD CONSTRAINT "_pages_v_blocks_contact_details_project_types_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_contact_details"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "_pages_v_blocks_contact_details_budgets" ADD CONSTRAINT "_pages_v_blocks_contact_details_budgets_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_contact_details"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_contact_details_next_steps" ADD CONSTRAINT "_pages_v_blocks_contact_details_next_steps_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v_blocks_contact_details"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_contact_details" ADD CONSTRAINT "_pages_v_blocks_contact_details_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "_pages_v_blocks_promo_banner" ADD CONSTRAINT "_pages_v_blocks_promo_banner_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_pages_v"("id") ON DELETE cascade ON UPDATE no action;
@@ -2157,6 +2317,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "pages_blocks_services_grid_order_idx" ON "pages_blocks_services_grid" USING btree ("_order");
   CREATE INDEX "pages_blocks_services_grid_parent_id_idx" ON "pages_blocks_services_grid" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_services_grid_path_idx" ON "pages_blocks_services_grid" USING btree ("_path");
+  CREATE INDEX "pages_blocks_portfolio_cards_order_idx" ON "pages_blocks_portfolio_cards" USING btree ("_order");
+  CREATE INDEX "pages_blocks_portfolio_cards_parent_id_idx" ON "pages_blocks_portfolio_cards" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_portfolio_strip_order_idx" ON "pages_blocks_portfolio_strip" USING btree ("_order");
+  CREATE INDEX "pages_blocks_portfolio_strip_parent_id_idx" ON "pages_blocks_portfolio_strip" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_portfolio_order_idx" ON "pages_blocks_portfolio" USING btree ("_order");
   CREATE INDEX "pages_blocks_portfolio_parent_id_idx" ON "pages_blocks_portfolio" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_portfolio_path_idx" ON "pages_blocks_portfolio" USING btree ("_path");
@@ -2188,9 +2352,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "pages_blocks_faq_section_order_idx" ON "pages_blocks_faq_section" USING btree ("_order");
   CREATE INDEX "pages_blocks_faq_section_parent_id_idx" ON "pages_blocks_faq_section" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_faq_section_path_idx" ON "pages_blocks_faq_section" USING btree ("_path");
+  CREATE INDEX "pages_blocks_projects_section_projects_highlights_order_idx" ON "pages_blocks_projects_section_projects_highlights" USING btree ("_order");
+  CREATE INDEX "pages_blocks_projects_section_projects_highlights_parent_id_idx" ON "pages_blocks_projects_section_projects_highlights" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_projects_section_projects_order_idx" ON "pages_blocks_projects_section_projects" USING btree ("_order");
+  CREATE INDEX "pages_blocks_projects_section_projects_parent_id_idx" ON "pages_blocks_projects_section_projects" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_projects_section_order_idx" ON "pages_blocks_projects_section" USING btree ("_order");
   CREATE INDEX "pages_blocks_projects_section_parent_id_idx" ON "pages_blocks_projects_section" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_projects_section_path_idx" ON "pages_blocks_projects_section" USING btree ("_path");
+  CREATE INDEX "pages_blocks_contact_details_project_types_order_idx" ON "pages_blocks_contact_details_project_types" USING btree ("_order");
+  CREATE INDEX "pages_blocks_contact_details_project_types_parent_id_idx" ON "pages_blocks_contact_details_project_types" USING btree ("_parent_id");
+  CREATE INDEX "pages_blocks_contact_details_budgets_order_idx" ON "pages_blocks_contact_details_budgets" USING btree ("_order");
+  CREATE INDEX "pages_blocks_contact_details_budgets_parent_id_idx" ON "pages_blocks_contact_details_budgets" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_contact_details_next_steps_order_idx" ON "pages_blocks_contact_details_next_steps" USING btree ("_order");
   CREATE INDEX "pages_blocks_contact_details_next_steps_parent_id_idx" ON "pages_blocks_contact_details_next_steps" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_contact_details_order_idx" ON "pages_blocks_contact_details" USING btree ("_order");
@@ -2361,6 +2533,10 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_pages_v_blocks_services_grid_order_idx" ON "_pages_v_blocks_services_grid" USING btree ("_order");
   CREATE INDEX "_pages_v_blocks_services_grid_parent_id_idx" ON "_pages_v_blocks_services_grid" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_services_grid_path_idx" ON "_pages_v_blocks_services_grid" USING btree ("_path");
+  CREATE INDEX "_pages_v_blocks_portfolio_cards_order_idx" ON "_pages_v_blocks_portfolio_cards" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_portfolio_cards_parent_id_idx" ON "_pages_v_blocks_portfolio_cards" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_portfolio_strip_order_idx" ON "_pages_v_blocks_portfolio_strip" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_portfolio_strip_parent_id_idx" ON "_pages_v_blocks_portfolio_strip" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_portfolio_order_idx" ON "_pages_v_blocks_portfolio" USING btree ("_order");
   CREATE INDEX "_pages_v_blocks_portfolio_parent_id_idx" ON "_pages_v_blocks_portfolio" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_portfolio_path_idx" ON "_pages_v_blocks_portfolio" USING btree ("_path");
@@ -2392,9 +2568,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "_pages_v_blocks_faq_section_order_idx" ON "_pages_v_blocks_faq_section" USING btree ("_order");
   CREATE INDEX "_pages_v_blocks_faq_section_parent_id_idx" ON "_pages_v_blocks_faq_section" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_faq_section_path_idx" ON "_pages_v_blocks_faq_section" USING btree ("_path");
+  CREATE INDEX "_pages_v_blocks_projects_section_projects_highlights_order_idx" ON "_pages_v_blocks_projects_section_projects_highlights" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_projects_section_projects_highlights_parent_id_idx" ON "_pages_v_blocks_projects_section_projects_highlights" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_projects_section_projects_order_idx" ON "_pages_v_blocks_projects_section_projects" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_projects_section_projects_parent_id_idx" ON "_pages_v_blocks_projects_section_projects" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_projects_section_order_idx" ON "_pages_v_blocks_projects_section" USING btree ("_order");
   CREATE INDEX "_pages_v_blocks_projects_section_parent_id_idx" ON "_pages_v_blocks_projects_section" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_projects_section_path_idx" ON "_pages_v_blocks_projects_section" USING btree ("_path");
+  CREATE INDEX "_pages_v_blocks_contact_details_project_types_order_idx" ON "_pages_v_blocks_contact_details_project_types" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_contact_details_project_types_parent_id_idx" ON "_pages_v_blocks_contact_details_project_types" USING btree ("_parent_id");
+  CREATE INDEX "_pages_v_blocks_contact_details_budgets_order_idx" ON "_pages_v_blocks_contact_details_budgets" USING btree ("_order");
+  CREATE INDEX "_pages_v_blocks_contact_details_budgets_parent_id_idx" ON "_pages_v_blocks_contact_details_budgets" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_contact_details_next_steps_order_idx" ON "_pages_v_blocks_contact_details_next_steps" USING btree ("_order");
   CREATE INDEX "_pages_v_blocks_contact_details_next_steps_parent_id_idx" ON "_pages_v_blocks_contact_details_next_steps" USING btree ("_parent_id");
   CREATE INDEX "_pages_v_blocks_contact_details_order_idx" ON "_pages_v_blocks_contact_details" USING btree ("_order");
@@ -2621,6 +2805,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "pages_blocks_hero" CASCADE;
   DROP TABLE "pages_blocks_services_grid_services" CASCADE;
   DROP TABLE "pages_blocks_services_grid" CASCADE;
+  DROP TABLE "pages_blocks_portfolio_cards" CASCADE;
+  DROP TABLE "pages_blocks_portfolio_strip" CASCADE;
   DROP TABLE "pages_blocks_portfolio" CASCADE;
   DROP TABLE "pages_blocks_process_steps" CASCADE;
   DROP TABLE "pages_blocks_process" CASCADE;
@@ -2633,7 +2819,11 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "pages_blocks_page_hero" CASCADE;
   DROP TABLE "pages_blocks_faq_section_items" CASCADE;
   DROP TABLE "pages_blocks_faq_section" CASCADE;
+  DROP TABLE "pages_blocks_projects_section_projects_highlights" CASCADE;
+  DROP TABLE "pages_blocks_projects_section_projects" CASCADE;
   DROP TABLE "pages_blocks_projects_section" CASCADE;
+  DROP TABLE "pages_blocks_contact_details_project_types" CASCADE;
+  DROP TABLE "pages_blocks_contact_details_budgets" CASCADE;
   DROP TABLE "pages_blocks_contact_details_next_steps" CASCADE;
   DROP TABLE "pages_blocks_contact_details" CASCADE;
   DROP TABLE "pages_blocks_promo_banner" CASCADE;
@@ -2702,6 +2892,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "_pages_v_blocks_hero" CASCADE;
   DROP TABLE "_pages_v_blocks_services_grid_services" CASCADE;
   DROP TABLE "_pages_v_blocks_services_grid" CASCADE;
+  DROP TABLE "_pages_v_blocks_portfolio_cards" CASCADE;
+  DROP TABLE "_pages_v_blocks_portfolio_strip" CASCADE;
   DROP TABLE "_pages_v_blocks_portfolio" CASCADE;
   DROP TABLE "_pages_v_blocks_process_steps" CASCADE;
   DROP TABLE "_pages_v_blocks_process" CASCADE;
@@ -2714,7 +2906,11 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "_pages_v_blocks_page_hero" CASCADE;
   DROP TABLE "_pages_v_blocks_faq_section_items" CASCADE;
   DROP TABLE "_pages_v_blocks_faq_section" CASCADE;
+  DROP TABLE "_pages_v_blocks_projects_section_projects_highlights" CASCADE;
+  DROP TABLE "_pages_v_blocks_projects_section_projects" CASCADE;
   DROP TABLE "_pages_v_blocks_projects_section" CASCADE;
+  DROP TABLE "_pages_v_blocks_contact_details_project_types" CASCADE;
+  DROP TABLE "_pages_v_blocks_contact_details_budgets" CASCADE;
   DROP TABLE "_pages_v_blocks_contact_details_next_steps" CASCADE;
   DROP TABLE "_pages_v_blocks_contact_details" CASCADE;
   DROP TABLE "_pages_v_blocks_promo_banner" CASCADE;

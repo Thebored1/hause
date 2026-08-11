@@ -10,7 +10,7 @@ interface SpaceItem {
   image: string;
 }
 
-const SPACES: SpaceItem[] = [
+export const DEFAULT_SPACES: SpaceItem[] = [
   { key: "architectural-atrium", name: "Living Rooms", image: "/images/sp-living.jpg" },
   { key: "living-sanctuary", name: "Bedrooms", image: "/images/sp-bedroom.jpg" },
   { key: "executive-lounge", name: "Offices", image: "/images/sp-office.jpg" },
@@ -24,7 +24,7 @@ export interface HeroStat {
   label: string;
 }
 
-const STATS: HeroStat[] = [
+export const DEFAULT_HERO_STATS: HeroStat[] = [
   { value: "100+", label: "Spaces Designed" },
   { value: "5+", label: "Cities Served Across India" },
   { value: "8+", label: "Years of Design & Delivery" },
@@ -47,20 +47,33 @@ interface HeroSpaceSwitcherProps {
   stats?: HeroStat[];
 }
 
+export const HERO_SPACE_SWITCHER_DEFAULTS = {
+  ctaHref: "/contact",
+  eyebrow: "Interior Design Studio · Delhi NCR · Projects Pan India",
+  titleLine1: "We design spaces",
+  titleLine2: "that feel like home.",
+  body: "Hause Interiors brings the same obsession with strategy and craft that built Hause’s digital work into the physical spaces you live and work in. Thoughtful design, honest execution, and interiors built to last — from the first sketch to the final handover.",
+  primaryLabel: "Book a Free Design Consultation",
+  secondaryLabel: "Explore Our Services",
+  secondaryHref: "/services",
+  spacesLabel: "Spaces",
+  statsIntro: "Residential and commercial interiors designed and delivered end to end — from the first sketch to the final handover, under one accountable team.",
+};
+
 export default function HeroSpaceSwitcher({
   onOpenContact,
-  ctaHref = "/contact",
-  eyebrow = "Interior Design Studio · Delhi NCR · Projects Pan India",
-  titleLine1 = "We design spaces",
-  titleLine2 = "that feel like home.",
-  body = "Hause Interiors brings the same obsession with strategy and craft that built Hause’s digital work into the physical spaces you live and work in. Thoughtful design, honest execution, and interiors built to last — from the first sketch to the final handover.",
-  primaryLabel = "Book a Free Design Consultation",
-  secondaryLabel = "Explore Our Services",
-  secondaryHref = "/services",
-  spacesLabel = "Spaces",
-  spaces = SPACES,
-  statsIntro = "Residential and commercial interiors designed and delivered end to end — from the first sketch to the final handover, under one accountable team.",
-  stats = STATS,
+  ctaHref = HERO_SPACE_SWITCHER_DEFAULTS.ctaHref,
+  eyebrow = HERO_SPACE_SWITCHER_DEFAULTS.eyebrow,
+  titleLine1 = HERO_SPACE_SWITCHER_DEFAULTS.titleLine1,
+  titleLine2 = HERO_SPACE_SWITCHER_DEFAULTS.titleLine2,
+  body = HERO_SPACE_SWITCHER_DEFAULTS.body,
+  primaryLabel = HERO_SPACE_SWITCHER_DEFAULTS.primaryLabel,
+  secondaryLabel = HERO_SPACE_SWITCHER_DEFAULTS.secondaryLabel,
+  secondaryHref = HERO_SPACE_SWITCHER_DEFAULTS.secondaryHref,
+  spacesLabel = HERO_SPACE_SWITCHER_DEFAULTS.spacesLabel,
+  spaces = DEFAULT_SPACES,
+  statsIntro = HERO_SPACE_SWITCHER_DEFAULTS.statsIntro,
+  stats = DEFAULT_HERO_STATS,
 }: HeroSpaceSwitcherProps) {
   const [activeSpaceIndex, setActiveSpaceIndex] = useState(0);
 

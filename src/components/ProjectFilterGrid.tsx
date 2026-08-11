@@ -173,15 +173,19 @@ export const defaultProjects: ProjectItem[] = [
   },
 ];
 
-export default function ProjectFilterGrid() {
+export default function ProjectFilterGrid({
+  projects = defaultProjects,
+}: {
+  projects?: ProjectItem[];
+}) {
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
   // Dynamically extract unique categories present in the available projects list
-  const categories = ["All", ...Array.from(new Set(defaultProjects.map((p) => p.category)))];
+  const categories = ["All", ...Array.from(new Set(projects.map((p) => p.category)))];
 
   const filteredProjects = activeCategory === "All"
-    ? defaultProjects
-    : defaultProjects.filter((p) => p.category === activeCategory);
+    ? projects
+    : projects.filter((p) => p.category === activeCategory);
 
   return (
     <div className="w-full">

@@ -16,6 +16,12 @@ import type { Page } from "../src/payload-types";
 // seeded pages carry the real copy instead of relying on fallbacks — and the
 // two can never disagree.
 import { defaultFAQs } from "../src/components/FAQAccordion";
+import {
+  PORTFOLIO_SHOWCASE_DEFAULTS,
+  DEFAULT_PORTFOLIO_CARDS,
+  DEFAULT_PORTFOLIO_STRIP,
+} from "../src/components/PortfolioShowcase";
+import { defaultProjects } from "../src/components/ProjectFilterGrid";
 import { DEFAULT_REGIONS } from "../src/components/RegionsDirectory";
 import { STUDIO_STORY_DEFAULTS, DEFAULT_STORY_STATS } from "../src/components/StudioStory";
 import { PHILOSOPHY_GRID_DEFAULTS, DEFAULT_PHILOSOPHIES } from "../src/components/PhilosophyGrid";
@@ -101,7 +107,10 @@ const pages: Pick<Page, "title" | "slug" | "meta" | "layout" | "_status">[] = [
         secondaryCtaText: "Explore Services",
         secondaryCtaHref: "/services",
       },
-      { blockType: "projectsSection" },
+      {
+        blockType: "projectsSection",
+        projects: defaultProjects.map((pr) => ({ ...pr, highlights: wrap(pr.highlights) })),
+      },
       { blockType: "cta", bgImage: "/images/jaiswal/jaiswal-33.jpg" },
     ],
   },

@@ -1,7 +1,7 @@
 import React from "react";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
-import ContactForm from "@/components/ContactForm";
+import ContactForm, { type SelectOption } from "@/components/ContactForm";
 
 // The contact band used on /contact — studio details, "what happens next",
 // and the enquiry form. Every prop defaults to the copy already shipped.
@@ -41,6 +41,8 @@ export interface ContactDetailsProps {
   hours?: string;
   nextStepsLabel?: string;
   nextSteps?: NextStep[];
+  projectTypes?: SelectOption[];
+  budgets?: SelectOption[];
 }
 
 /** Strips everything a `tel:` href can't carry. */
@@ -67,6 +69,8 @@ export default function ContactDetails({
   hours = CONTACT_DETAILS_DEFAULTS.hours,
   nextStepsLabel = CONTACT_DETAILS_DEFAULTS.nextStepsLabel,
   nextSteps = DEFAULT_NEXT_STEPS,
+  projectTypes,
+  budgets,
 }: ContactDetailsProps) {
   const addressLines = address.split("\n");
 
@@ -168,7 +172,7 @@ export default function ContactDetails({
 
         {/* Right: Comprehensive Interactive Form */}
         <div className="lg:col-span-7 h-full flex flex-col">
-          <ContactForm theme="light" />
+          <ContactForm theme="light" projectTypes={projectTypes} budgets={budgets} />
         </div>
       </div>
     </section>

@@ -215,6 +215,38 @@ export interface Page {
             blockType: 'servicesGrid';
           }
         | {
+            eyebrow?: string | null;
+            title?: string | null;
+            intro?: string | null;
+            /**
+             * Three works best: the first spans two rows, the other two stack beside it. Leave empty to keep the current set.
+             */
+            cards?:
+              | {
+                  tag: string;
+                  title: string;
+                  image: string;
+                  /**
+                   * Defaults to the CTA link.
+                   */
+                  href?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Two image-only cards below the features; the note card sits beside them.
+             */
+            strip?:
+              | {
+                  image: string;
+                  alt: string;
+                  href?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            note?: string | null;
+            ctaLabel?: string | null;
+            ctaHref?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'portfolio';
@@ -264,10 +296,25 @@ export interface Page {
             blockType: 'locations';
           }
         | {
+            eyebrow?: string | null;
+            title?: string | null;
+            body?: string | null;
             /**
-             * Background photograph, e.g. /images/jaiswal/jaiswal-07.jpg
+             * e.g. /images/jaiswal/jaiswal-07.jpg
              */
             bgImage?: string | null;
+            studioLabel?: string | null;
+            contactLabel?: string | null;
+            /**
+             * One line per line break.
+             */
+            studioAddress?: string | null;
+            /**
+             * One line per line break.
+             */
+            contactDetails?: string | null;
+            ctaLabel?: string | null;
+            ctaHref?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'cta';
@@ -322,6 +369,31 @@ export interface Page {
             blockType: 'faqSection';
           }
         | {
+            /**
+             * The filter tabs are built from the categories used here. Leave empty to keep the current set.
+             */
+            projects?:
+              | {
+                  /**
+                   * Unique key, e.g. villa-entrance
+                   */
+                  id: string;
+                  title: string;
+                  category: string;
+                  location: string;
+                  area: string;
+                  scope: string;
+                  timeline: string;
+                  image: string;
+                  description: string;
+                  highlights?:
+                    | {
+                        value: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                }[]
+              | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'projectsSection';
@@ -338,6 +410,26 @@ export interface Page {
             address?: string | null;
             hours?: string | null;
             nextStepsLabel?: string | null;
+            projectTypes?:
+              | {
+                  /**
+                   * Stored on the enquiry; keep stable.
+                   */
+                  value: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            budgets?:
+              | {
+                  /**
+                   * Stored on the enquiry; keep stable.
+                   */
+                  value: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
             nextSteps?:
               | {
                   /**
@@ -1148,6 +1240,29 @@ export interface PagesSelect<T extends boolean = true> {
         portfolio?:
           | T
           | {
+              eyebrow?: T;
+              title?: T;
+              intro?: T;
+              cards?:
+                | T
+                | {
+                    tag?: T;
+                    title?: T;
+                    image?: T;
+                    href?: T;
+                    id?: T;
+                  };
+              strip?:
+                | T
+                | {
+                    image?: T;
+                    alt?: T;
+                    href?: T;
+                    id?: T;
+                  };
+              note?: T;
+              ctaLabel?: T;
+              ctaHref?: T;
               id?: T;
               blockName?: T;
             };
@@ -1195,7 +1310,16 @@ export interface PagesSelect<T extends boolean = true> {
         cta?:
           | T
           | {
+              eyebrow?: T;
+              title?: T;
+              body?: T;
               bgImage?: T;
+              studioLabel?: T;
+              contactLabel?: T;
+              studioAddress?: T;
+              contactDetails?: T;
+              ctaLabel?: T;
+              ctaHref?: T;
               id?: T;
               blockName?: T;
             };
@@ -1241,6 +1365,25 @@ export interface PagesSelect<T extends boolean = true> {
         projectsSection?:
           | T
           | {
+              projects?:
+                | T
+                | {
+                    id?: T;
+                    title?: T;
+                    category?: T;
+                    location?: T;
+                    area?: T;
+                    scope?: T;
+                    timeline?: T;
+                    image?: T;
+                    description?: T;
+                    highlights?:
+                      | T
+                      | {
+                          value?: T;
+                          id?: T;
+                        };
+                  };
               id?: T;
               blockName?: T;
             };
@@ -1255,6 +1398,20 @@ export interface PagesSelect<T extends boolean = true> {
               address?: T;
               hours?: T;
               nextStepsLabel?: T;
+              projectTypes?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              budgets?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                    id?: T;
+                  };
               nextSteps?:
                 | T
                 | {

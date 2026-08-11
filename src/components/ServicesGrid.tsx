@@ -36,7 +36,7 @@ interface ServicesGridProps {
   services?: ServiceItem[];
 }
 
-const SERVICES: ServiceItem[] = [
+export const DEFAULT_SERVICES: ServiceItem[] = [
   {
     number: "01",
     title: "Residential Interior Design",
@@ -81,20 +81,34 @@ const SERVICES: ServiceItem[] = [
   },
 ];
 
+export const SERVICES_GRID_DEFAULTS = {
+  ctaHref: "/contact",
+  eyebrow: "Services",
+  title: "Interior design services that work for the way you live.",
+  intro: "Whether it's a first home, a growing office, or a retail space that needs to convert footfall into sales, Hause Interiors designs around how a space is actually used — then builds it to hold up.",
+  featureImage: "/images/sp-living.jpg",
+  statLabel: "Site Supervision",
+  statValue: "100%",
+  statBody: "Every project is personally supervised on site by our own team, from the first day of civil work to final styling.",
+  ctaLabel: "Book a free consultation",
+  viewAllLabel: "View All Services",
+  viewAllHref: "/services",
+};
+
 export default function ServicesGrid({
   onOpenContact,
-  ctaHref = "/contact",
-  eyebrow = "Services",
-  title = "Interior design services that work for the way you live.",
-  intro = "Whether it's a first home, a growing office, or a retail space that needs to convert footfall into sales, Hause Interiors designs around how a space is actually used — then builds it to hold up.",
-  featureImage = "/images/sp-living.jpg",
-  statLabel = "Site Supervision",
-  statValue = "100%",
-  statBody = "Every project is personally supervised on site by our own team, from the first day of civil work to final styling.",
-  ctaLabel = "Book a free consultation",
-  viewAllLabel = "View All Services",
-  viewAllHref = "/services",
-  services = SERVICES,
+  ctaHref = SERVICES_GRID_DEFAULTS.ctaHref,
+  eyebrow = SERVICES_GRID_DEFAULTS.eyebrow,
+  title = SERVICES_GRID_DEFAULTS.title,
+  intro = SERVICES_GRID_DEFAULTS.intro,
+  featureImage = SERVICES_GRID_DEFAULTS.featureImage,
+  statLabel = SERVICES_GRID_DEFAULTS.statLabel,
+  statValue = SERVICES_GRID_DEFAULTS.statValue,
+  statBody = SERVICES_GRID_DEFAULTS.statBody,
+  ctaLabel = SERVICES_GRID_DEFAULTS.ctaLabel,
+  viewAllLabel = SERVICES_GRID_DEFAULTS.viewAllLabel,
+  viewAllHref = SERVICES_GRID_DEFAULTS.viewAllHref,
+  services = DEFAULT_SERVICES,
 }: ServicesGridProps) {
   return (
     <section id="overview" className="bg-[#f9f8f6] text-[#18181b] py-24 px-6 sm:px-12 md:px-16">

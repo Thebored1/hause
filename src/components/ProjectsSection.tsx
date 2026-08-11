@@ -1,15 +1,14 @@
 import React from "react";
 
-import ProjectFilterGrid from "@/components/ProjectFilterGrid";
+import ProjectFilterGrid, { type ProjectItem } from "@/components/ProjectFilterGrid";
 
-// The filterable portfolio band used on /projects. Placement only — the
-// project list still lives in ProjectFilterGrid.
+// The filterable portfolio band used on /projects.
 
-export default function ProjectsSection() {
+export default function ProjectsSection({ projects }: { projects?: ProjectItem[] }) {
   return (
     <section className="py-24 px-6 sm:px-12 md:px-16 bg-[#0c0d0e]">
       <div className="max-w-[1408px] mx-auto">
-        <ProjectFilterGrid />
+        <ProjectFilterGrid projects={projects} />
       </div>
     </section>
   );
