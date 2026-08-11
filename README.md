@@ -23,9 +23,10 @@ Payload documents whose blocks are rendered by the site's own components, editab
 
 | Editable in the admin | Not yet |
 | --- | --- |
-| Home — hero, services, process, why us, locations, CTA | Nav and footer content |
-| The nine inner pages (about, services, process, contact, locations, projects, faqs, testimonials, why-us) | Portfolio and project-filter lists (placement only; content still in the component) |
+| Home — hero, services, process, why us, locations, CTA | Portfolio and project-filter lists (placement only; content still in the component) |
+| The nine inner pages (about, services, process, contact, locations, projects, faqs, testimonials, why-us) | |
 | The five service detail pages | |
+| Nav and footer — links, services dropdown, CTA, footer columns, contact details (**Nav & Footer**) | |
 | Blog posts, enquiries, media | |
 
 **The CMS now serves the site.** Editing a page in the admin changes what visitors see. The
@@ -45,7 +46,8 @@ so a fresh database or a failed lookup never leaves the site blank.
 Seed every page with its real content:
 
 ```bash
-npx payload run scripts/seed-pages.ts    # the fourteen inner pages
+npx payload run scripts/seed-pages.ts     # the fourteen inner pages
+npx payload run scripts/seed-chrome.ts    # nav and footer
 ```
 
 The seed **imports the components' own exported defaults** rather than carrying a copy of the

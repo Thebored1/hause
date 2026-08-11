@@ -35,6 +35,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE TYPE "public"."enum_posts_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum__posts_v_version_status" AS ENUM('draft', 'published');
   CREATE TYPE "public"."enum_enquiries_status" AS ENUM('new', 'contacted', 'quoted', 'won', 'closed');
+  CREATE TYPE "public"."enum_site_settings_header_service_items_icon" AS ENUM('home', 'building', 'kitchen', 'layers', 'hammer');
   CREATE TABLE "pages_blocks_hero_spaces" (
   	"_order" integer NOT NULL,
   	"_parent_id" varchar NOT NULL,
@@ -1907,6 +1908,65 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
+  CREATE TABLE "site_settings_header_nav_links" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"label" varchar NOT NULL,
+  	"href" varchar NOT NULL
+  );
+  
+  CREATE TABLE "site_settings_header_service_items" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar NOT NULL,
+  	"href" varchar NOT NULL,
+  	"desc" varchar NOT NULL,
+  	"icon" "enum_site_settings_header_service_items_icon" DEFAULT 'home'
+  );
+  
+  CREATE TABLE "site_settings_footer_columns_links" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" varchar NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"label" varchar NOT NULL,
+  	"href" varchar NOT NULL,
+  	"arrow" boolean DEFAULT false,
+  	"external" boolean DEFAULT false,
+  	"emphasis" boolean DEFAULT false
+  );
+  
+  CREATE TABLE "site_settings_footer_columns" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"heading" varchar NOT NULL
+  );
+  
+  CREATE TABLE "site_settings_footer_bottom_notes" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"value" varchar NOT NULL
+  );
+  
+  CREATE TABLE "site_settings" (
+  	"id" serial PRIMARY KEY NOT NULL,
+  	"header_logo" varchar,
+  	"header_services_label" varchar,
+  	"header_services_href" varchar,
+  	"header_cta_label" varchar,
+  	"header_cta_href" varchar,
+  	"footer_logo" varchar,
+  	"footer_contact_address" varchar,
+  	"footer_contact_phone" varchar,
+  	"footer_contact_email" varchar,
+  	"footer_bottom_company_name" varchar,
+  	"updated_at" timestamp(3) with time zone,
+  	"created_at" timestamp(3) with time zone
+  );
+  
   ALTER TABLE "pages_blocks_hero_spaces" ADD CONSTRAINT "pages_blocks_hero_spaces_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_hero"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_hero_stats" ADD CONSTRAINT "pages_blocks_hero_stats_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages_blocks_hero"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "pages_blocks_hero" ADD CONSTRAINT "pages_blocks_hero_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."pages"("id") ON DELETE cascade ON UPDATE no action;
@@ -2080,6 +2140,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_preferences"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "site_settings_header_nav_links" ADD CONSTRAINT "site_settings_header_nav_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."site_settings"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "site_settings_header_service_items" ADD CONSTRAINT "site_settings_header_service_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."site_settings"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "site_settings_footer_columns_links" ADD CONSTRAINT "site_settings_footer_columns_links_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."site_settings_footer_columns"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "site_settings_footer_columns" ADD CONSTRAINT "site_settings_footer_columns_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."site_settings"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "site_settings_footer_bottom_notes" ADD CONSTRAINT "site_settings_footer_bottom_notes_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."site_settings"("id") ON DELETE cascade ON UPDATE no action;
   CREATE INDEX "pages_blocks_hero_spaces_order_idx" ON "pages_blocks_hero_spaces" USING btree ("_order");
   CREATE INDEX "pages_blocks_hero_spaces_parent_id_idx" ON "pages_blocks_hero_spaces" USING btree ("_parent_id");
   CREATE INDEX "pages_blocks_hero_stats_order_idx" ON "pages_blocks_hero_stats" USING btree ("_order");
@@ -2536,7 +2601,17 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "payload_preferences_rels_path_idx" ON "payload_preferences_rels" USING btree ("path");
   CREATE INDEX "payload_preferences_rels_users_id_idx" ON "payload_preferences_rels" USING btree ("users_id");
   CREATE INDEX "payload_migrations_updated_at_idx" ON "payload_migrations" USING btree ("updated_at");
-  CREATE INDEX "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");`)
+  CREATE INDEX "payload_migrations_created_at_idx" ON "payload_migrations" USING btree ("created_at");
+  CREATE INDEX "site_settings_header_nav_links_order_idx" ON "site_settings_header_nav_links" USING btree ("_order");
+  CREATE INDEX "site_settings_header_nav_links_parent_id_idx" ON "site_settings_header_nav_links" USING btree ("_parent_id");
+  CREATE INDEX "site_settings_header_service_items_order_idx" ON "site_settings_header_service_items" USING btree ("_order");
+  CREATE INDEX "site_settings_header_service_items_parent_id_idx" ON "site_settings_header_service_items" USING btree ("_parent_id");
+  CREATE INDEX "site_settings_footer_columns_links_order_idx" ON "site_settings_footer_columns_links" USING btree ("_order");
+  CREATE INDEX "site_settings_footer_columns_links_parent_id_idx" ON "site_settings_footer_columns_links" USING btree ("_parent_id");
+  CREATE INDEX "site_settings_footer_columns_order_idx" ON "site_settings_footer_columns" USING btree ("_order");
+  CREATE INDEX "site_settings_footer_columns_parent_id_idx" ON "site_settings_footer_columns" USING btree ("_parent_id");
+  CREATE INDEX "site_settings_footer_bottom_notes_order_idx" ON "site_settings_footer_bottom_notes" USING btree ("_order");
+  CREATE INDEX "site_settings_footer_bottom_notes_parent_id_idx" ON "site_settings_footer_bottom_notes" USING btree ("_parent_id");`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
@@ -2715,6 +2790,12 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "payload_preferences" CASCADE;
   DROP TABLE "payload_preferences_rels" CASCADE;
   DROP TABLE "payload_migrations" CASCADE;
+  DROP TABLE "site_settings_header_nav_links" CASCADE;
+  DROP TABLE "site_settings_header_service_items" CASCADE;
+  DROP TABLE "site_settings_footer_columns_links" CASCADE;
+  DROP TABLE "site_settings_footer_columns" CASCADE;
+  DROP TABLE "site_settings_footer_bottom_notes" CASCADE;
+  DROP TABLE "site_settings" CASCADE;
   DROP TYPE "public"."enum_pages_blocks_services_grid_services_icon";
   DROP TYPE "public"."enum_pages_blocks_promo_banner_spacing";
   DROP TYPE "public"."enum_pages_blocks_promo_banner_card_shadow";
@@ -2747,5 +2828,6 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum__pages_v_version_status";
   DROP TYPE "public"."enum_posts_status";
   DROP TYPE "public"."enum__posts_v_version_status";
-  DROP TYPE "public"."enum_enquiries_status";`)
+  DROP TYPE "public"."enum_enquiries_status";
+  DROP TYPE "public"."enum_site_settings_header_service_items_icon";`)
 }

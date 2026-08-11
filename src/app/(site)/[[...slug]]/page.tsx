@@ -4,6 +4,7 @@ import PageBlocks, { type PageBlock } from "@/components/PageBlocks";
 import SmoothScroll from "@/components/SmoothScroll";
 import HomeHardcoded from "@/components/HomeHardcoded";
 import { getPageBySlug } from "@/lib/pages";
+import { getChrome } from "@/lib/site-settings";
 
 export const dynamic = "force-dynamic";
 
@@ -41,7 +42,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 export default async function SitePage({ params }: Params) {
   const { slug } = await params;
   const path = slugOf(slug);
-  const page = await getPageBySlug(path).catch(() => null);
+  const [page, chrome] = await Promise.all([
+    getPageBySlug(path).catch(() => null),
+    getChrome(),
+  ]);
 
   if (!page) {
     if (path === "home") return <HomeHardcoded />;
@@ -58,6 +62,8 @@ export default async function SitePage({ params }: Params) {
           // /contact. Stored per page rather than inferred from the path.
           contactModal={Boolean(page.contactModal)}
           activePath={path === "home" ? "/" : `/${path}`}
+          header={chrome.header}
+          footer={chrome.footer}
         />
       </main>
     </SmoothScroll>

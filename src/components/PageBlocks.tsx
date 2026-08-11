@@ -46,6 +46,7 @@ import ContactModal from "@/components/ContactModal";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { RenderTree } from "@/render/RenderTree";
+import { HEADER_DEFAULTS, FOOTER_DEFAULTS, type HeaderContent, type FooterContent } from "@/lib/chrome";
 
 // ============================================================
 // Renders a CMS page's blocks using the site's own components.
@@ -77,6 +78,8 @@ export default function PageBlocks({
   withChrome = false,
   contactModal = true,
   activePath,
+  header = HEADER_DEFAULTS,
+  footer = FOOTER_DEFAULTS,
 }: {
   blocks: PageBlock[];
   /** Render the site navbar and footer around the blocks. */
@@ -89,13 +92,16 @@ export default function PageBlocks({
   contactModal?: boolean;
   /** The route this page stands in for, so the nav highlights the right link. */
   activePath?: string;
+  /** Nav and footer content. Both fall back to the copy the site ships with. */
+  header?: HeaderContent;
+  footer?: FooterContent;
 }) {
   const [contactOpen, setContactOpen] = useState(false);
   const openContact = contactModal ? () => setContactOpen(true) : undefined;
 
   return (
     <>
-      {withChrome ? <Navbar onOpenContact={openContact} activePath={activePath} /> : null}
+      {withChrome ? <Navbar onOpenContact={openContact} activePath={activePath} header={header} /> : null}
       {blocks.map((block, i) => {
         switch (block.blockType) {
           case "hero":
@@ -550,7 +556,7 @@ export default function PageBlocks({
         }
       })}
 
-      {withChrome ? <Footer /> : null}
+      {withChrome ? <Footer footer={footer} /> : null}
 
       {contactModal ? (
         <ContactModal isOpen={contactOpen} onClose={() => setContactOpen(false)} />

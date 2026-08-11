@@ -93,8 +93,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'site-settings': SiteSetting;
+  };
+  globalsSelect: {
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -1898,6 +1902,168 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  header?: {
+    /**
+     * e.g. /images/logo.png
+     */
+    logo?: string | null;
+    /**
+     * Shown after the Services dropdown. Leave empty to keep the current set.
+     */
+    navLinks?:
+      | {
+          label: string;
+          href: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Label for the dropdown itself.
+     */
+    servicesLabel?: string | null;
+    servicesHref?: string | null;
+    serviceItems?:
+      | {
+          title: string;
+          href: string;
+          desc: string;
+          icon?: ('home' | 'building' | 'kitchen' | 'layers' | 'hammer') | null;
+          id?: string | null;
+        }[]
+      | null;
+    cta?: {
+      label?: string | null;
+      href?: string | null;
+    };
+  };
+  footer?: {
+    /**
+     * e.g. /images/footer-logo.png
+     */
+    logo?: string | null;
+    /**
+     * Leave empty to keep the current three columns.
+     */
+    columns?:
+      | {
+          heading: string;
+          links?:
+            | {
+                label: string;
+                href: string;
+                arrow?: boolean | null;
+                external?: boolean | null;
+                emphasis?: boolean | null;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+    contact?: {
+      address?: string | null;
+      phone?: string | null;
+      email?: string | null;
+    };
+    bottom?: {
+      /**
+       * Used in the © line; the year is added automatically.
+       */
+      companyName?: string | null;
+      notes?:
+        | {
+            value: string;
+            id?: string | null;
+          }[]
+        | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  header?:
+    | T
+    | {
+        logo?: T;
+        navLinks?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              id?: T;
+            };
+        servicesLabel?: T;
+        servicesHref?: T;
+        serviceItems?:
+          | T
+          | {
+              title?: T;
+              href?: T;
+              desc?: T;
+              icon?: T;
+              id?: T;
+            };
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  footer?:
+    | T
+    | {
+        logo?: T;
+        columns?:
+          | T
+          | {
+              heading?: T;
+              links?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    arrow?: T;
+                    external?: T;
+                    emphasis?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        contact?:
+          | T
+          | {
+              address?: T;
+              phone?: T;
+              email?: T;
+            };
+        bottom?:
+          | T
+          | {
+              companyName?: T;
+              notes?:
+                | T
+                | {
+                    value?: T;
+                    id?: T;
+                  };
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

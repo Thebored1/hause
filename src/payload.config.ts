@@ -13,6 +13,7 @@ import { Media } from "./collections/Media";
 import { Pages } from "./collections/Pages";
 import { Posts } from "./collections/Posts";
 import { Enquiries } from "./collections/Enquiries";
+import { SiteSettings } from "./globals/SiteSettings";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -55,6 +56,7 @@ const plugins = BLOB_TOKEN
 export default buildConfig({
   admin: { user: Users.slug, importMap: { baseDir: path.resolve(dirname) } },
   collections: [Pages, Posts, Enquiries, Media, Users],
+  globals: [SiteSettings],
   editor: lexicalEditor(),
   // Resend or SMTP when credentials are present; otherwise Payload logs to
   // the console, which is fine locally and silent in production.

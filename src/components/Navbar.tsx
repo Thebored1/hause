@@ -4,48 +4,38 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowUpRight, Phone, Mail, ChevronDown, Sparkles, Home, Building2, UtensilsCrossed, Layers, Hammer } from "lucide-react";
+import { Menu, X, ArrowUpRight, Phone, Mail, ChevronDown, Sparkles, Home, Building2, UtensilsCrossed, Layers, Hammer, type LucideIcon } from "lucide-react";
+
+import { HEADER_DEFAULTS, type HeaderContent } from "@/lib/chrome";
+
+/** Icons the services dropdown may use, keyed by the name stored in the CMS. */
+const SERVICE_ICONS: Record<string, LucideIcon> = {
+  home: Home,
+  building: Building2,
+  kitchen: UtensilsCrossed,
+  layers: Layers,
+  hammer: Hammer,
+};
 
 interface NavbarProps {
   onOpenContact?: () => void;
   /** Overrides the route used to decide which nav link is highlighted. */
   activePath?: string;
+  /** Nav content; falls back to the copy the site ships with. */
+  header?: HeaderContent;
 }
 
-export const SERVICE_ITEMS = [
-  {
-    title: "Residential Interior Design",
-    href: "/services/residential-interior-design",
-    desc: "Apartments, luxury penthouses & villas",
-    icon: Home,
-  },
-  {
-    title: "Commercial & Office Interiors",
-    href: "/services/commercial-office-interior-design",
-    desc: "Agile tech offices, studios & retail spaces",
-    icon: Building2,
-  },
-  {
-    title: "Modular Kitchens & Wardrobes",
-    href: "/services/modular-kitchen-wardrobe-design",
-    desc: "Precision German/Austrian hardware & acrylic finishes",
-    icon: UtensilsCrossed,
-  },
-  {
-    title: "Turnkey Interior Solutions",
-    href: "/services/turnkey-interior-solutions",
-    desc: "Complete concept-to-handover under one team",
-    icon: Layers,
-  },
-  {
-    title: "Renovation & Remodeling",
-    href: "/services/renovation-remodeling",
-    desc: "Structural wall removal, MEP overhauls & modern updates",
-    icon: Hammer,
-  },
-];
+/**
+ * Kept as a named export because other modules import it. Now derived from the
+ * shipped defaults so there is one copy of this list, not two.
+ */
+export const SERVICE_ITEMS = HEADER_DEFAULTS.serviceItems.map((item) => ({
+  ...item,
+  icon: SERVICE_ICONS[item.icon] ?? Home,
+}));
 
-export default function Navbar({ onOpenContact, activePath }: NavbarProps) {
+
+export default function Navbar({ onOpenContact, activePath, header = HEADER_DEFAULTS }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
@@ -85,15 +75,11 @@ export default function Navbar({ onOpenContact, activePath }: NavbarProps) {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const navLinks = [
-    { label: "PORTFOLIO", href: "/projects" },
-    { label: "PROCESS", href: "/process" },
-    { label: "WHY US", href: "/why-hause-interiors" },
-    { label: "LOCATIONS", href: "/locations" },
-    { label: "ABOUT", href: "/about" },
-    { label: "FAQS", href: "/faqs" },
-    { label: "CONTACT", href: "/contact" },
-  ];
+  const navLinks = header.navLinks;
+  const serviceItems = header.serviceItems.map((item) => ({
+    ...item,
+    icon: SERVICE_ICONS[item.icon] ?? Home,
+  }));
 
   return (
     <header
@@ -131,12 +117,12 @@ export default function Navbar({ onOpenContact, activePath }: NavbarProps) {
           >
             <div className="flex items-center gap-1">
               <Link
-                href="/services"
+                href={header.servicesHref}
                 className={`text-[11px] font-semibold tracking-[0.18em] uppercase transition-colors whitespace-nowrap ${
                   isServicePage ? "text-white font-bold" : "text-[#d4d4d4]/70 hover:text-white"
                 }`}
               >
-                SERVICES
+                {header.servicesLabel}
               </Link>
               <button
                 onClick={(e) => {
@@ -165,7 +151,7 @@ export default function Navbar({ onOpenContact, activePath }: NavbarProps) {
                   </div>
 
                   <div className="space-y-1 py-1">
-                    {SERVICE_ITEMS.map((item) => {
+                    {serviceItems.map((item) => {
                       const Icon = item.icon;
                       const isItemActive = pathname === item.href;
                       return (
@@ -321,7 +307,7 @@ export default function Navbar({ onOpenContact, activePath }: NavbarProps) {
                   <Sparkles size={11} className="text-white/40" />
                 </div>
 
-                {SERVICE_ITEMS.map((item) => {
+                {serviceItems.map((item) => {
                   const Icon = item.icon;
                   const isItemActive = pathname === item.href;
                   return (
