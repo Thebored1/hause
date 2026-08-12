@@ -23,11 +23,13 @@ Payload documents whose blocks are rendered by the site's own components, editab
 
 | Editable in the admin | Not yet |
 | --- | --- |
-| Home — hero, services, process, why us, locations, CTA | Portfolio and project-filter lists (placement only; content still in the component) |
+| Home — hero, services, process, why us, locations, CTA | — |
 | The nine inner pages (about, services, process, contact, locations, projects, faqs, testimonials, why-us) | |
 | The five service detail pages | |
-| Nav and footer — links, services dropdown, CTA, footer columns, contact details (**Nav & Footer**) | |
+| Nav, footer, site identity and business details (**Site Settings**) | |
 | Blog posts, enquiries, media | |
+| Portfolio and project lists — filter tabs follow the categories used | |
+| SEO per page and post — title, description, share image, canonical, noindex | |
 
 **The CMS now serves the site.** Editing a page in the admin changes what visitors see. The
 hand-coded page files have been deleted; every route resolves through
@@ -40,8 +42,9 @@ previous versions remain on the `main` branch.
 One consequence: pages are now server-rendered per request rather than prerendered, because they
 come from the database. Add caching if that matters.
 
-`/` falls back to the original hand-coded home page if no CMS page with slug `home` exists,
-so a fresh database or a failed lookup never leaves the site blank.
+A path with no document 404s, `/` included. The hand-coded fallback was removed: a second copy
+of the homepage drifts from the CMS silently, and a missing `home` is a broken install that is
+better shown than hidden behind a page that ignores every edit.
 
 Seed every page with its real content:
 
@@ -60,6 +63,7 @@ overwrites admin edits with those defaults.
 | --- | --- |
 | [`CMS.md`](./CMS.md) | Architecture, the recipe for making a component editable, rules for agents, the content API, gotchas |
 | [`DEPLOY.md`](./DEPLOY.md) | Vercel deployment — Postgres, Blob storage, env vars, migrations |
+| [`SEO.md`](./SEO.md) | What an editor controls, what is generated, and what is still outstanding — verified against a build |
 
 The short version of the architecture: components stay exactly as written and every prop
 defaults to the copy already shipped, so hard-coded pages render byte-identically while a CMS

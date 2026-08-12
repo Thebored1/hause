@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { getPublishedPosts } from "@/lib/posts";
 import { buildMetadata } from "@/lib/metadata";
 import { getSeoSettings } from "@/lib/seo-settings";
+import { buildGraph } from "@/lib/structured-data";
+import { headers } from "next/headers";
 
 export const dynamic = "force-dynamic";
 
@@ -29,10 +31,27 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function BlogIndex() {
   // Filters on _status itself. The collection's access rule is not enough:
   // the local API runs with overrideAccess: true and bypasses it.
-  const docs = await getPublishedPosts();
+  const [docs, seo, nonce] = await Promise.all([
+    getPublishedPosts(),
+    getSeoSettings(),
+    headers().then((h) => h.get("x-nonce") ?? undefined),
+  ]);
+
+  const graph = buildGraph({
+    settings: seo,
+    slug: "blog",
+    pageTitle: "Journal",
+    knownSlugs: [],
+  });
 
   return (
     <main className="min-h-screen bg-[#f9f8f6] text-[#18181b] py-28 px-6 sm:px-12 md:px-16">
+      {/* Nonce-signed: an unsigned ld+json block is dropped by the CSP. */}
+      <script
+        type="application/ld+json"
+        nonce={nonce}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
+      />
       <div className="max-w-[1280px] mx-auto">
         <span className="text-xs font-semibold tracking-[0.22em] text-[#8a8578] uppercase">
           Journal
