@@ -66,16 +66,31 @@ Payload has no database of its own; it uses whatever `DATABASE_URI` points at. S
 Postgres, so its tables live in your Supabase project alongside everything else — there is no
 second database to manage.
 
-Use the **session pooler** connection string from Supabase → Settings → Database. Payload holds
-pooled connections, which suits a long-lived server; on serverless, the transaction pooler
-(port 6543) is the safer choice.
+Take the connection string from Supabase → Settings → Database.
 
 ```
-DATABASE_URI=postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres
+DATABASE_URI=postgresql://postgres.<ref>:<password>@aws-1-<region>.pooler.supabase.com:6543/postgres
 ```
 
 The adapter is picked from the string: anything starting `postgres` uses Postgres, otherwise
 SQLite. Local development keeps using the SQLite file unless you point it at Supabase too.
+
+**Connection string.** Use Supabase's **transaction pooler on port 6543**. The other two
+options both fail in production, in ways that do not look like connection problems:
+
+| Option | What happens |
+| --- | --- |
+| `db.<ref>.supabase.co` (direct) | Publishes only an AAAA record. Anything without IPv6 cannot resolve it |
+| Session pooler, port 5432 | Caps total clients at 15 and holds each for a whole session. Serverless opens a pool per instance, exhausts it within a couple of deploys, and then Payload cannot initialise - every page 404s and `/admin` 500s |
+| **Transaction pooler, port 6543** | Returns the connection after each transaction. This is the one to use |
+
+Percent-encode the password: a raw `@` splits the URI at the wrong place and produces a
+confusing host error.
+
+The pool is capped at 5 per instance in `payload.config.ts` rather than the default 10, so a
+handful of concurrent instances cannot exhaust the pooler. Not 1: Payload holds a connection
+for a transaction while issuing other queries, so a single-connection pool deadlocks until the
+connect timeout fires.
 
 **Schema.** `npm run dev` pushes schema changes automatically; that does not happen in
 production. An initial Postgres migration is committed at `src/migrations/`, so the first

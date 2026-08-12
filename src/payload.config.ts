@@ -42,7 +42,21 @@ function payloadSecret(): string {
  */
 const db = DATABASE_URI.startsWith("postgres")
   ? postgresAdapter({
-      pool: { connectionString: DATABASE_URI },
+      pool: {
+        connectionString: DATABASE_URI,
+        // Serverless runs many short-lived instances and each opens its own
+        // pool, so the default of 10 per instance exhausts a Supabase pooler
+        // quickly. When that happens Payload cannot initialise and every
+        // route 404s — it does not look like a database problem at all.
+        //
+        // Not 1, though: Payload holds a connection open for a transaction
+        // while issuing other queries, so a single-connection pool deadlocks
+        // until the connect timeout fires. Measured, not guessed — at max 1 a
+        // query running alongside a transaction never returns.
+        max: 5,
+        idleTimeoutMillis: 10_000,
+        connectionTimeoutMillis: 10_000,
+      },
       // Postgres is managed by the committed migrations, so never let the
       // dev-mode schema push run against it. Push introspects the whole
       // remote schema and can stop for an interactive prompt, which over a
