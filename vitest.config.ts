@@ -7,6 +7,9 @@ export default defineConfig({
     // same specifier the application uses.
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
+      // Payload's own alias, used by anything that calls getPayload(). Next
+      // supplies it from tsconfig paths; vitest needs it spelled out.
+      "@payload-config": fileURLToPath(new URL("./src/payload.config.ts", import.meta.url)),
     },
   },
   test: {

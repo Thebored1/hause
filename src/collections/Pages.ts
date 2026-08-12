@@ -60,16 +60,11 @@ export const Pages: CollectionConfig = {
         description: "Off means they link to /contact — how the inner pages behave.",
       },
     },
-    {
-      name: "meta",
-      type: "group",
-      label: "SEO",
-      admin: { description: "Falls back to the page title and the site description." },
-      fields: [
-        { name: "title", type: "text" },
-        { name: "description", type: "textarea" },
-      ],
-    },
+    // The SEO group used to be declared here with a title and a description.
+    // It now comes from @payloadcms/plugin-seo, which adds the share image,
+    // character counts and a search-result preview alongside them — and keeps
+    // the same `meta.title` / `meta.description` paths, so nothing stored
+    // under the old fields moves.
     {
       name: "layout",
       type: "blocks",

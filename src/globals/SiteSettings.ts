@@ -16,7 +16,9 @@ const linkFields = [
 
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
-  label: "Nav & Footer",
+  // Was "Nav & Footer"; it now carries the site identity and business
+  // details that structured data is built from, as well as the chrome.
+  label: "Site Settings",
   admin: { group: "Site" },
   access: {
     // Chrome is public; only staff can change it.
@@ -27,6 +29,122 @@ export const SiteSettings: GlobalConfig = {
     {
       type: "tabs",
       tabs: [
+        {
+          name: "site",
+          label: "Site",
+          description:
+            "Used as the fallback for any page that sets no SEO of its own, and as the identity search engines attach to this site.",
+          fields: [
+            { name: "name", type: "text", defaultValue: "Hause Interiors" },
+            {
+              name: "description",
+              type: "textarea",
+              admin: { description: "Default meta description." },
+            },
+            {
+              name: "defaultImage",
+              type: "upload",
+              relationTo: "media",
+              label: "Default share image",
+              admin: {
+                description:
+                  "Shown when a link is pasted into WhatsApp, LinkedIn or Slack, for any page with no image of its own. 1200x630; keep text large, because it is usually shown small and cropped.",
+              },
+            },
+            {
+              name: "sameAs",
+              type: "array",
+              label: "Social profiles",
+              admin: {
+                description:
+                  "Full profile URLs. Search engines use these to connect the site to those accounts, so only list ones you control.",
+              },
+              fields: [{ name: "url", type: "text", required: true }],
+            },
+          ],
+        },
+        {
+          name: "business",
+          label: "Business",
+          description:
+            "Studio details, published as structured data so the business can appear in local search and on maps.",
+          fields: [
+            {
+              name: "enabled",
+              type: "checkbox",
+              defaultValue: false,
+              label: "Publish business details to search engines",
+              admin: {
+                description:
+                  "Off until the fields below are right. A half-filled address is treated as a quality problem, and these are cross-checked against your Google Business Profile — they must match it exactly.",
+              },
+            },
+            {
+              name: "type",
+              type: "text",
+              defaultValue: "InteriorDesignService",
+              label: "Schema type",
+              admin: {
+                description:
+                  "InteriorDesignService is the closest fit for a studio. LocalBusiness is the safe general option.",
+              },
+            },
+            {
+              type: "row",
+              fields: [
+                { name: "telephone", type: "text", admin: { width: "50%" } },
+                { name: "email", type: "text", admin: { width: "50%" } },
+              ],
+            },
+            { name: "streetAddress", type: "text" },
+            {
+              type: "row",
+              fields: [
+                { name: "locality", type: "text", label: "City", admin: { width: "50%" } },
+                { name: "region", type: "text", label: "State", admin: { width: "50%" } },
+              ],
+            },
+            {
+              type: "row",
+              fields: [
+                { name: "postalCode", type: "text", admin: { width: "50%" } },
+                {
+                  name: "country",
+                  type: "text",
+                  defaultValue: "IN",
+                  admin: { width: "50%", description: "Two-letter code." },
+                },
+              ],
+            },
+            {
+              type: "row",
+              fields: [
+                {
+                  name: "latitude",
+                  type: "text",
+                  admin: {
+                    width: "50%",
+                    description: "Google Maps: right-click the pin, the numbers at the top.",
+                  },
+                },
+                { name: "longitude", type: "text", admin: { width: "50%" } },
+              ],
+            },
+            {
+              name: "openingHours",
+              type: "text",
+              admin: { description: 'Schema format, e.g. "Mo-Sa 10:00-19:00".' },
+            },
+            { name: "priceRange", type: "text", admin: { description: 'Coarse, e.g. "₹₹".' } },
+            {
+              name: "areaServed",
+              type: "array",
+              label: "Areas served",
+              admin: { description: "Cities you work in — Delhi, Noida, Gurugram, and so on." },
+              fields: [{ name: "name", type: "text", required: true }],
+            },
+          ],
+        },
         {
           label: "Header",
           fields: [

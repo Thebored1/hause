@@ -139,13 +139,6 @@ export interface Page {
    * Off means they link to /contact — how the inner pages behave.
    */
   contactModal?: boolean | null;
-  /**
-   * Falls back to the page title and the site description.
-   */
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-  };
   layout?:
     | (
         | {
@@ -968,9 +961,52 @@ export interface Page {
           }
       )[]
     | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Adds a noindex tag and drops the page from sitemap.xml. The page stays public — this only asks search engines to skip it.
+     */
+    noindex?: boolean | null;
+    /**
+     * Leave blank unless this page duplicates another. Set it to the URL that should rank, and search engines will credit that one instead of treating the two as competing copies.
+     */
+    canonical?: string | null;
+    /**
+     * Adds structured data describing the page to search engines. Only claim Service or Article when the page really is one — describing a contact form as an article is the kind of mismatch that costs trust rather than earning a richer result.
+     */
+    schemaType?: ('page' | 'service' | 'article') | null;
+    /**
+     * How this page describes itself when shared. Use Article for posts.
+     */
+    ogType?: ('website' | 'article') | null;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  alt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1005,28 +1041,33 @@ export interface Post {
   } | null;
   publishedAt?: string | null;
   author?: string | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    /**
+     * Adds a noindex tag and drops the page from sitemap.xml. The page stays public — this only asks search engines to skip it.
+     */
+    noindex?: boolean | null;
+    /**
+     * Leave blank unless this page duplicates another. Set it to the URL that should rank, and search engines will credit that one instead of treating the two as competing copies.
+     */
+    canonical?: string | null;
+    /**
+     * Adds structured data describing the page to search engines. Only claim Service or Article when the page really is one — describing a contact form as an article is the kind of mismatch that costs trust rather than earning a richer result.
+     */
+    schemaType?: ('page' | 'service' | 'article') | null;
+    /**
+     * How this page describes itself when shared. Use Article for posts.
+     */
+    ogType?: ('website' | 'article') | null;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1173,12 +1214,6 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   contactModal?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-      };
   layout?:
     | T
     | {
@@ -1943,6 +1978,17 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noindex?: T;
+        canonical?: T;
+        schemaType?: T;
+        ogType?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1959,6 +2005,17 @@ export interface PostsSelect<T extends boolean = true> {
   content?: T;
   publishedAt?: T;
   author?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noindex?: T;
+        canonical?: T;
+        schemaType?: T;
+        ogType?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2068,6 +2125,68 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface SiteSetting {
   id: number;
+  site?: {
+    name?: string | null;
+    /**
+     * Default meta description.
+     */
+    description?: string | null;
+    /**
+     * Shown when a link is pasted into WhatsApp, LinkedIn or Slack, for any page with no image of its own. 1200x630; keep text large, because it is usually shown small and cropped.
+     */
+    defaultImage?: (number | null) | Media;
+    /**
+     * Full profile URLs. Search engines use these to connect the site to those accounts, so only list ones you control.
+     */
+    sameAs?:
+      | {
+          url: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  business?: {
+    /**
+     * Off until the fields below are right. A half-filled address is treated as a quality problem, and these are cross-checked against your Google Business Profile — they must match it exactly.
+     */
+    enabled?: boolean | null;
+    /**
+     * InteriorDesignService is the closest fit for a studio. LocalBusiness is the safe general option.
+     */
+    type?: string | null;
+    telephone?: string | null;
+    email?: string | null;
+    streetAddress?: string | null;
+    locality?: string | null;
+    region?: string | null;
+    postalCode?: string | null;
+    /**
+     * Two-letter code.
+     */
+    country?: string | null;
+    /**
+     * Google Maps: right-click the pin, the numbers at the top.
+     */
+    latitude?: string | null;
+    longitude?: string | null;
+    /**
+     * Schema format, e.g. "Mo-Sa 10:00-19:00".
+     */
+    openingHours?: string | null;
+    /**
+     * Coarse, e.g. "₹₹".
+     */
+    priceRange?: string | null;
+    /**
+     * Cities you work in — Delhi, Noida, Gurugram, and so on.
+     */
+    areaServed?:
+      | {
+          name: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
   header?: {
     /**
      * e.g. /images/logo.png
@@ -2152,6 +2271,42 @@ export interface SiteSetting {
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
+  site?:
+    | T
+    | {
+        name?: T;
+        description?: T;
+        defaultImage?: T;
+        sameAs?:
+          | T
+          | {
+              url?: T;
+              id?: T;
+            };
+      };
+  business?:
+    | T
+    | {
+        enabled?: T;
+        type?: T;
+        telephone?: T;
+        email?: T;
+        streetAddress?: T;
+        locality?: T;
+        region?: T;
+        postalCode?: T;
+        country?: T;
+        latitude?: T;
+        longitude?: T;
+        openingHours?: T;
+        priceRange?: T;
+        areaServed?:
+          | T
+          | {
+              name?: T;
+              id?: T;
+            };
+      };
   header?:
     | T
     | {

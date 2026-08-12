@@ -4,6 +4,7 @@ import { buildConfig } from "payload";
 import { sqliteAdapter } from "@payloadcms/db-sqlite";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
+import { seoPlugin } from "@payloadcms/plugin-seo";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { emailAdapter } from "./lib/email";
 import sharp from "sharp";
@@ -14,6 +15,8 @@ import { Pages } from "./collections/Pages";
 import { Posts } from "./collections/Posts";
 import { Enquiries } from "./collections/Enquiries";
 import { SiteSettings } from "./globals/SiteSettings";
+import { extraSeoFields } from "./fields/seo";
+import { pageUrl } from "./lib/site-url";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -71,9 +74,21 @@ const db = DATABASE_URI.startsWith("postgres")
  * public/uploads on disk. Same reason: nothing written to the
  * filesystem survives on Vercel.
  */
-const plugins = BLOB_TOKEN
-  ? [vercelBlobStorage({ enabled: true, collections: { media: true }, token: BLOB_TOKEN })]
-  : [];
+const plugins = [
+  seoPlugin({
+    // Posts get the same treatment as pages: a blog post shared without a
+    // title and image of its own is the most-shared kind of page there is.
+    collections: ["pages", "posts"],
+    tabbedUI: true,
+    uploadsCollection: "media",
+    fields: ({ defaultFields }) => [...defaultFields, ...extraSeoFields],
+    generateTitle: ({ doc }: { doc?: { title?: string } }) => doc?.title ?? "",
+    generateURL: ({ doc }: { doc?: { slug?: string } }) => pageUrl(doc?.slug ?? ""),
+  }),
+  ...(BLOB_TOKEN
+    ? [vercelBlobStorage({ enabled: true, collections: { media: true }, token: BLOB_TOKEN })]
+    : []),
+];
 
 export default buildConfig({
   admin: {

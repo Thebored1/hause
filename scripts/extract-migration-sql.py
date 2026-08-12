@@ -19,9 +19,9 @@ is not literal SQL.
 import io
 import re
 
-SRC = 'src/migrations/20260811_142757_initial.ts'
-NAME = '20260811_142757_initial'
-OUT = 'src/migrations/20260811_142757_initial.sql'
+SRC = 'src/migrations/20260812_190051_seo.ts'
+NAME = '20260812_190051_seo'
+OUT = 'src/migrations/20260812_190051_seo.sql'
 
 s = io.open(SRC, encoding='utf-8').read()
 
@@ -38,28 +38,33 @@ body = up[i:j]
 assert up.count(open_tok) == 1, 'expected exactly one sql`` block in up()'
 assert '${' not in body, 'template interpolation found — not literal SQL'
 assert '\\`' not in body, 'escaped backtick found — not literal SQL'
-assert 'CREATE TABLE "payload_migrations"' in body, 'payload_migrations not created here'
+# An initial migration builds payload_migrations itself; a later one expects
+# it to exist already. That difference decides both the wording and the batch
+# number below, so it is detected rather than assumed.
+is_initial = 'CREATE TABLE "payload_migrations"' in body
 
-header = """-- Hause Interiors - initial schema for Supabase (Postgres)
+header = """-- Hause Interiors - %s for Supabase (Postgres)
 --
 -- Extracted verbatim from src/migrations/%s.ts, which is what
 -- `payload migrate` would run. Paste the whole file into the Supabase SQL
--- editor and run it once, against an empty database.
+-- editor and run it once.
 --
--- Wrapped in a transaction: if any statement fails, nothing is applied and you
--- can fix and re-run, rather than being left half-migrated.
+-- Wrapped in a transaction: if any statement fails nothing is applied, so you
+-- can fix it and re-run rather than being left half-migrated.
 --
 -- The final INSERT records the migration in `payload_migrations`. Without it
--- Payload considers this migration outstanding and would try to apply it again
--- on your next deploy, which would fail on tables that already exist.
+-- Payload treats the migration as outstanding and tries to apply it again on
+-- the next deploy, which then fails on objects that already exist.
 
 BEGIN;
-""" % NAME
+""" % ('initial schema' if is_initial else 'schema update', NAME)
 
 footer = """
 -- Mark this migration as applied, exactly as `payload migrate` would.
+-- The batch number continues from whatever is already recorded, so the
+-- history stays in order however many updates come later.
 INSERT INTO "payload_migrations" ("name", "batch", "updated_at", "created_at")
-VALUES ('%s', 1, now(), now());
+SELECT '%s', COALESCE(MAX("batch"), 0) + 1, now(), now() FROM "payload_migrations";
 
 COMMIT;
 """ % NAME

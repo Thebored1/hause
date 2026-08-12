@@ -126,6 +126,27 @@ DATABASE_URI=<a postgres:// url> npx payload migrate:create
 python scripts/extract-migration-sql.py    # retarget the filename at the top first
 ```
 
+### The SEO update (`20260812_190051_seo`)
+
+Adds the SEO fields to pages and posts, and the site and business details the
+structured data is built from. Additive only - new columns, enums, indexes and
+two small tables - so nothing existing is rewritten.
+
+Paste `src/migrations/20260812_190051_seo.sql` into the Supabase SQL editor and
+run it once. It records itself in `payload_migrations` with the next batch
+number, so the history stays in order.
+
+**This must be applied before the next deploy.** Postgres runs with `push:
+false`, so Payload will not create these columns on its own; without them every
+query against pages or posts fails, which surfaces as the whole site 404ing
+rather than as a database error.
+
+Verified by rebuilding your database's exact state - the initial schema plus the
+budget-column upgrade - and applying this on top: every expected column present
+on both `pages` and `posts`, and existing `meta_title` / `meta_description`
+values still readable afterwards. The plugin reuses those same paths, so the
+descriptions already written stay where they are.
+
 **If you already ran the earlier `20260811_125959_initial.sql`**, do not paste the new file —
 it will fail on tables that already exist. The only difference between the two is one column,
 added when the contact form started recording the visitor's budget. Run this instead:

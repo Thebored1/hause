@@ -24,3 +24,44 @@ export async function getPageBySlug(slug: string) {
   });
   return docs[0] ?? null;
 }
+
+/** One entry per page that belongs in sitemap.xml. */
+export interface SitemapEntry {
+  slug: string;
+  updatedAt: string;
+}
+
+/**
+ * Published pages that are not hidden from search.
+ *
+ * Drafts are excluded by the query and noindex pages by the filter: listing a
+ * page in the sitemap while asking crawlers to skip it is a contradiction, and
+ * Search Console reports it as an error rather than ignoring it.
+ */
+export async function listSitemapPages(): Promise<SitemapEntry[]> {
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: "pages",
+    where: {
+      and: [{ _status: { equals: "published" } }, { "meta.noindex": { not_equals: true } }],
+    },
+    limit: 1000,
+    depth: 0,
+  });
+  return docs.map((d) => ({
+    slug: String(d.slug ?? ""),
+    updatedAt: String(d.updatedAt ?? ""),
+  }));
+}
+
+/** Slugs of every published page, used to decide which breadcrumbs to link. */
+export async function listPageSlugs(): Promise<string[]> {
+  const payload = await getPayload({ config });
+  const { docs } = await payload.find({
+    collection: "pages",
+    where: { _status: { equals: "published" } },
+    limit: 1000,
+    depth: 0,
+  });
+  return docs.map((d) => String(d.slug ?? ""));
+}
