@@ -11,6 +11,7 @@
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
     "test:watch": "vitest",
+    "seo:audit": "node scripts/seo-audit.mjs",
     "payload": "payload",
     "generate:importmap": "payload generate:importmap",
     "dev:turbo": "next dev",

@@ -17,6 +17,28 @@ export const dynamic = "force-dynamic";
  * A failure here must not take the route down — an empty sitemap costs a
  * crawl cycle, a 500 costs the file entirely.
  */
+/**
+ * Relative weight within this site — it says nothing to other sites, and
+ * search engines treat it as a hint at best.
+ *
+ * Derived from the slug rather than made an editable field: a number nobody
+ * can feel the effect of is one that gets set once, forgotten, and then
+ * quietly contradicts the site as it grows.
+ */
+function priorityFor(slug: string): number {
+  if (slug === "home") return 1;
+  // The pages that win work: services, and the page that asks for the enquiry.
+  if (slug.startsWith("services")) return 0.9;
+  if (slug === "contact" || slug === "projects") return 0.8;
+  return 0.7;
+}
+
+function changeFrequencyFor(slug: string): "weekly" | "monthly" {
+  // Only the home page and the portfolio change on any regular cadence;
+  // claiming otherwise for a services page invites crawls that find nothing.
+  return slug === "home" || slug === "projects" ? "weekly" : "monthly";
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [pages, posts] = await Promise.all([
     listSitemapPages().catch(() => []),
@@ -28,9 +50,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Real edit times, so a crawler can tell what actually changed instead of
     // being told the whole site changed on every deploy.
     lastModified: page.updatedAt ? new Date(page.updatedAt) : undefined,
-    // The home page is worth weighting; beyond that, priority is guesswork
-    // that search engines largely ignore.
-    priority: page.slug === "home" ? 1 : 0.7,
+    changeFrequency: changeFrequencyFor(page.slug),
+    priority: priorityFor(page.slug),
   }));
 
   const blogIndex: MetadataRoute.Sitemap = [{ url: `${SITE_URL}/blog`, priority: 0.6 }];

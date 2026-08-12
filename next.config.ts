@@ -39,11 +39,30 @@ const imageHosts = (process.env.NEXT_IMAGE_HOSTS ?? "")
   .filter(Boolean);
 
 const nextConfig: NextConfig = {
+  // One canonical shape per URL. Without this a page answers at both /about
+  // and /about/, which search engines can treat as two pages competing over
+  // the same content.
+  trailingSlash: false,
   images: {
     remotePatterns: imageHosts.map((hostname) => ({ protocol: "https" as const, hostname })),
+    // AVIF first, WebP next, the original as fallback. This is a
+    // photography-led site: images are most of what a visitor downloads and
+    // most of what Largest Contentful Paint measures, and AVIF is routinely
+    // half the bytes of the same JPEG at matching quality.
+    formats: ["image/avif", "image/webp"],
   },
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      {
+        // robots.txt asks crawlers not to visit these; this tells any that do
+        // anyway not to index what they found. A disallowed URL can still be
+        // indexed from a link elsewhere - the header is what actually keeps a
+        // login screen out of search results.
+        source: "/:path(admin|api)/:rest*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
   },
 };
 

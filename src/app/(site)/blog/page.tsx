@@ -1,13 +1,30 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getPublishedPosts } from "@/lib/posts";
+import { buildMetadata } from "@/lib/metadata";
+import { getSeoSettings } from "@/lib/seo-settings";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Journal — Hause Interiors",
-  description: "Notes on interior design, materials and delivering spaces that last.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSeoSettings();
+  return buildMetadata(
+    {
+      title: "Journal",
+      slug: "blog",
+      meta: {
+        title: "Journal — Hause Interiors",
+        description: "Notes on interior design, materials and delivering spaces that last.",
+        image: "",
+        canonical: "",
+        ogType: "website",
+        schemaType: "page",
+        noindex: false,
+      },
+    },
+    { name: seo.site.name, description: seo.site.description, defaultImage: seo.site.defaultImage },
+  );
+}
 
 export default async function BlogIndex() {
   // Filters on _status itself. The collection's access rule is not enough:
