@@ -5,6 +5,20 @@
 Read `CMS.md` before changing anything content-related, and `DEPLOY.md` before anything that
 touches the database. `SEO.md` records what is generated and what is still outstanding.
 
+## Its relationship to nextblocks
+
+`../nextblocks` is the MIT-licensed starter this site's canvas and SEO work came from. The two
+are separate repositories with no shared code at build time — changes move by hand, in both
+directions, and that is the part to be careful with.
+
+**Mechanism may go back to the starter. This client's content may not.** A block, a helper, a
+script or a test is fair game; copy, imagery, the studio address, the telephone number and the
+social links are not. Porting a test means rewriting its fixtures, not pasting them — a real
+address and phone number reached the starter's public repository exactly that way.
+
+Coming the other way — starter to site — there is nothing to be careful about. Take whatever
+is useful.
+
 ## Load-bearing, and silent when broken
 
 - **`--webpack` stays on `dev` and `build`.** Under Turbopack the server action Payload declares
