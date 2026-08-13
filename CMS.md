@@ -150,12 +150,58 @@ Follow these or the change will silently not work.
 2. **Block `slug` must equal the renderer's `case`.** A mismatch renders nothing, with no error.
 3. **Field names must equal prop names.** The renderer maps them one-to-one on purpose.
 4. **No React components, functions or class instances in block fields.** JSON only.
-5. **After adding or changing Payload fields, run `npm run dev` once** so the schema is pushed.
+5. **After adding or changing Payload fields, the schema has to catch up.** On SQLite, running
+   `npm run dev` once pushes it. On Postgres it does not: `push` is off, so generate a migration
+   and apply it — see `DEPLOY.md`. Skipping this is why a field appears to save and then
+   everything 404s.
 6. **After adding a custom admin component, run `npm run generate:importmap`.**
 7. **Do not unwrap `withPayload` in `next.config.ts`** and do not remove `"type": "module"`
    from `package.json`. Both are load-bearing — see below.
-8. **Verify by rendering, not by reading the diff.** Compare a CMS page against the hard-coded
-   one and confirm the CMS content actually appears.
+8. **Verify by rendering, not by reading the diff.** Load the page and confirm the content
+   actually appears. When comparing markup, normalise the CSP nonce, the `?v=` cache-buster and
+   React's stream id first — they vary per request — and check the comparison can still fail
+   before trusting an "identical".
+9. **Give a new page a meta description.** Everything else on the SEO tab falls back sensibly;
+   this one falls back to the site default, which is the same sentence on every page.
+10. **Run `npm run seo:audit` after adding a route.** It catches a page with no canonical, no
+    `<h1>`, or images with no alt text — none of which show up as an error anywhere else.
+
+---
+
+## SEO fields
+
+Pages and posts have an **SEO** tab, from `@payloadcms/plugin-seo` plus three fields this project
+adds in `src/fields/seo.ts`:
+
+| Field | What it does |
+| --- | --- |
+| Meta title, description, keywords | Falls back to the page title and the site description |
+| Share image | The picture shown when a link is pasted into WhatsApp, LinkedIn or Slack |
+| **Canonical URL** | Only for a page that duplicates another. Validated as absolute — a relative canonical is ignored by crawlers, so it would look set and do nothing |
+| **Hide from search engines** | `noindex`, and drops the page from `sitemap.xml` |
+| **Share card type** | website or article |
+| **What this page is** | page / service / article — adds `Service` or `Article` structured data |
+
+Site-wide identity and the studio's address live in **Site Settings** → Site and Business. The
+business details are off by default: a half-filled address counts against you, and Google
+cross-checks them against your Business Profile.
+
+`src/lib/metadata.ts` turns the stored fields into tags; `src/lib/structured-data.ts` builds the
+JSON-LD graph. Both are pure functions over plain values, because every rule in them is a
+fallback chain and fallback chains fail silently — nothing throws when a canonical is relative.
+
+**FAQ structured data is generated from the `faqSection` blocks on the page**, never stored
+separately. One copy of each answer means editing it changes what search engines are given; a
+second copy would drift the first time somebody edited one and not the other.
+
+Check the result rather than trusting it:
+
+```bash
+npm run seo:audit                        # against a local production build
+npm run seo:audit https://www.hause.co.in
+```
+
+See `SEO.md` for what is generated, what an editor controls, and what is still outstanding.
 
 ---
 
